@@ -7,17 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ZumpaReader;
 using ZumpaReader.Model;
 using ZumpaReader.WebService;
 
 namespace ZumpaReader_UnitTests.WebService
 {
     [TestClass]
-    public class WebServiceClientTest : WorkItemTest
+    public class WebServiceClientTest : TestCase
     {
-
-        private object oLock = new object();
-
         [Asynchronous]
         [TestMethod]
         public void TestGetItems()
@@ -27,19 +25,17 @@ namespace ZumpaReader_UnitTests.WebService
             client.OnError += (o, e) =>
             {
                 ex = e.Error;
-                lock (oLock) { Monitor.PulseAll(oLock); }
+                TestFinished();
             };
             client.OnDownloadedItems += (object sender, WSDownloadEventArgs e) =>
             {
                 Assert.IsNotNull(e.Result);
                 Assert.IsTrue(e.Result.NextPage.Length > 0);
                 Assert.AreEqual(35, e.Result.Items.Count);
-                lock (oLock) { Monitor.PulseAll(oLock); }
+                TestFinished();
             };
             client.DownloadItems();
-
-            lock (oLock) { Monitor.Wait(oLock); }
-
+            TestWait(2000);            
             if (ex != null)
             {
                 Assert.Fail(ex.Message);

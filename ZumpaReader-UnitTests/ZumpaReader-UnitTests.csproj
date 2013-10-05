@@ -91,6 +91,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TestCase.cs" />
     <Compile Include="WebService\WebServiceClientTest.cs" />
   </ItemGroup>
   <ItemGroup>
