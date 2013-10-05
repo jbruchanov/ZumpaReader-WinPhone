@@ -124,11 +124,11 @@
                 "Subject": "Tohle si zumpa zaslouzi videt..",
                 "Time": 1380990901000,
                 "Responds": 6,
-                "HasRespondForYou": false,
+                "HasRespondForYou": true,
                 "ItemsUrl": "http://portal2.dkm.cz/phorum/read.php?f=2&amp;i=1222776&amp;t=1222776",
-                "IsFavourite": false,
-                "HasBeenRead": false,
-                "IsNewOne": false
+                "IsFavourite": true,
+                "HasBeenRead": true,
+                "IsNewOne": true
 }</value>
   </data>
 </root>

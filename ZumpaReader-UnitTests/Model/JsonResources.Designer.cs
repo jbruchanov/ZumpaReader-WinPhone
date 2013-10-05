@@ -67,11 +67,11 @@ namespace ZumpaReader_UnitTests.Model {
         ///                &quot;Subject&quot;: &quot;Tohle si zumpa zaslouzi videt..&quot;,
         ///                &quot;Time&quot;: 1380990901000,
         ///                &quot;Responds&quot;: 6,
-        ///                &quot;HasRespondForYou&quot;: false,
+        ///                &quot;HasRespondForYou&quot;: true,
         ///                &quot;ItemsUrl&quot;: &quot;http://portal2.dkm.cz/phorum/read.php?f=2&amp;i=1222776&amp;t=1222776&quot;,
-        ///                &quot;IsFavourite&quot;: false,
-        ///                &quot;HasBeenRead&quot;: false,
-        ///                &quot;IsNewOne&quot;: false
+        ///                &quot;IsFavourite&quot;: true,
+        ///                &quot;HasBeenRead&quot;: true,
+        ///                &quot;IsNewOne&quot;: true
         ///}.
         /// </summary>
         internal static string ZumpaItemJson {
