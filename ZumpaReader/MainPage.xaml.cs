@@ -10,20 +10,23 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using ZumpaReader.ViewModel;
+using ViewModel;
 
 namespace ZumpaReader
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage : BasePage
     {
         // Constructor
-        public MainPage()
+        public MainPage() : base()
         {
-            InitializeComponent();
-            #if WP75
-                PageTitle.Text = "W75";
-            #elif WP8
-                PageTitle.Text = "W8";
-            #endif
+            InitializeComponent();            
+            ViewModel.OnAttachPage(this);
+        }
+
+        public override ViewModel.BaseViewModel OnCreateViewModel()
+        {
+            return new MainPageViewModel();
         }
     }
 }

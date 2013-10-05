@@ -53,8 +53,7 @@ namespace ZumpaReader8
                 // Caution:- Use this under debug mode only. Application that disables user idle detection will continue to run
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
-            }
-
+            }            
         }
 
         // Code to execute when the application is launching (eg, from Start)
@@ -115,6 +114,8 @@ namespace ZumpaReader8
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
             RootFrame = new PhoneApplicationFrame();
+            SetUriMapper(RootFrame);
+
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Handle navigation failures
@@ -125,6 +126,24 @@ namespace ZumpaReader8
 
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
+        }
+
+        /// <summary>
+        /// Set UriMapper for opening MainPage from parent project assembly
+        /// </summary>
+        /// <param name="frame"></param>
+        private void SetUriMapper(PhoneApplicationFrame frame)
+        {
+            var mapper = new UriMapper();            
+            Uri u = new Uri("/ZumpaReader;component/MainPage.xaml", UriKind.RelativeOrAbsolute);
+            // Here you map "MainPage.xaml" to "Songslist.xaml"
+            mapper.UriMappings.Add(new UriMapping
+            {
+                Uri = new Uri("/MainPage.xaml", UriKind.Relative),
+                MappedUri = u
+            });
+
+            RootFrame.UriMapper = mapper;
         }
 
         // Do not add any additional code to this method
