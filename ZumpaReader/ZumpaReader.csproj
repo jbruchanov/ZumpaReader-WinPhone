@@ -67,6 +67,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\ZumpaItemsResult.cs" />
+    <Compile Include="WebService\WebServiceClient.cs" />
+    <Compile Include="WebService\WebServiceEventArgs.cs" />
     <Compile Include="ZumpaReaderResources.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
