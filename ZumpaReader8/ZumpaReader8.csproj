@@ -159,12 +159,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="..\ZumpaReader\DataTemplates.xaml">
-      <Link>DataTemplates.xaml</Link>
+    <Page Include="..\ZumpaReader\Resources\ThemeDefault.xaml">
+      <Link>Resources\ThemeDefault.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\ZumpaReader\Resources\ThemeDefault\Colors.xaml">
+      <Link>Resources\ThemeDefault\Colors.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\ZumpaReader\Resources\ThemeDefault\DataTemplates.xaml">
+      <Link>Resources\ThemeDefault\DataTemplates.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
