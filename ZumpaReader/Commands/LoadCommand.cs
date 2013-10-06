@@ -19,8 +19,8 @@ namespace ZumpaReader.Commands
         public LoadCommand(IWebService client)
         {
             _client = client;
-            _client.OnDownloadedItems += (o,e) => {_canExecute = true;};
-            _client.OnError += (o, e) => { _canExecute = true; };
+            _client.DownloadedItems += (o,e) => {_canExecute = true;};
+            _client.Error += (o, e) => { _canExecute = true; };
         }
 
         public bool CanExecute(object parameter)

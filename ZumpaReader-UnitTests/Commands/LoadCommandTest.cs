@@ -52,7 +52,7 @@ namespace ZumpaReader_UnitTests.Commands
             lc.Execute(null);
             Assert.IsFalse(lc.CanExecute(null));
             
-            mock.Raise( m => m.OnDownloadedItems += null, new WSDownloadEventArgs());
+            mock.Raise( m => m.DownloadedItems += null, new WSDownloadEventArgs());
             
             Assert.IsTrue(lc.CanExecute(null));
         }
@@ -65,7 +65,7 @@ namespace ZumpaReader_UnitTests.Commands
             lc.Execute(null);
             Assert.IsFalse(lc.CanExecute(null));
 
-            mock.Raise(m => m.OnError += null, new WSErrorEventArgs());
+            mock.Raise(m => m.Error += null, new WSErrorEventArgs());
 
             Assert.IsTrue(lc.CanExecute(null));
         }

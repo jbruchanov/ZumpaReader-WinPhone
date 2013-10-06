@@ -131,4 +131,26 @@
                 "IsNewOne": true
 }</value>
   </data>
+  <data name="ZumpaItemsResult" xml:space="preserve">
+    <value>{
+    "Context": {
+        "NextPage": "www.next.com",
+        "PreviousPage": "www.prev.com",
+        "Items": [
+            {
+                "ID": 1223330,
+                "Author": "Ganesh|VOJTA!",
+                "Subject": "doporucte film?",
+                "Time": 1381085470000,
+                "Responds": 4,
+                "HasRespondForYou": false,
+                "ItemsUrl": "http://portal2.dkm.cz/phorum/read.php?f=2&amp;i=1223330&amp;t=1223330",
+                "IsFavourite": false,
+                "HasBeenRead": false,
+                "IsNewOne": false
+            }]
+    },
+    "HasError": true
+}</value>
+  </data>
 </root>

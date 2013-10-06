@@ -79,5 +79,28 @@ namespace ZumpaReader_UnitTests.Model {
                 return ResourceManager.GetString("ZumpaItemJson", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;Context&quot;: {
+        ///        &quot;NextPage&quot;: &quot;www.next.com&quot;,
+        ///        &quot;PreviousPage&quot;: &quot;www.prev.com&quot;,
+        ///        &quot;Items&quot;: [
+        ///            {
+        ///                &quot;ID&quot;: 1223330,
+        ///                &quot;Author&quot;: &quot;Ganesh|VOJTA!&quot;,
+        ///                &quot;Subject&quot;: &quot;doporucte film?&quot;,
+        ///                &quot;Time&quot;: 1381085470000,
+        ///                &quot;Responds&quot;: 4,
+        ///                &quot;HasRespondForYou&quot;: false,
+        ///                &quot;ItemsUrl&quot;: &quot;http://portal2.dkm.cz/phorum/read.php?f=2&amp;i=1223330&amp;t=1223330&quot;,
+        ///                &quot;IsFavourite&quot;: false,
+        ///       [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ZumpaItemsResult {
+            get {
+                return ResourceManager.GetString("ZumpaItemsResult", resourceCulture);
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ZumpaReader.Model;
 
-namespace ZumpaReader_UnitTests.WebService
+namespace ZumpaReader.WebService
 {    
 
     public class WSDownloadEventArgs : EventArgs

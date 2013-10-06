@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZumpaReader.Model;
+using ZRWS = ZumpaReader.WebService;
 
 namespace ZumpaReader_UnitTests.Model
 {
@@ -31,6 +32,23 @@ namespace ZumpaReader_UnitTests.Model
             Assert.AreEqual(true, zi.IsFavourite);
             Assert.AreEqual(true, zi.HasBeenRead);
             Assert.AreEqual(true, zi.IsNewOne);
+        }
+
+        [TestMethod]
+        public void TestZumpaItemResultParsing()
+        {
+            string json = JsonResources.ZumpaItemsResult;
+            ZRWS.WebService.ContextResult<ZumpaItemsResult> result = ZRWS.WebService.Parse<ZumpaItemsResult>(json);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.HasError);
+            
+            ZumpaItemsResult zi = result.Context;
+
+            Assert.IsNotNull(zi);
+            Assert.AreEqual("www.prev.com", zi.PreviousPage);
+            Assert.AreEqual("www.next.com", zi.NextPage);
+            Assert.AreEqual(1, zi.Items.Count);
+            Assert.IsNotNull(zi.Items[0]);
         }
     }
 }

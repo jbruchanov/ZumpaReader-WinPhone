@@ -22,12 +22,12 @@ namespace ZumpaReader_UnitTests.WebService
         {
             Exception ex = null;
             WebServiceClient client = new WebServiceClient();
-            client.OnError += (o, e) =>
+            client.Error += (o, e) =>
             {
                 ex = e.Error;
                 FinishWaiting();
             };
-            client.OnDownloadedItems += (object sender, WSDownloadEventArgs e) =>
+            client.DownloadedItems += (object sender, WSDownloadEventArgs e) =>
             {
                 Assert.IsNotNull(e.Result);
                 Assert.IsTrue(e.Result.NextPage.Length > 0);
