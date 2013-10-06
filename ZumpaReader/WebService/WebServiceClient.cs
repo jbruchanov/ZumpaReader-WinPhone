@@ -12,7 +12,7 @@ using ZumpaReader_UnitTests.WebService;
 
 namespace ZumpaReader.WebService
 {
-    public class WebServiceClient
+    public class WebServiceClient : ZumpaReader.WebService.IWebService
     {
         private string _baseUrl;
 
@@ -35,7 +35,7 @@ namespace ZumpaReader.WebService
         /// Download page of items, after loading OnDownloadedItems is called
         /// </summary>
         /// <param name="page">Option param for page url, if null main page</param>
-        public void DownloadItems()
+        public void DownloadItems(string url = null)
         {
             var webRequest = (HttpWebRequest)HttpWebRequest.CreateHttp(_baseUrl + ITEMS);
             webRequest.Method = POST;
