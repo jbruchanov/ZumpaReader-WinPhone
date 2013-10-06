@@ -18,7 +18,7 @@ namespace ZumpaReader_UnitTests.WebService
     {
         [Asynchronous]
         [TestMethod]
-        public void TestGetItems()
+        public void TestRealGetItems()
         {
             Exception ex = null;
             WebServiceClient client = new WebServiceClient();
@@ -35,7 +35,7 @@ namespace ZumpaReader_UnitTests.WebService
                 FinishWaiting();
             };
             client.DownloadItems();
-            TestWait(2000);            
+            TestWait(5000);            
             if (ex != null)
             {
                 Assert.Fail(ex.Message);
