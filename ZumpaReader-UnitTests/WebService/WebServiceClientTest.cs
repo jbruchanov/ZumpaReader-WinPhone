@@ -25,14 +25,14 @@ namespace ZumpaReader_UnitTests.WebService
             client.OnError += (o, e) =>
             {
                 ex = e.Error;
-                TestFinished();
+                FinishWaiting();
             };
             client.OnDownloadedItems += (object sender, WSDownloadEventArgs e) =>
             {
                 Assert.IsNotNull(e.Result);
                 Assert.IsTrue(e.Result.NextPage.Length > 0);
                 Assert.AreEqual(35, e.Result.Items.Count);
-                TestFinished();
+                FinishWaiting();
             };
             client.DownloadItems();
             TestWait(2000);            

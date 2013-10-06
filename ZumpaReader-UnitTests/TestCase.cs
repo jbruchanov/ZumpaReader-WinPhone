@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ZumpaReader
 {
@@ -35,7 +36,12 @@ namespace ZumpaReader
 
         }
 
-        protected void TestFinished()
+        protected void RunInMainThread(Action a)
+        {
+            Deployment.Current.Dispatcher.BeginInvoke(a);
+        }
+
+        protected void FinishWaiting()
         {
             lock (oLock) { Monitor.PulseAll(oLock); }
             _finished = true;
