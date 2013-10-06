@@ -134,13 +134,12 @@ namespace ZumpaReader8
         /// <param name="frame"></param>
         private void SetUriMapper(PhoneApplicationFrame frame)
         {
-            var mapper = new UriMapper();            
-            Uri u = new Uri("/ZumpaReader;component/MainPage.xaml", UriKind.RelativeOrAbsolute);
+            var mapper = new UriMapper();                        
             // Here you map "MainPage.xaml" to "Songslist.xaml"
             mapper.UriMappings.Add(new UriMapping
             {
                 Uri = new Uri("/MainPage.xaml", UriKind.Relative),
-                MappedUri = u
+                MappedUri = new Uri("/ZumpaReader;component/MainPage.xaml", UriKind.RelativeOrAbsolute)
             });
 
             RootFrame.UriMapper = mapper;

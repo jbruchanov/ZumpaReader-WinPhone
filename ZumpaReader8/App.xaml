@@ -7,7 +7,14 @@
 
     <!--Application Resources-->
     <Application.Resources>
-        <local:LocalizedStrings xmlns:local="clr-namespace:ZumpaReader;assembly=ZumpaReader" x:Key="LocalizedStrings"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DataTemplates.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:LocalizedStrings xmlns:local="clr-namespace:ZumpaReader;assembly=ZumpaReader"
+                                    x:Key="LocalizedStrings" />
+        </ResourceDictionary>
+        
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

@@ -11,22 +11,15 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using ZumpaReader.ViewModel;
-using ViewModel;
 
 namespace ZumpaReader
 {
-    public partial class MainPage : BasePage
+    public partial class MainPage : PhoneApplicationPage
     {
         // Constructor
         public MainPage() : base()
         {
             InitializeComponent();            
-            ViewModel.OnAttachPage(this);
-        }
-
-        public override ViewModel.BaseViewModel OnCreateViewModel()
-        {
-            return new MainPageViewModel();
         }
     }
 }

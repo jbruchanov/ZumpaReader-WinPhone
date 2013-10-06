@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace ZumpaReader.ViewModel
 {
-    public class BaseViewModel
+    public class BaseViewModel : INotifyPropertyChanged
     {
-        public BasePage _basePage {get; private set;}
-
-        public virtual void OnAttachPage(BasePage page)
+        public void NotifyPropertyChange([CallerMemberName] String propertyName = "")
         {
-            if(page == null)
+            if (PropertyChanged != null)
             {
-                throw new ArgumentNullException("Page is null!");
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
-            _basePage = page;        
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -1,4 +1,4 @@
-﻿<zr:BasePage 
+﻿<phone:PhoneApplicationPage
     xmlns:zr="clr-namespace:ZumpaReader;assembly=ZumpaReader"
     x:Class="ZumpaReader.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -11,9 +11,15 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
+    xmlns:vm="clr-namespace:ZumpaReader.ViewModel;assembly=ZumpaReader"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
-
+    <phone:PhoneApplicationPage.Resources>
+        <vm:MainPageViewModel x:Key="ViewModel" />
+    </phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.DataContext>
+        <Binding Source="{StaticResource ViewModel}" />
+    </phone:PhoneApplicationPage.DataContext>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -25,10 +31,14 @@
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <Button Content="Load"
+                    Command="{Binding LoadCommand}" />
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0"></Grid>
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ListBox Style="{StaticResource ZumpaItemForListBox}" ItemsSource="{Binding DataItems}"/>
+        </Grid>
     </Grid>
  
-</zr:BasePage>
+</phone:PhoneApplicationPage>

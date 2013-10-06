@@ -1,3 +1,5 @@
 install-package WPToolkitTestFx -ProjectName ZumpaReader-UnitTests
+install-package WPToolkit -ProjectName ZumpaReader-UnitTests
 manual install http://code.google.com/p/moq/
 Install-Package Newtonsoft.Json -ProjectName ZumpaReader
+Install-Package Microsoft.Bcl.Async -ProjectName ZumpaReader

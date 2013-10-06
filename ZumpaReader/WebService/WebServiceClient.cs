@@ -30,6 +30,7 @@ namespace ZumpaReader.WebService
             _baseUrl = ZumpaReaderResources.Instance[ZumpaReader.ZumpaReaderResources.Keys.WebServiceURL];
         }
 
+
         /// <summary>
         /// Download page of items, after loading OnDownloadedItems is called
         /// </summary>
