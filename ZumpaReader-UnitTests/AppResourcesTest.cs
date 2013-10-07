@@ -20,5 +20,12 @@ namespace ZumpaReader_UnitTests
         {
             Assert.IsNotNull(ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL]);
         }
+
+        [TestMethod]
+        public void TestGetCredentials()
+        {
+            Assert.IsNotNull(ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login]);
+            Assert.IsNotNull(ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password]);
+        }
     }
 }

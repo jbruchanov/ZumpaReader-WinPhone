@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
+using ZumpaReader.Model;
 namespace ZumpaReader.WebService
 {
     public interface IWebService
     {
-        void DownloadItems(string url = null);
-        event EventHandler<WSDownloadEventArgs> DownloadedItems;
-        event EventHandler<WSErrorEventArgs> Error;
+        Task<WebService.ContextResult<ZumpaItemsResult>> DownloadItems(string url = null);
+        Task<WebService.ContextResult<string>> Login(string username, string password);
+        Task<WebService.ContextResult<bool>> Logout();
     }
 }

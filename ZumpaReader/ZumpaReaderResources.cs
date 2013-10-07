@@ -12,7 +12,9 @@ namespace ZumpaReader
     {
         public enum Keys
         {
-            WebServiceURL
+            WebServiceURL,
+            Login,
+            Password
         }
 
         private const string FILE_NAME = "ZumpaReaderResources.json";

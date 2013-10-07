@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using ZumpaReader.Model;
 
@@ -37,45 +38,24 @@ namespace ZumpaReader.WebService
         }
 
         /// <summary>
-        /// Event called on successful download of items.
-        /// Called in main thread.
-        /// </summary>
-        public event EventHandler<WSDownloadEventArgs> DownloadedItems;
-
-        /// <summary>
-        /// Called in any kind of error.
-        /// Called in main thread.
-        /// </summary>
-        public event EventHandler<WSErrorEventArgs> Error;
-
-        /// <summary>
         /// Download main page
         /// </summary>
         /// <param name="url">Specific url for older pages, pass null for latest one</param>
-        public abstract void DownloadItems(string url = null);        
+        public abstract Task<WebService.ContextResult<ZumpaItemsResult>> DownloadItems(string url = null);
 
-        /// <summary>
-        /// Call event handlers about error
-        /// </summary>
-        /// <param name="err"></param>
-        public void OnError(Exception err)
-        {
-            if (Error != null)
-            {
-                Deployment.Current.Dispatcher.BeginInvoke(() => Error.Invoke(this, new WSErrorEventArgs { Error = err }));
-            }
-        }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="result"></param>
-        public void OnDownloadedItems(ContextResult<ZumpaItemsResult> result)
-        {
-            if (DownloadedItems != null)
-            {
-                Deployment.Current.Dispatcher.BeginInvoke(() => DownloadedItems.Invoke(this, new WSDownloadEventArgs { Result = result.Context }));
-            }
-        }
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public abstract Task<WebService.ContextResult<string>> Login(string username, string password);        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public abstract Task<WebService.ContextResult<bool>> Logout();        
     }
 }

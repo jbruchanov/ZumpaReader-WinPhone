@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using ZumpaReader.Model;
 using ZumpaReader.WebService;
 
 namespace ZumpaReader.Commands
@@ -16,11 +17,12 @@ namespace ZumpaReader.Commands
 
         private bool _canExecute = true;
 
-        public LoadCommand(IWebService client)
+        private Action<ZumpaReader.WebService.WebService.ContextResult<ZumpaItemsResult>> _callback;
+
+        public LoadCommand(IWebService client, Action<ZumpaReader.WebService.WebService.ContextResult<ZumpaItemsResult>> resultCallback)
         {
             _client = client;
-            _client.DownloadedItems += (o,e) => {_canExecute = true;};
-            _client.Error += (o, e) => { _canExecute = true; };
+            _callback = resultCallback;            
         }
 
         public bool CanExecute(object parameter)
@@ -32,8 +34,15 @@ namespace ZumpaReader.Commands
 
         public void Execute(object parameter)
         {
-            _canExecute = false;
-            _client.DownloadItems(LoadURL);
+            _canExecute = false;            
+
+            _client.DownloadItems(LoadURL).ContinueWith( e =>
+            {
+                _canExecute = true;
+                if(_callback != null){
+                    _callback.Invoke(e.Result);
+                }
+            });
         }
 
         private void NotifyCanExecuteChanged()
