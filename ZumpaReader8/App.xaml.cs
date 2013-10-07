@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using ZumpaReader.Resources;
+using RemoteLogCore;
 
 namespace ZumpaReader8
 {
@@ -53,7 +54,14 @@ namespace ZumpaReader8
                 // Caution:- Use this under debug mode only. Application that disables user idle detection will continue to run
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
-            }            
+            }
+            InitializeRemoteLog();
+        }
+
+        private void InitializeRemoteLog()
+        {
+            RemoteLog.Resend();
+            RemoteLog.Init("ZumpaReaderWP", "http://rlw.scurab.com");            
         }
 
         // Code to execute when the application is launching (eg, from Start)

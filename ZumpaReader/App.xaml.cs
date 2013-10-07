@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using RemoteLogCore;
 
 namespace ZumpaReader
 {
@@ -57,6 +58,13 @@ namespace ZumpaReader
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
+            InitializeRemoteLog();
+        }
+
+        private void InitializeRemoteLog()
+        {
+            RemoteLog.Resend();
+            RemoteLog.Init("ZumpaReaderWP", "http://rlog.scurab.com");         
         }
 
         // Code to execute when the application is launching (eg, from Start)

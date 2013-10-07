@@ -157,6 +157,9 @@
     <Reference Include="microsoft.phone.controls.toolkit">
       <HintPath>..\..\amerioplayer\amerioplayer75\packages\wptoolkit.4.2012.10.30\lib\sl4-windowsphone71\microsoft.phone.controls.toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="RemoteLogCore">
+      <HintPath>..\packages\RemoteLog\RemoteLogCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\ZumpaReader\Resources\ThemeDefault.xaml">
