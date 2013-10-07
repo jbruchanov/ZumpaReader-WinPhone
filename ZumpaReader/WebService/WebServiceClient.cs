@@ -18,13 +18,16 @@ namespace ZumpaReader.WebService
 
         private const string ITEMS = "/zumpa";
         private const string LOGIN = "/login";
-        private const string LOGOUT = "/logout";        
+        private const string LOGOUT = "/logout";
+        private const string THREAD = "/thread";        
         private const string POST = "POST";
 
         private const string PARAM_COOKIES = "Cookies";
         private const string PARAM_PAGE = "Page";
         private const string PARAM_USER_NAME = "UserName";
         private const string PARAM_USER_PASSWORD = "Password";
+        private const string PARAM_THREAD_URL = "ItemsUrl";        
+
         private const string TYPE_JSON = "application/json";
 
         private string _cookies;
@@ -139,6 +142,13 @@ namespace ZumpaReader.WebService
             string @params = JsonParamsCreator();
             string jsonResponse = await PostData(_baseUrl + LOGOUT, @params);
             return Parse<bool>(jsonResponse);
+        }
+        
+        public async override Task<ContextResult<List<ZumpaSubItem>>> DownloadThread(string url)
+        {
+            string @params = JsonParamsCreator(PARAM_THREAD_URL, url);
+            string jsonResponse = await PostData(_baseUrl + THREAD, @params);
+            return Parse<List<ZumpaSubItem>>(jsonResponse);
         }
     }
 }

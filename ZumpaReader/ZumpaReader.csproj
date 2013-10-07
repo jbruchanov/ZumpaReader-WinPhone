@@ -93,7 +93,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Survey.cs" />
     <Compile Include="Model\ZumpaItemsResult.cs" />
+    <Compile Include="Model\ZumpaSubItem.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="WebService\IWebService.cs" />

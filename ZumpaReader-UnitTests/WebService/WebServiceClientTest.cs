@@ -114,5 +114,20 @@ namespace ZumpaReader_UnitTests.WebService
             });
             TestWait(5000);
         }
+
+        [Asynchronous]
+        [TestMethod]
+        public void TestDownloadSubItems()
+        {
+            WebServiceClient client = new WebServiceClient();            
+            client.DownloadThread("http://portal2.dkm.cz/phorum/read.php?f=2&i=1206682&t=1206682").ContinueWith((e) =>
+            {
+                ZWS.ContextResult<List<ZumpaSubItem>> result = e.Result;
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Context.Count >= 3);//3 saw on web
+                FinishWaiting();
+            });
+            TestWait(5000);
+        }
     }
 }

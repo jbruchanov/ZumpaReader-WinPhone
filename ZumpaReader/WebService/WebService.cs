@@ -43,6 +43,12 @@ namespace ZumpaReader.WebService
         /// <param name="url">Specific url for older pages, pass null for latest one</param>
         public abstract Task<WebService.ContextResult<ZumpaItemsResult>> DownloadItems(string url = null);
 
+        /// <summary>
+        /// Download thread for particular link
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>                
+        public abstract Task<ContextResult<List<ZumpaSubItem>>> DownloadThread(string url);
 
         /// <summary>
         /// 
