@@ -35,7 +35,47 @@ namespace ZumpaReader_UnitTests.WebService
                 FinishWaiting();
             };
             client.DownloadItems();
-            TestWait(5000);            
+            TestWait(5000);
+            if (ex != null)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Asynchronous]
+        [TestMethod]
+        public void TestRealGetItemsNextPage()
+        {
+            Exception ex = null;
+            WebServiceClient client = new WebServiceClient();
+            client.Error += (o, e) =>
+            {
+                ex = e.Error;
+                FinishWaiting();
+            };
+            int testStep = 1;
+            ZumpaItemsResult first = null;
+            client.DownloadedItems += (object sender, WSDownloadEventArgs e) =>
+            {
+                Assert.IsNotNull(e.Result);
+                Assert.IsNotNull(e.Result.NextPage);
+
+                if (testStep == 1)
+                {
+                    Assert.IsNull(e.Result.PreviousPage);
+                    first = e.Result;
+                    client.DownloadItems(e.Result.NextPage);
+                    testStep++;
+                }
+                else if (testStep == 2)
+                {
+                    Assert.IsNotNull(e.Result.PreviousPage);
+                    Assert.AreNotEqual(first.NextPage, e.Result.NextPage);
+                    FinishWaiting();
+                }
+            };
+            client.DownloadItems();
+            TestWait(10000);
             if (ex != null)
             {
                 Assert.Fail(ex.Message);

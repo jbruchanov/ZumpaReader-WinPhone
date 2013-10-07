@@ -15,9 +15,10 @@ namespace ZumpaReader.WebService
     {
         private string _baseUrl;
 
-        private const string ITEMS = "/zumpa";
-
+        private const string ITEMS = "/zumpa";        
         private const string POST = "POST";
+
+        private const string PARAM_PAGE = "Page";
         private const string TYPE_JSON = "application/json";
 
         public WebServiceClient()
@@ -65,7 +66,7 @@ namespace ZumpaReader.WebService
                 {                                                        
                     using (Stream s = webRequest.EndGetRequestStream(ac1))
                     {
-                        byte [] data = System.Text.Encoding.UTF8.GetBytes("{}");
+                        byte[] data = System.Text.Encoding.UTF8.GetBytes(JsonParamsCreator(PARAM_PAGE, url));
                         s.Write(data, 0, data.Length);
                         s.Close();
                         webRequest.BeginGetResponse(downloader, null);
@@ -79,6 +80,26 @@ namespace ZumpaReader.WebService
             #endregion
 
             webRequest.BeginGetRequestStream(uploader, null);
+        }
+
+        private string JsonParamsCreator(params object[] values)
+        {
+            if (values.Length % 2 != 0)
+            { 
+                throw new ArgumentException("Values must be even, exactly value:key pairs!");
+            }
+
+            Dictionary<string, string> pars = new Dictionary<string, string>();
+            for (int i = 0, n = values.Length; i < n; i++)
+            {
+                object key = values[i];
+                object value = values[++i];
+                if (key != null && value != null)
+                { 
+                    pars[key.ToString()] = value.ToString();
+                }
+            }
+            return JsonConvert.SerializeObject(pars);
         }
     }
 }
