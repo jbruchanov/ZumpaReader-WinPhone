@@ -17,7 +17,8 @@ namespace ZumpaReader.WebService
         private string _baseUrl;
 
         private const string ITEMS = "/zumpa";
-        private const string LOGIN = "/login";        
+        private const string LOGIN = "/login";
+        private const string LOGOUT = "/logout";        
         private const string POST = "POST";
 
         private const string PARAM_COOKIES = "Cookies";
@@ -33,17 +34,20 @@ namespace ZumpaReader.WebService
             _baseUrl = ZumpaReaderResources.Instance[ZumpaReader.ZumpaReaderResources.Keys.WebServiceURL];
             _cookies = cookies;
         }
+        
+        #region Help methods
 
-        #region Help methods        
         /// <summary>
-        /// Download page of items, after loading OnDownloadedItems is called
+        /// Create post request for json data
         /// </summary>
-        /// <param name="page">Option param for page url, if null main page</param>
-        public async override Task<WebService.ContextResult<ZumpaItemsResult>> DownloadItems(string url = null)
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private HttpWebRequest CreatePostRequest(string url)
         {
-            string @params = JsonParamsCreator(PARAM_PAGE, url);
-            string jsonResponse = await PostData(_baseUrl + ITEMS, @params);
-            return Parse<ZumpaItemsResult>(jsonResponse);            
+            HttpWebRequest req = HttpWebRequest.CreateHttp(url);
+            req.Method = POST;
+            req.ContentType = TYPE_JSON;     
+            return req;
         }
 
         /// <summary>
@@ -75,8 +79,6 @@ namespace ZumpaReader.WebService
             return JsonConvert.SerializeObject(pars);
         }
 
-        #endregion
-
         /// <summary>
         /// Post json data to url
         /// </summary>
@@ -85,9 +87,7 @@ namespace ZumpaReader.WebService
         /// <returns></returns>
         private async Task<string> PostData(string url, string data)
         {
-            WebRequest req = HttpWebRequest.CreateHttp(url);
-            req.Method = POST;
-            req.ContentType = TYPE_JSON;      
+            WebRequest req = CreatePostRequest(url);
             using (Stream s = await req.GetRequestStreamAsync())
             {
                 byte[] raw = System.Text.Encoding.UTF8.GetBytes(data);
@@ -102,8 +102,27 @@ namespace ZumpaReader.WebService
                 result = await sr.ReadToEndAsync();
             }
             return result;
-        }        
+        }
 
+        #endregion
+
+        /// <summary>
+        /// Download page of items, after loading OnDownloadedItems is called
+        /// </summary>
+        /// <param name="page">Option param for page url, if null main page</param>
+        public async override Task<WebService.ContextResult<ZumpaItemsResult>> DownloadItems(string url = null)
+        {
+            string @params = JsonParamsCreator(PARAM_PAGE, url);
+            string jsonResponse = await PostData(_baseUrl + ITEMS, @params);
+            return Parse<ZumpaItemsResult>(jsonResponse);
+        }
+
+        /// <summary>
+        /// Login into zumpa
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>Cookie string value</returns>
         public async override Task<WebService.ContextResult<string>> Login(string username, string password)
         {
             string @params = JsonParamsCreator(PARAM_USER_NAME, username, PARAM_USER_PASSWORD, password);
@@ -111,10 +130,14 @@ namespace ZumpaReader.WebService
             return Parse<string>(jsonResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>true if logout was successful</returns>
         public async override Task<WebService.ContextResult<bool>> Logout()
         {
             string @params = JsonParamsCreator();
-            string jsonResponse = await PostData(_baseUrl + LOGIN, @params);
+            string jsonResponse = await PostData(_baseUrl + LOGOUT, @params);
             return Parse<bool>(jsonResponse);
         }
     }

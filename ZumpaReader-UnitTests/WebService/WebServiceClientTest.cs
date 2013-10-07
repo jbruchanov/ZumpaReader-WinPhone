@@ -88,5 +88,31 @@ namespace ZumpaReader_UnitTests.WebService
             });
             TestWait(5000);
         }
+
+        [Asynchronous]
+        [TestMethod]
+        public void TestLogoutCorrect()
+        {
+            WebServiceClient client = new WebServiceClient();
+            string username = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
+            string password = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password];
+            string cookie = null;
+            client.Login(username, password).ContinueWith((e) =>
+            {
+                cookie = e.Result.Context;
+                Assert.IsTrue(cookie.Contains("portal_lln"));
+                FinishWaiting();
+            });
+            TestWait(5000);
+
+            client = new WebServiceClient(cookie);
+            client.Logout().ContinueWith((e) =>
+            {
+                bool result = e.Result.Context;
+                Assert.IsTrue(result);
+                FinishWaiting();
+            });
+            TestWait(5000);
+        }
     }
 }
