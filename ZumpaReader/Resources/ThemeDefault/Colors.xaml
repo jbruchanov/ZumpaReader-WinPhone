@@ -6,7 +6,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
     <SolidColorBrush x:Name="RowBackgroundEven"
-                     Color="LightGray" />
+                     Color="#22FFFFFF" />
     <SolidColorBrush x:Name="RowBackgroundOdd"
-                     Color="DarkGray" />
+                     Color="Black" />
 </ResourceDictionary>
