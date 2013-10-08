@@ -64,7 +64,7 @@ namespace ZumpaReader_UnitTests.Commands
             LoadCommand lc = new LoadCommand(mock.Object, (e) => {FinishWaiting();});            
             lc.Execute(null);
             Assert.IsFalse(lc.CanExecute(null));
-            TestWait(5000);
+            TestWait(DEFAULT_TIMEOUT);
             Assert.IsTrue(lc.CanExecute(null));
         }
     }
