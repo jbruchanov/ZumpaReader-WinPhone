@@ -77,17 +77,18 @@
                                                 Orientation="Horizontal">
                                         <TextBlock Text="{Binding LastAnswerAuthor}"
                                                    Grid.Row="1"
-                                                   FontSize="16"
+                                                   FontSize="14"
                                                    VerticalAlignment="Bottom"
                                                    Foreground="{StaticResource ZumpaYellow}"
                                                    Margin="5,0,5,0" />
                                         <TextBlock Text="{Binding Responses}"
                                                    Grid.Row="1"
                                                    FontSize="20"
-                                                   Margin="5,0,5,0" />
+                                                   Margin="10,0,10,0" />
                                         <TextBlock Text="{Binding ReadableDateTime}"
                                                    Grid.Row="1"
-                                                   FontSize="16"
+                                                   FontSize="14"
+                                                   VerticalAlignment="Bottom"
                                                    Margin="5,0,5,0" />
                                     </StackPanel>
                                 </Grid>

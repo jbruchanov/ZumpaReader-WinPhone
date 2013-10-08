@@ -5,10 +5,13 @@
                       xmlns:m="clr-namespace:ZumpaReader.Model">
     <vm:MainPageViewModel.DataItems>
         <m:ZumpaItem Author="Author 01"
+                     LastAnswerAuthor ="Last"
                      Subject="Very long subject" />
         <m:ZumpaItem Author="Author 02"
+                     LastAnswerAuthor="Last"
                      Subject="Subject" />
         <m:ZumpaItem Author="Author 03"
+                     LastAnswerAuthor="Last"
                      Subject="Blablabla blablalbla ablablablabllba balbalablbalbal balablbalbal" />
     </vm:MainPageViewModel.DataItems>
 
