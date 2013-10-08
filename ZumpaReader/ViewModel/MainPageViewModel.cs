@@ -39,7 +39,12 @@ namespace ZumpaReader.ViewModel
 
         public MainPageViewModel()
         {
-            _client = new HttpService();
+            WebService.WebService.WebServiceConfig c = new WebService.WebService.WebServiceConfig();
+            c.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
+            c.LastAnswerAuthor = true;
+            _client = new HttpService(c);
+
+            
             LoadCommand = new LoadCommand(_client, (e) => Dispatcher.BeginInvoke( () => OnDownloadedPage(e.Context)));
             NotifyPropertyChange("BackColorConverter");
             test();

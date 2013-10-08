@@ -39,8 +39,11 @@ namespace ZumpaReader.WebService
 
         private const string TYPE_JSON = "application/json";
         private const string TYPE_IMAGE = "image/jpeg";
-        
 
+        public HttpService():base(null) { }
+
+        public HttpService(WebServiceConfig config) : base(config) { }
+        
         #region Help methods
 
         /// <summary>
