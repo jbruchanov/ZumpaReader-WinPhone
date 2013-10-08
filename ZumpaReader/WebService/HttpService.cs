@@ -12,7 +12,7 @@ using ZumpaReader.Model;
 
 namespace ZumpaReader.WebService
 {
-    public class WebServiceClient : WebService
+    public class HttpService : WebService
     {
         private const string ITEMS = "/zumpa";
         private const string LOGIN = "/login";

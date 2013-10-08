@@ -15,13 +15,13 @@ using ZWS = ZumpaReader.WebService.WebService;
 namespace ZumpaReader_UnitTests.WebService
 {
     [TestClass]
-    public class WebServiceClientTest : TestCase
+    public class HttpServiceTest : TestCase
     {
         [Asynchronous]
         [TestMethod]
         public void TestRealGetItems()
         {
-            WebServiceClient client = new WebServiceClient();
+            HttpService client = new HttpService();
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             client.DownloadItems().ContinueWith((e) =>
             {
@@ -38,7 +38,7 @@ namespace ZumpaReader_UnitTests.WebService
         [TestMethod]
         public void TestRealGetItemsNextPage()
         {
-            WebServiceClient client = new WebServiceClient();
+            HttpService client = new HttpService();
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             client.DownloadItems().ContinueWith((e) =>
             {
@@ -61,7 +61,7 @@ namespace ZumpaReader_UnitTests.WebService
         [TestMethod]
         public void TestLoginCorrect()
         {
-            WebServiceClient client = new WebServiceClient();
+            HttpService client = new HttpService();
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             string username = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
             string password = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password];
@@ -80,7 +80,7 @@ namespace ZumpaReader_UnitTests.WebService
         [TestMethod]
         public void TestLoginIncorrect()
         {
-            WebServiceClient client = new WebServiceClient();
+            HttpService client = new HttpService();
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             client.Login("X", "X").ContinueWith((e) =>
             {
@@ -97,7 +97,7 @@ namespace ZumpaReader_UnitTests.WebService
         [TestMethod]
         public void TestLogoutCorrect()
         {
-            WebServiceClient client = new WebServiceClient();
+            HttpService client = new HttpService();
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             string username = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
             string password = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password];
@@ -125,7 +125,7 @@ namespace ZumpaReader_UnitTests.WebService
         [TestMethod]
         public void TestDownloadSubItems()
         {
-            WebServiceClient client = new WebServiceClient();
+            HttpService client = new HttpService();
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             client.DownloadThread("http://portal2.dkm.cz/phorum/read.php?f=2&i=1206682&t=1206682").ContinueWith((e) =>
             {
@@ -142,7 +142,7 @@ namespace ZumpaReader_UnitTests.WebService
         [Ignore]//manual test
         public void TestPostMessageToThread()
         {
-            WebServiceClient client = new WebServiceClient();
+            HttpService client = new HttpService();
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             client.Config.NickName =  ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
             string username = client.Config.NickName;
@@ -182,7 +182,7 @@ namespace ZumpaReader_UnitTests.WebService
         [Ignore]//manual test
         public void TestVoteSurvey()
         {
-            WebServiceClient client = new WebServiceClient();
+            HttpService client = new HttpService();
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             client.Config.NickName = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
             string username = client.Config.NickName;
