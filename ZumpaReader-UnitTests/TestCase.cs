@@ -43,8 +43,11 @@ namespace ZumpaReader
 
         protected void FinishWaiting()
         {
-            lock (oLock) { Monitor.PulseAll(oLock); }
-            _finished = true;
+            lock (oLock) 
+            {
+                _finished = true;
+                Monitor.PulseAll(oLock); 
+            }            
         }
     }
 }
