@@ -76,6 +76,7 @@
     <Compile Include="AppResourcesTest.cs" />
     <Compile Include="Commands\LoadCommandTest.cs" />
     <Compile Include="Converters\BackgroundColorConverterTest.cs" />
+    <Compile Include="Model\DynamicValuesTest.cs" />
     <Compile Include="Model\JsonResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

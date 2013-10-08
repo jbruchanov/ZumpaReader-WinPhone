@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -42,7 +43,14 @@ namespace ZumpaReader.Model
 
         public string ReadableDateTime
         {
-            get { 
+            get {
+                if (_date == null)
+                {
+                    long subv = Time * 10000;//difference for java
+                    _date = (Time > 86400000)
+                            ? new DateTime(subv).AddYears(1969).AddDays(-1).AddHours(DateTimeOffset.Now.Offset.Hours).ToString("d.MM.yyyy HH:mm.ss", CultureInfo.InvariantCulture)
+                            : new DateTime(subv).ToString("HH:mm");
+                }
                 return _date; 
             }            
         }
