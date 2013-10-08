@@ -27,12 +27,16 @@ namespace ZumpaReader.WebService
         /// <summary>
         /// 
         /// </summary>
-        public virtual WebServiceConfig Config { get; private set; }
+        public WebServiceConfig Config { get; private set; }
 
-        public WebService() : this(new WebServiceConfig()) { }
+        public WebService() : this(null) { }
 
         public WebService(WebServiceConfig config)
         {
+            if (config == null)
+            {
+                config = new WebServiceConfig();
+            }
             Config = config;
         }
 

@@ -40,10 +40,10 @@ namespace ZumpaReader.WebService
         private const string TYPE_JSON = "application/json";
         private const string TYPE_IMAGE = "image/jpeg";
 
-        public HttpService():base(null) { }
+        public HttpService() : this(null) { }
 
         public HttpService(WebServiceConfig config) : base(config) { }
-        
+
         #region Help methods
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace ZumpaReader.WebService
         {
             WebRequest req = CreatePostRequest(url, type);
             using (Stream s = await req.GetRequestStreamAsync())
-            {                
+            {
                 await s.WriteAsync(data, 0, data.Length);
             }
 
@@ -117,7 +117,7 @@ namespace ZumpaReader.WebService
                 StreamReader sr = new StreamReader(s);
                 result = await sr.ReadToEndAsync();
             }
-            return result;     
+            return result;
         }
 
         private void EnsureLoggedIn()
