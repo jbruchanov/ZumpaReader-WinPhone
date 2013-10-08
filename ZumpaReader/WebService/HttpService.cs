@@ -33,6 +33,7 @@ namespace ZumpaReader.WebService
         private const string PARAM_THREAD_ID = "ThreadID";
         private const string PARAM_SURVEY_ID = "SurveyID";
         private const string PARAM_SURVEY_ITEM = "SurveyItem";
+        private const string PARAM_LAST_ANSWER_AUTHOR = "LastAnswerAuthor";
 
 
         private const string TYPE_JSON = "application/json";
@@ -81,6 +82,7 @@ namespace ZumpaReader.WebService
             if (!String.IsNullOrEmpty(Config.Cookies)) { pars[PARAM_COOKIES] = Config.Cookies; }
             if (!String.IsNullOrEmpty(Config.NickName)) { pars[PARAM_FAKE_NICK] = Config.NickName; }
             if (!String.IsNullOrEmpty(Config.FakeNickName)) { pars[PARAM_USER_NAME] = Config.FakeNickName; }
+            pars[PARAM_LAST_ANSWER_AUTHOR] = Convert.ToString(Config.LastAnswerAuthor);
             return JsonConvert.SerializeObject(pars);
         }
 

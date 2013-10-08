@@ -20,6 +20,8 @@ namespace ZumpaReader.WebService
             public string NickName { get; set; }
 
             public string FakeNickName { get; set; }
+
+            public bool LastAnswerAuthor { get; set; }
         }
 
         /// <summary>
