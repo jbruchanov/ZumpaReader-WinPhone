@@ -32,6 +32,7 @@ namespace ZumpaReader_UnitTests.Model
             Assert.AreEqual(true, zi.IsFavourite);
             Assert.AreEqual(true, zi.HasBeenRead);
             Assert.AreEqual(true, zi.IsNewOne);
+            Assert.AreEqual("Konve", zi.LastAnswerAuthor);
         }
 
         [TestMethod]

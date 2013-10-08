@@ -71,6 +71,7 @@ namespace ZumpaReader_UnitTests.Model {
         ///                &quot;ItemsUrl&quot;: &quot;http://portal2.dkm.cz/phorum/read.php?f=2&amp;i=1222776&amp;t=1222776&quot;,
         ///                &quot;IsFavourite&quot;: true,
         ///                &quot;HasBeenRead&quot;: true,
+        ///                &quot;LastAnswerAuthor&quot; : &quot;Konve&quot;,
         ///                &quot;IsNewOne&quot;: true
         ///}.
         /// </summary>

@@ -128,6 +128,7 @@
                 "ItemsUrl": "http://portal2.dkm.cz/phorum/read.php?f=2&amp;i=1222776&amp;t=1222776",
                 "IsFavourite": true,
                 "HasBeenRead": true,
+                "LastAnswerAuthor" : "Konve",
                 "IsNewOne": true
 }</value>
   </data>

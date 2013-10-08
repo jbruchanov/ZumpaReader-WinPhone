@@ -37,5 +37,17 @@ namespace ZumpaReader.Model
 
         [JsonProperty("ItemsUrl")]
         public string ItemsUrl { get; set; }
+
+        private string _date;
+
+        public string ReadableDateTime
+        {
+            get { 
+                return _date; 
+            }            
+        }
+
+        [JsonProperty("LastAnswerAuthor")]
+        public string LastAnswerAuthor { get; set; }
     }
 }
