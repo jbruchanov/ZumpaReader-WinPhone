@@ -11,6 +11,29 @@ namespace ZumpaReader.WebService
 {
     public abstract class WebService : IWebService
     {
+        public class WebServiceConfig
+        {
+            public string Cookies { get; set; }
+
+            public string BaseURL { get; set; }
+
+            public string NickName { get; set; }
+
+            public string FakeNickName { get; set; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual WebServiceConfig Config { get; private set; }
+
+        public WebService() : this(new WebServiceConfig()) { }
+
+        public WebService(WebServiceConfig config)
+        {
+            Config = config;
+        }
+
         /// <summary>
         /// Parse any generic response from server
         /// </summary>
@@ -56,12 +79,21 @@ namespace ZumpaReader.WebService
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public abstract Task<WebService.ContextResult<string>> Login(string username, string password);        
+        public abstract Task<WebService.ContextResult<string>> Login(string username, string password);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public abstract Task<WebService.ContextResult<bool>> Logout();        
+        public abstract Task<WebService.ContextResult<bool>> Logout();
+
+        /// <summary>
+        /// Send new thread or message into thread
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <param name="message"></param>
+        /// <param name="threadId">Numeric value for thread, if it's null new thread is created</param>
+        /// <returns></returns>
+        public abstract Task<WebService.ContextResult<bool>> SendMessage(string subject, string message, string threadId = null);
     }
 }
