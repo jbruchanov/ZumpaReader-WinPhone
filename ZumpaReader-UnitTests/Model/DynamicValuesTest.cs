@@ -29,7 +29,17 @@ namespace ZumpaReader_UnitTests.Model
             zi.Time = 76440000;
 
             string v = zi.ReadableDateTime;
-            Assert.AreEqual("21:14", v);
+            Assert.AreEqual("22:14", v);
+        }
+
+        [TestMethod]
+        public void TestShortDateNegativeValue()
+        {
+            ZumpaItem zi = new ZumpaItem();
+            zi.Time = -1440000;//36m -1H
+
+            string v = zi.ReadableDateTime;
+            Assert.AreEqual("00:36", v);
         }
     }
 }

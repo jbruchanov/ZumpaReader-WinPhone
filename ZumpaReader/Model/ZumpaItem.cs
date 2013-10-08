@@ -9,6 +9,8 @@ namespace ZumpaReader.Model
 {
     public class ZumpaItem
     {
+        private static int TIME_OFFSET = 10000;
+        
         [JsonProperty("Subject")]
         public string Subject { get; set; }
 
@@ -46,10 +48,10 @@ namespace ZumpaReader.Model
             get {
                 if (_date == null)
                 {
-                    long subv = Time * 10000;//difference for java
+                    long t = (Time + (DateTimeOffset.Now.Offset.Hours * 3600000)) * TIME_OFFSET;
                     _date = (Time > 86400000)
-                            ? new DateTime(subv).AddYears(1969).AddDays(-1).AddHours(DateTimeOffset.Now.Offset.Hours).ToString("d.MM.yyyy HH:mm.ss", CultureInfo.InvariantCulture)
-                            : new DateTime(subv).ToString("HH:mm");
+                            ? new DateTime(t).AddYears(1969).AddDays(-1).ToString("d.MM.yyyy HH:mm.ss", CultureInfo.InvariantCulture)
+                            : new DateTime(t).ToString("HH:mm");
                 }
                 return _date; 
             }            
