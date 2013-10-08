@@ -9,4 +9,7 @@
                      Color="#22FFFFFF" />
     <SolidColorBrush x:Name="RowBackgroundOdd"
                      Color="Black" />
+    <SolidColorBrush x:Name="ZumpaYellow"
+                     Color="#FFA710" />
+    
 </ResourceDictionary>
