@@ -17,5 +17,7 @@ namespace ZumpaReader.WebService
         Task<WebService.ContextResult<bool>> SendMessage(string subject, string message, string threadId = null);
 
         Task<WebService.ContextResult<Survey>> VoteSurvey(int id, int vote);
+
+        Task<WebService.ContextResult<string>> UploadImage(byte[] data);
     }
 }

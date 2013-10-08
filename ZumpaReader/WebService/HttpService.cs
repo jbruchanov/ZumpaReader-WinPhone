@@ -19,7 +19,8 @@ namespace ZumpaReader.WebService
         private const string LOGOUT = "/logout";
         private const string THREAD = "/thread";
         private const string POST = "/post";
-        private const string SURVEY = "/survey";       
+        private const string SURVEY = "/survey";
+        private const string IMAGE = "/image";       
         private const string HTTP_POST = "POST";
 
         private const string PARAM_COOKIES = "Cookies";
@@ -37,6 +38,7 @@ namespace ZumpaReader.WebService
 
 
         private const string TYPE_JSON = "application/json";
+        private const string TYPE_IMAGE = "image/jpeg";
         
 
         #region Help methods
@@ -46,11 +48,11 @@ namespace ZumpaReader.WebService
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        private HttpWebRequest CreatePostRequest(string url)
+        private HttpWebRequest CreatePostRequest(string url, string type)
         {
             HttpWebRequest req = HttpWebRequest.CreateHttp(url);
             req.Method = HTTP_POST;
-            req.ContentType = TYPE_JSON;
+            req.ContentType = type;
             return req;
         }
 
@@ -94,11 +96,15 @@ namespace ZumpaReader.WebService
         /// <returns></returns>
         private async Task<string> PostData(string url, string data)
         {
-            WebRequest req = CreatePostRequest(url);
+            return await PostData(url, System.Text.Encoding.UTF8.GetBytes(data));
+        }
+
+        private async Task<string> PostData(string url, byte[] data, string type = TYPE_JSON)
+        {
+            WebRequest req = CreatePostRequest(url, type);
             using (Stream s = await req.GetRequestStreamAsync())
-            {
-                byte[] raw = System.Text.Encoding.UTF8.GetBytes(data);
-                await s.WriteAsync(raw, 0, data.Length);
+            {                
+                await s.WriteAsync(data, 0, data.Length);
             }
 
             WebResponse wr = await req.GetResponseAsync();
@@ -108,7 +114,7 @@ namespace ZumpaReader.WebService
                 StreamReader sr = new StreamReader(s);
                 result = await sr.ReadToEndAsync();
             }
-            return result;        
+            return result;     
         }
 
         private void EnsureLoggedIn()
@@ -185,6 +191,12 @@ namespace ZumpaReader.WebService
             string @params = JsonParamsCreator(PARAM_SURVEY_ID, id, PARAM_SURVEY_ITEM, vote);
             string jsonResponse = await PostData(Config.BaseURL + SURVEY, @params);
             return Parse<Survey>(jsonResponse);
+        }
+
+        public async override Task<ContextResult<string>> UploadImage(byte[] data)
+        {
+            string jsonResponse = await PostData(Config.BaseURL + IMAGE, data, TYPE_IMAGE);
+            return Parse<string>(jsonResponse);
         }
     }
 }

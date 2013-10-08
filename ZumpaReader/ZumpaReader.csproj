@@ -100,7 +100,7 @@
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="WebService\IWebService.cs" />
     <Compile Include="WebService\WebService.cs" />
-    <Compile Include="WebService\WebServiceClient.cs" />
+    <Compile Include="WebService\HttpService.cs" />
     <Compile Include="ZumpaReaderResources.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Model\ZumpaItem.cs" />

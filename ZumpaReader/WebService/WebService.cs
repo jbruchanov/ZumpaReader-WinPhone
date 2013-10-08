@@ -105,5 +105,12 @@ namespace ZumpaReader.WebService
         /// <param name="vote"></param>
         /// <returns></returns>
         public abstract Task<ContextResult<Survey>> VoteSurvey(int id, int vote);
+
+        /// <summary>
+        /// Upload JPEG image
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns>Context result with url of the image</returns>
+        public abstract Task<ContextResult<string>> UploadImage(byte[] data);
     }
 }

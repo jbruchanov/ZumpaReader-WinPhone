@@ -3,10 +3,16 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ZumpaReader;
 using ZumpaReader.Model;
 using ZumpaReader.WebService;
@@ -217,6 +223,63 @@ namespace ZumpaReader_UnitTests.WebService
                 FinishWaiting();
             });
             TestWait(DEFAULT_TIMEOUT);
+        }
+
+        [Asynchronous]
+        [TestMethod]
+        [Ignore]//manual test
+        public void TestUploadImage()
+        {                                   
+            HttpService client = new HttpService();
+            client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
+            client.Config.NickName = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
+            string username = client.Config.NickName;
+            string password = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password];
+            string cookie = null;
+            client.Login(username, password).ContinueWith((e) =>
+            {
+                cookie = e.Result.Context;
+                Assert.IsTrue(cookie.Contains("portal_lln"));
+                FinishWaiting();
+            });
+            TestWait(DEFAULT_TIMEOUT);
+
+            client.Config.Cookies = cookie;
+
+            byte[] data = GenerateSimpleImage();
+            client.UploadImage(data).ContinueWith((e) =>
+            {
+                ZWS.ContextResult<string> result = e.Result;
+                Assert.IsNotNull(result);
+                Assert.IsFalse(String.IsNullOrEmpty(result.Context));
+                Assert.IsTrue(result.Context.Contains("http://www.q3.cz/images/"));
+                FinishWaiting();
+            });
+
+            TestWait(DEFAULT_TIMEOUT);
+
+            client.Logout().ContinueWith((e) =>
+            {
+                bool result = e.Result.Context;
+                Assert.IsTrue(result);
+                FinishWaiting();
+            });
+            TestWait(DEFAULT_TIMEOUT);
+        }
+
+        private byte[] GenerateSimpleImage()
+        {            
+            byte[] data = null;
+            RunInMainThread( () =>
+            {
+                WriteableBitmap wb = new WriteableBitmap(200,200);
+                MemoryStream mem = new MemoryStream();
+                wb.SaveJpeg(mem, wb.PixelWidth, wb.PixelHeight, 0, 100);            
+                data = mem.ToArray();
+                FinishWaiting();
+            });
+            TestWait(DEFAULT_TIMEOUT);
+            return data;
         }
     }
 }
