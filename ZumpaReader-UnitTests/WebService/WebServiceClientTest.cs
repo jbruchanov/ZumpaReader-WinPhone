@@ -139,7 +139,7 @@ namespace ZumpaReader_UnitTests.WebService
 
         [Asynchronous]
         [TestMethod]
-        [Ignore]//tested it's fine
+        [Ignore]//manual test
         public void TestPostMessageToThread()
         {
             WebServiceClient client = new WebServiceClient();
@@ -166,6 +166,48 @@ namespace ZumpaReader_UnitTests.WebService
                 FinishWaiting();
             });
             
+            TestWait(DEFAULT_TIMEOUT);
+
+            client.Logout().ContinueWith((e) =>
+            {
+                bool result = e.Result.Context;
+                Assert.IsTrue(result);
+                FinishWaiting();
+            });
+            TestWait(DEFAULT_TIMEOUT);
+        }
+
+        [Asynchronous]
+        [TestMethod]
+        [Ignore]//manual test
+        public void TestVoteSurvey()
+        {
+            WebServiceClient client = new WebServiceClient();
+            client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
+            client.Config.NickName = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
+            string username = client.Config.NickName;
+            string password = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password];
+            string cookie = null;
+            client.Login(username, password).ContinueWith((e) =>
+            {
+                cookie = e.Result.Context;
+                Assert.IsTrue(cookie.Contains("portal_lln"));
+                FinishWaiting();
+            });
+            TestWait(DEFAULT_TIMEOUT);
+
+            client.Config.Cookies = cookie;
+
+            int sId = 3939;
+            int sVote = 1;
+            client.VoteSurvey(sId, sVote).ContinueWith((e) =>
+            {
+                ZWS.ContextResult<Survey> result = e.Result;
+                Assert.IsNotNull(result);
+                Assert.AreEqual(sVote, result.Context.VotedItem);
+                FinishWaiting();
+            });
+
             TestWait(DEFAULT_TIMEOUT);
 
             client.Logout().ContinueWith((e) =>

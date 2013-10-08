@@ -19,6 +19,7 @@ namespace ZumpaReader.WebService
         private const string LOGOUT = "/logout";
         private const string THREAD = "/thread";
         private const string POST = "/post";
+        private const string SURVEY = "/survey";       
         private const string HTTP_POST = "POST";
 
         private const string PARAM_COOKIES = "Cookies";
@@ -30,9 +31,12 @@ namespace ZumpaReader.WebService
         private const string PARAM_MESSAGE = "Message";
         private const string PARAM_SUBJECT = "Subject";
         private const string PARAM_THREAD_ID = "ThreadID";
+        private const string PARAM_SURVEY_ID = "SurveyID";
+        private const string PARAM_SURVEY_ITEM = "SurveyItem";
 
 
         private const string TYPE_JSON = "application/json";
+        
 
         #region Help methods
 
@@ -102,7 +106,15 @@ namespace ZumpaReader.WebService
                 StreamReader sr = new StreamReader(s);
                 result = await sr.ReadToEndAsync();
             }
-            return result;
+            return result;        
+        }
+
+        private void EnsureLoggedIn()
+        {
+            if (String.IsNullOrEmpty(Config.Cookies))
+            {
+                throw new InvalidOperationException("Not logged in!");
+            }
         }
 
         #endregion
@@ -151,10 +163,7 @@ namespace ZumpaReader.WebService
 
         public async override Task<ContextResult<bool>> SendMessage(string subject, string message, string threadId = null)
         {
-            if (String.IsNullOrEmpty(Config.Cookies))
-            {
-                throw new InvalidOperationException("Not legged in!");
-            }
+            EnsureLoggedIn();
 
             if (String.IsNullOrEmpty(Config.NickName) && String.IsNullOrEmpty(Config.FakeNickName))
             {
@@ -165,6 +174,15 @@ namespace ZumpaReader.WebService
                                                PARAM_THREAD_ID, threadId);
             string jsonResponse = await PostData(Config.BaseURL + POST, @params);
             return Parse<bool>(jsonResponse);
+        }
+
+        public async override Task<ContextResult<Survey>> VoteSurvey(int id, int vote)
+        {
+            EnsureLoggedIn();
+
+            string @params = JsonParamsCreator(PARAM_SURVEY_ID, id, PARAM_SURVEY_ITEM, vote);
+            string jsonResponse = await PostData(Config.BaseURL + SURVEY, @params);
+            return Parse<Survey>(jsonResponse);
         }
     }
 }

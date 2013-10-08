@@ -15,5 +15,7 @@ namespace ZumpaReader.WebService
         Task<WebService.ContextResult<List<ZumpaSubItem>>> DownloadThread(string url);
 
         Task<WebService.ContextResult<bool>> SendMessage(string subject, string message, string threadId = null);
+
+        Task<WebService.ContextResult<Survey>> VoteSurvey(int id, int vote);
     }
 }

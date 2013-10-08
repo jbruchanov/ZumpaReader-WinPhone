@@ -95,5 +95,13 @@ namespace ZumpaReader.WebService
         /// <param name="threadId">Numeric value for thread, if it's null new thread is created</param>
         /// <returns></returns>
         public abstract Task<WebService.ContextResult<bool>> SendMessage(string subject, string message, string threadId = null);
+
+        /// <summary>
+        /// Vote survey
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="vote"></param>
+        /// <returns></returns>
+        public abstract Task<ContextResult<Survey>> VoteSurvey(int id, int vote);
     }
 }
