@@ -50,5 +50,55 @@ namespace ZumpaReader_UnitTests.Model
             Assert.AreEqual(1, zi.Items.Count);
             Assert.IsNotNull(zi.Items[0]);
         }
+
+        [TestMethod]
+        public void TestZumpaSubItemParsing()
+        {
+            string json = JsonResources.ZumpaSubItemWithUrls;
+            ZRWS.WebService.ContextResult<ZumpaSubItem> result = ZRWS.WebService.Parse<ZumpaSubItem>(json);
+            Assert.IsNotNull(result);            
+
+            ZumpaSubItem zi = result.Context;
+
+            Assert.IsNotNull(zi);
+            Assert.IsNull(zi.Survey);
+            Assert.AreEqual("old.a", zi.AuthorReal);
+            Assert.AreEqual("http://www.epubbud.com/book.php?g=N8YACER3", zi.Body);
+            Assert.AreEqual(1381270016000L, zi.Time);
+            Assert.AreEqual(true, zi.HasRespondForYou);
+            Assert.AreEqual(true, zi.HasInsideUris);
+            Assert.IsNotNull(zi.InsideUris);
+            Assert.AreEqual(1, zi.InsideUris.Count);
+            Assert.AreEqual("http://www.epubbud.com/book.php?g=N8YACER3", zi.InsideUris[0]);
+        }
+
+        [TestMethod]
+        public void TestZumpaSubItemParsingWithSurvey()
+        {
+            string json = JsonResources.ZumpaSubItemWithSurvey;
+            ZRWS.WebService.ContextResult<ZumpaSubItem> result = ZRWS.WebService.Parse<ZumpaSubItem>(json);
+            Assert.IsNotNull(result);            
+
+            ZumpaSubItem zi = result.Context;
+
+            Assert.IsNotNull(zi);            
+            Assert.IsNotNull(zi.Survey);
+
+            Survey s = zi.Survey;            
+            Assert.AreEqual("Mno", s.Question);
+            Assert.AreEqual(14, s.Responds);
+            Assert.AreEqual(3939, s.ID);
+            Assert.AreEqual(4, s.Answers.Count);
+            Assert.AreEqual("WP < 7.5", s.Answers[0]);
+            Assert.AreEqual("WP 7.5", s.Answers[1]);
+            Assert.AreEqual("WP 8", s.Answers[2]);
+            Assert.AreEqual("chystam se koupit do konce roku...", s.Answers[3]);
+            Assert.AreEqual(4, s.Percents.Count);
+            Assert.AreEqual(7, s.Percents[0]);
+            Assert.AreEqual(7, s.Percents[1]);
+            Assert.AreEqual(7, s.Percents[2]);
+            Assert.AreEqual(79, s.Percents[3]);
+            Assert.AreEqual(-1, s.VotedItem);
+        }
     }
 }

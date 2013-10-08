@@ -102,5 +102,52 @@ namespace ZumpaReader_UnitTests.Model {
                 return ResourceManager.GetString("ZumpaItemsResult", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;Context&quot;: {
+        ///        &quot;AuthorReal&quot;: &quot;JtS&quot;,
+        ///        &quot;Body&quot;: &quot;Tak co kdo mate&quot;,
+        ///        &quot;Time&quot;: 1380895215000,
+        ///        &quot;HasRespondForYou&quot;: false,
+        ///        &quot;HasInsideUris&quot;: false,
+        ///        &quot;Survey&quot;: {
+        ///            &quot;Question&quot;: &quot;Mno&quot;,
+        ///            &quot;Responds&quot;: 14,
+        ///            &quot;ID&quot;: 3939,
+        ///            &quot;Answers&quot;: [
+        ///                &quot;WP &lt; 7.5&quot;,
+        ///                &quot;WP 7.5&quot;,
+        ///                &quot;WP 8&quot;,
+        ///                &quot;chystam se koupit do konce roku...&quot;
+        ///            ],
+        ///            &quot;Percents&quot;: [
+        ///              [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ZumpaSubItemWithSurvey {
+            get {
+                return ResourceManager.GetString("ZumpaSubItemWithSurvey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;Context&quot;: {
+        ///        &quot;AuthorReal&quot;: &quot;old.a&quot;,
+        ///        &quot;Body&quot;: &quot;http://www.epubbud.com/book.php?g=N8YACER3&quot;,
+        ///        &quot;Time&quot;: 1381270016000,
+        ///        &quot;HasRespondForYou&quot;: true,
+        ///        &quot;HasInsideUris&quot;: true,
+        ///        &quot;InsideUris&quot;: [
+        ///            &quot;http://www.epubbud.com/book.php?g=N8YACER3&quot;
+        ///        ]
+        ///    }
+        ///}.
+        /// </summary>
+        internal static string ZumpaSubItemWithUrls {
+            get {
+                return ResourceManager.GetString("ZumpaSubItemWithUrls", resourceCulture);
+            }
+        }
     }
 }

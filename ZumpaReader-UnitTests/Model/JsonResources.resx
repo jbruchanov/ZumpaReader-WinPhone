@@ -153,4 +153,47 @@
     "HasError": true
 }</value>
   </data>
+  <data name="ZumpaSubItemWithSurvey" xml:space="preserve">
+    <value>{
+    "Context": {
+        "AuthorReal": "JtS",
+        "Body": "Tak co kdo mate",
+        "Time": 1380895215000,
+        "HasRespondForYou": false,
+        "HasInsideUris": false,
+        "Survey": {
+            "Question": "Mno",
+            "Responds": 14,
+            "ID": 3939,
+            "Answers": [
+                "WP &lt; 7.5",
+                "WP 7.5",
+                "WP 8",
+                "chystam se koupit do konce roku..."
+            ],
+            "Percents": [
+                7,
+                7,
+                7,
+                79
+            ],
+            "VotedItem": -1
+        }
+    }
+}</value>
+  </data>
+  <data name="ZumpaSubItemWithUrls" xml:space="preserve">
+    <value>{
+    "Context": {
+        "AuthorReal": "old.a",
+        "Body": "http://www.epubbud.com/book.php?g=N8YACER3",
+        "Time": 1381270016000,
+        "HasRespondForYou": true,
+        "HasInsideUris": true,
+        "InsideUris": [
+            "http://www.epubbud.com/book.php?g=N8YACER3"
+        ]
+    }
+}</value>
+  </data>
 </root>
