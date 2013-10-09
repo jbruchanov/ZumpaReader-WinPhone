@@ -35,6 +35,15 @@ namespace ZumpaReader.ViewModel
             set {_dataItems = value; NotifyPropertyChange();}
         }
 
+        private bool _isProgressVisible;
+
+        public bool IsProgressVisible
+        {
+            get { return _isProgressVisible; }
+            set { _isProgressVisible = value; NotifyPropertyChange();}
+        }
+        
+
         #endregion
 
         public MainPageViewModel()
@@ -46,6 +55,8 @@ namespace ZumpaReader.ViewModel
 
             
             LoadCommand = new LoadCommand(_client, (e) => Dispatcher.BeginInvoke( () => OnDownloadedPage(e.Context)));
+            LoadCommand.CanExecuteChanged += (o, e) => {IsProgressVisible = !LoadCommand.CanExecute(null);};
+
             NotifyPropertyChange("BackColorConverter");
             test();
         }  
