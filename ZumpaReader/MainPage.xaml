@@ -13,8 +13,7 @@
                             d:DesignHeight="768"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"                            
-                            shell:SystemTray.IsVisible="true"
-                            shell:SystemTray.Opacity="0"
+                            shell:SystemTray.IsVisible="true"                            
                             d:DataContext="{d:DesignData /SampleData/SampleMainPageViewModel.xaml}">
    
     <phone:PhoneApplicationPage.Resources>
@@ -25,8 +24,8 @@
         <Binding Source="{StaticResource ViewModel}" />
     </phone:PhoneApplicationPage.DataContext>
     <shell:SystemTray.ProgressIndicator>
-        <shell:ProgressIndicator IsIndeterminate="{Binding IsProgressVisible}"
-                                 IsVisible="True" />
+        <shell:ProgressIndicator IsIndeterminate="True"
+                                 IsVisible="{Binding IsProgressVisible}" />
     </shell:SystemTray.ProgressIndicator>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot"
