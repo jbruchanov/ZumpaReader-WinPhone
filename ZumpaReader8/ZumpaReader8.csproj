@@ -114,6 +114,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\ZumpaReader\Images\appbar.next.rest.png">
+      <Link>Images\appbar.next.rest.png</Link>
+    </Content>
+    <Content Include="..\ZumpaReader\Images\appbar.prev.rest.png">
+      <Link>Images\appbar.prev.rest.png</Link>
+    </Content>
+    <Content Include="..\ZumpaReader\Images\appbar.questionmark.rest.png">
+      <Link>Images\appbar.questionmark.rest.png</Link>
+    </Content>
+    <Content Include="..\ZumpaReader\Images\appbar.refresh.rest.png">
+      <Link>Images\appbar.refresh.rest.png</Link>
+    </Content>
     <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

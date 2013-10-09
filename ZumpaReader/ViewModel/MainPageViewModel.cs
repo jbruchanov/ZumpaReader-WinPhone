@@ -16,6 +16,7 @@ using ZumpaReader.Converters;
 using ZumpaReader.Commands;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+using Microsoft.Phone.Shell;
 
 namespace ZumpaReader.ViewModel
 {
@@ -55,34 +56,32 @@ namespace ZumpaReader.ViewModel
 
             
             LoadCommand = new LoadCommand(_client, (e) => Dispatcher.BeginInvoke( () => OnDownloadedPage(e.Context)));
-            LoadCommand.CanExecuteChanged += (o, e) => {IsProgressVisible = !LoadCommand.CanExecute(null);};
+            LoadCommand.CanExecuteChanged += (o, e) => 
+            {
+                bool can = LoadCommand.CanExecute(null);
+                IsProgressVisible = !can;
+                (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).IsEnabled = can;
+            };
 
             NotifyPropertyChange("BackColorConverter");
-            test();
+            
         }  
         
-        private void test()
-        {
-            try
-            {
-
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                Debug.WriteLine(e.StackTrace);
-            }
-        }      
-
         public int GetIndex(object o)
         {
             return _dataItems == null ? 0 : _dataItems.IndexOf(o as ZumpaItem);            
+        }
+
+        public override void OnPageAttached()
+        {
+            (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).Click += (o,e) => {LoadCommand.Execute(null);};
+            LoadCommand.Execute(null);
         }
 
         public virtual void OnDownloadedPage(ZumpaItemsResult zumpaItemsResult)
         {
             _lastResult = zumpaItemsResult;
             DataItems = new ObservableCollection<ZumpaItem>(zumpaItemsResult.Items);
-        }
+        }        
     }
 }

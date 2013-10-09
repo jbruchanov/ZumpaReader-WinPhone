@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using ZumpaReader.ViewModel;
+using System.Diagnostics;
 
 namespace ZumpaReader
 {
@@ -19,7 +20,15 @@ namespace ZumpaReader
         // Constructor
         public MainPage() : base()
         {
-            InitializeComponent();            
+            InitializeComponent();
+
+            ApplicationBar.BackgroundColor = (App.Current.Resources["ApplicationBarBackground"] as SolidColorBrush).Color;
+
+            BaseViewModel model = Resources["ViewModel"] as BaseViewModel;
+            if (model != null)
+            {
+                model.Page = this;
+            }
         }
     }
 }

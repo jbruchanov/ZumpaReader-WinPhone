@@ -14,4 +14,7 @@
     <SolidColorBrush x:Name="ZumpaWhite"
                      Color="#EFEFEF" />
 
+    <SolidColorBrush x:Name="ApplicationBarBackground"
+                     Color="#212021" />
+
 </ResourceDictionary>

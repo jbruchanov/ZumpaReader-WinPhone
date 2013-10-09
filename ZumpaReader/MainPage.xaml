@@ -12,13 +12,14 @@
                             d:DesignWidth="480"
                             d:DesignHeight="768"
                             SupportedOrientations="Portrait"
-                            Orientation="Portrait"
-                            x:Name="Page"
-                            d:DataContext="{d:DesignData /SampleData/SampleMainPageViewModel.xaml}">    
+                            Orientation="Portrait"                            
+                            shell:SystemTray.IsVisible="true"
+                            shell:SystemTray.Opacity="0"
+                            d:DataContext="{d:DesignData /SampleData/SampleMainPageViewModel.xaml}">
+   
     <phone:PhoneApplicationPage.Resources>
         <conv:BackgroundColorConverter x:Key="BackgroundConverter" />
-        <vm:MainPageViewModel x:Key="ViewModel"
-                              Page="{Binding ElementName=Page}" />
+        <vm:MainPageViewModel x:Key="ViewModel" />
     </phone:PhoneApplicationPage.Resources>
     <phone:PhoneApplicationPage.DataContext>
         <Binding Source="{StaticResource ViewModel}" />
@@ -34,19 +35,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel"
-                    Grid.Row="0">
-            <Button Content="Load"
-                    Command="{Binding LoadCommand}" />
-        </StackPanel>
-
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel"
               Grid.Row="1">
             <ListBox ItemsSource="{Binding DataItems}"
-                     x:Name="ListBox">
+                     x:Name="ListBox"
+                     Margin="0">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="HorizontalContentAlignment"
@@ -65,5 +59,13 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-    </Grid>    
+    </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.refresh.rest.png"
+                    x:Name="ReloadButton"
+                    Text="Reload"
+                    />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
