@@ -82,6 +82,18 @@ namespace ZumpaReader.ViewModel
         {
             _lastResult = zumpaItemsResult;
             DataItems = new ObservableCollection<ZumpaItem>(zumpaItemsResult.Items);
+            Bind();
         }        
+
+        private void Bind()
+        {
+            (Page as MainPage).ListBox.SelectionChanged += (o,e) => {OnItemClick(e.AddedItems[0] as ZumpaItem);};
+        }
+
+        public void OnItemClick(ZumpaItem item)
+        {
+            String url = item.ItemsUrl;
+            Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/ThreadPage.xaml",UriKind.RelativeOrAbsolute));
+        }
     }
 }

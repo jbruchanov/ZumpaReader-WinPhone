@@ -39,7 +39,7 @@
         <Grid x:Name="ContentPanel"
               Grid.Row="1">
             <ListBox ItemsSource="{Binding DataItems}"
-                     x:Name="ListBox"
+                     x:Name="ListBox"                                          
                      Margin="0">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
