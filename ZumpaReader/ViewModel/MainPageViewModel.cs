@@ -17,23 +17,25 @@ using ZumpaReader.Commands;
 using System.Windows.Controls;
 using System.Threading.Tasks;
 using Microsoft.Phone.Shell;
+using System.Net;
 
 namespace ZumpaReader.ViewModel
 {
     public class MainPageViewModel : BaseViewModel, ZumpaReader.Converters.BackgroundColorConverter.IGetIndexEvaluator
     {
         #region Fields and properties
-        
+
         private IWebService _client;
 
         public LoadCommand LoadCommand { get; private set; }
-        
+
         private ZumpaItemsResult _lastResult;
 
         private ObservableCollection<ZumpaItem> _dataItems;
-        public ObservableCollection<ZumpaItem> DataItems {
-            get {return _dataItems;}
-            set {_dataItems = value; NotifyPropertyChange();}
+        public ObservableCollection<ZumpaItem> DataItems
+        {
+            get { return _dataItems; }
+            set { _dataItems = value; NotifyPropertyChange(); }
         }
 
         private bool _isProgressVisible;
@@ -41,9 +43,9 @@ namespace ZumpaReader.ViewModel
         public bool IsProgressVisible
         {
             get { return _isProgressVisible; }
-            set { _isProgressVisible = value; NotifyPropertyChange();}
+            set { _isProgressVisible = value; NotifyPropertyChange(); }
         }
-        
+
 
         #endregion
 
@@ -54,9 +56,9 @@ namespace ZumpaReader.ViewModel
             c.LastAnswerAuthor = true;
             _client = new HttpService(c);
 
-            
-            LoadCommand = new LoadCommand(_client, (e) => Dispatcher.BeginInvoke( () => OnDownloadedPage(e.Context)));
-            LoadCommand.CanExecuteChanged += (o, e) => 
+
+            LoadCommand = new LoadCommand(_client, (e) => Dispatcher.BeginInvoke(() => OnDownloadedPage(e.Context)));
+            LoadCommand.CanExecuteChanged += (o, e) =>
             {
                 bool can = LoadCommand.CanExecute(null);
                 IsProgressVisible = !can;
@@ -64,17 +66,17 @@ namespace ZumpaReader.ViewModel
             };
 
             NotifyPropertyChange("BackColorConverter");
-            
-        }  
-        
+
+        }
+
         public int GetIndex(object o)
         {
-            return _dataItems == null ? 0 : _dataItems.IndexOf(o as ZumpaItem);            
+            return _dataItems == null ? 0 : _dataItems.IndexOf(o as ZumpaItem);
         }
 
         public override void OnPageAttached()
         {
-            (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).Click += (o,e) => {LoadCommand.Execute(null);};
+            (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).Click += (o, e) => { LoadCommand.Execute(null); };
             LoadCommand.Execute(null);
         }
 
@@ -83,17 +85,17 @@ namespace ZumpaReader.ViewModel
             _lastResult = zumpaItemsResult;
             DataItems = new ObservableCollection<ZumpaItem>(zumpaItemsResult.Items);
             Bind();
-        }        
+        }
 
         private void Bind()
         {
-            (Page as MainPage).ListBox.SelectionChanged += (o,e) => {OnItemClick(e.AddedItems[0] as ZumpaItem);};
+            (Page as MainPage).ListBox.SelectionChanged += (o, e) => { OnItemClick(e.AddedItems[0] as ZumpaItem); };
         }
 
         public void OnItemClick(ZumpaItem item)
         {
-            String url = item.ItemsUrl;
-            Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/ThreadPage.xaml",UriKind.RelativeOrAbsolute));
+            String url = HttpUtility.UrlEncode(item.ItemsUrl);
+            Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/ThreadPage.xaml?url=" + url, UriKind.RelativeOrAbsolute));
         }
     }
 }
