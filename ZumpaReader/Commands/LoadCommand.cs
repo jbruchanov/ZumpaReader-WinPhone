@@ -35,13 +35,14 @@ namespace ZumpaReader.Commands
         public void Execute(object parameter)
         {
             _canExecute = false;            
-
+            NotifyCanExecuteChanged();
             _client.DownloadItems(LoadURL).ContinueWith( e =>
             {
                 _canExecute = true;
                 if(_callback != null){
                     _callback.Invoke(e.Result);
                 }
+                NotifyCanExecuteChanged();
             });
         }
 
