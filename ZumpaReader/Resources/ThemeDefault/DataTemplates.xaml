@@ -4,6 +4,57 @@
                     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
-                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">       
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
+    <Style TargetType="TextBlock" x:Name="SubjectFontSize">
+        <Setter Property="FontSize"
+                Value="22" />
+    </Style>
+        <DataTemplate x:Name="ZumpaItemTemplate">
+        <Grid Margin="0,1">
+            <Grid>                
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Subject}"
+                               Grid.Row="0"
+                               HorizontalAlignment="Stretch"
+                               Style="{StaticResource SubjectFontSize}"
+                               Foreground="{StaticResource ZumpaWhite}"
+                               TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding Author}"
+                               Grid.Row="1"
+                               x:Name="Author"
+                               FontSize="16"
+                               Foreground="{StaticResource ZumpaYellow}"
+                               Margin="0,5,0,0" />
+                    <StackPanel HorizontalAlignment="Right"
+                                Grid.Row="1"
+                                Margin="5,0,5,0"
+                                VerticalAlignment="Bottom"
+                                Orientation="Horizontal">
+                        <TextBlock Text="{Binding LastAnswerAuthor}"
+                                   Grid.Row="1"
+                                   FontSize="14"
+                                   VerticalAlignment="Bottom"
+                                   Foreground="{StaticResource ZumpaYellow}"
+                                   Margin="5,0,5,0" />
+                        <TextBlock Text="{Binding Responses}"
+                                   Grid.Row="1"
+                                   FontSize="20"
+                                   Foreground="{StaticResource ZumpaWhite}"
+                                   Margin="10,0,10,0" />
+                        <TextBlock Text="{Binding ReadableDateTime}"
+                                   Grid.Row="1"
+                                   FontSize="14"
+                                   VerticalAlignment="Bottom"
+                                   Foreground="{StaticResource ZumpaYellow}"
+                                   Margin="5,0,5,0" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>

@@ -47,53 +47,17 @@
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch" />
+                                Value="Stretch" />                        
                     </Style>
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,1">
-                            <Grid Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}">
-                                <Grid Margin="5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding Subject}"
-                                               Grid.Row="0"
-                                               HorizontalAlignment="Stretch"
-                                               FontSize="22"
-                                               TextWrapping="Wrap" />
-                                    <TextBlock Text="{Binding Author}"
-                                               Grid.Row="1"
-                                               x:Name="Author"
-                                               FontSize="16"
-                                               Foreground="{StaticResource ZumpaYellow}"
-                                               Margin="0,5,0,0" />
-                                    <StackPanel HorizontalAlignment="Right"
-                                                Grid.Row="1"
-                                                Margin="5,0,5,0"
-                                                VerticalAlignment="Bottom"
-                                                Orientation="Horizontal">
-                                        <TextBlock Text="{Binding LastAnswerAuthor}"
-                                                   Grid.Row="1"
-                                                   FontSize="14"
-                                                   VerticalAlignment="Bottom"
-                                                   Foreground="{StaticResource ZumpaYellow}"
-                                                   Margin="5,0,5,0" />
-                                        <TextBlock Text="{Binding Responses}"
-                                                   Grid.Row="1"
-                                                   FontSize="20"
-                                                   Margin="10,0,10,0" />
-                                        <TextBlock Text="{Binding ReadableDateTime}"
-                                                   Grid.Row="1"
-                                                   FontSize="14"
-                                                   VerticalAlignment="Bottom"
-                                                   Margin="5,0,5,0" />
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </Grid>
+                        <Grid Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}">
+                            <ContentControl Content="{Binding}"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch"
+                                            ContentTemplate="{StaticResource ZumpaItemTemplate}" />
+                        </Grid>                       
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

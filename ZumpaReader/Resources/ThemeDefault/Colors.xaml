@@ -11,5 +11,7 @@
                      Color="Black" />
     <SolidColorBrush x:Name="ZumpaYellow"
                      Color="#FFA710" />
-    
+    <SolidColorBrush x:Name="ZumpaWhite"
+                     Color="#EFEFEF" />
+
 </ResourceDictionary>
