@@ -35,6 +35,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <!--ContentPanel - place additional content here-->
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+            <TextBlock Name="Title"
+                       Style="{StaticResource PageTitle}"                       
+                       Text="Žump&#960;čka" />
+            <Line Style="{StaticResource PageTitleDivider}" />
+        </StackPanel>
         <Grid x:Name="ContentPanel"
               Grid.Row="1">
             <ListBox ItemsSource="{Binding DataItems}"
