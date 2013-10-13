@@ -5,6 +5,16 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    
+    <Style TargetType="phone:PhoneApplicationFrame">
+        <Setter Property="Background"
+                Value="Black" />
+    </Style>
+
+    <Style TargetType="ListBox">
+        <Setter Property="Background"
+                Value="Black" />
+    </Style>
 
     <Style TargetType="TextBlock"
            x:Name="PageTitle">
