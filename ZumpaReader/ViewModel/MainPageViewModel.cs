@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Microsoft.Phone.Shell;
 using System.Net;
 using Microsoft.Phone.Controls;
+using ZumpaReader.Utils;
 
 namespace ZumpaReader.ViewModel
 {
@@ -77,14 +78,29 @@ namespace ZumpaReader.ViewModel
 
         public override void OnPageAttached()
         {
-            (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).Click += (o, e) => { LoadCommand.Execute(null); };
+            (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).Click += (o, e) => { 
+                DataItems.Clear();
+                LoadCommand.LoadURL = null;
+                _lastResult = null;
+                LoadCommand.Execute(null); 
+            };
             LoadCommand.Execute(null);
         }
 
         public virtual void OnDownloadedPage(ZumpaItemsResult zumpaItemsResult)
         {
             _lastResult = zumpaItemsResult;
-            DataItems = new ObservableCollection<ZumpaItem>(zumpaItemsResult.Items);
+            if (DataItems != null)
+            {
+                foreach (var item in zumpaItemsResult.Items)
+                {
+                    DataItems.Add(item);
+                }
+            }
+            else
+            {
+                DataItems = new ObservableCollection<ZumpaItem>(zumpaItemsResult.Items);
+            }
             Bind();
         }
 
@@ -99,6 +115,7 @@ namespace ZumpaReader.ViewModel
                 }
                 
             };
+                        
             TiltEffect.SetIsTiltEnabled(page, true);
         }
 
@@ -108,6 +125,14 @@ namespace ZumpaReader.ViewModel
             String url = String.Format("?url={0}&title={1}", HttpUtility.UrlEncode(item.ItemsUrl), HttpUtility.UrlEncode(item.Subject));
             Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/ThreadPage.xaml" + url, UriKind.RelativeOrAbsolute));
             (Page as MainPage).ListBox.SelectedItem = null;
+        }
+
+        public void LoadNextPage()
+        {
+            if (null != _lastResult && LoadCommand.CanExecuteIt) { 
+                LoadCommand.LoadURL = _lastResult.NextPage;
+                LoadCommand.Execute(null);
+            }
         }
     }
 }

@@ -30,5 +30,14 @@ namespace ZumpaReader
                 model.Page = this;
             }
         }
+
+        private void Footer_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainPageViewModel model = Resources["ViewModel"] as MainPageViewModel;
+            if (model != null)
+            {
+                model.LoadNextPage();
+            }
+        }
     }
 }

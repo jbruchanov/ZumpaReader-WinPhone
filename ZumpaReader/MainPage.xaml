@@ -58,6 +58,11 @@
                         </Grid>                       
                     </DataTemplate>
                 </toolkit:LongListSelector.ItemTemplate>
+                <toolkit:LongListSelector.ListFooterTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="Footer" Loaded="Footer_Loaded" />
+                    </DataTemplate>
+                </toolkit:LongListSelector.ListFooterTemplate>
             </toolkit:LongListSelector>
         </Grid>
     </Grid>
