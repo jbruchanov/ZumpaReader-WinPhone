@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ZumpaReader;
 using ZumpaReader.Commands;
@@ -53,13 +54,18 @@ namespace ZumpaReader_UnitTests.Commands
         }
 
         [TestMethod]
-        [Ignore]//not sure how to write this test...
         public void LoadCommandCallDownloadItemsAfterSuccessfulDownload()
         {
             var mock = new Mock<IWebService>();            
             mock.Setup(e => e.DownloadItems(null)).Returns(() =>
-            {
-                return new Task<ZumpaReader.WebService.WebService.ContextResult<ZumpaItemsResult>>( () => {return null;});
+            {                
+                var t = new Task<ZumpaReader.WebService.WebService.ContextResult<ZumpaItemsResult>>( () => 
+                {
+                    Thread.Sleep(500);
+                    return null;
+                });
+                t.Start();
+                return t;
             });
             LoadCommand lc = new LoadCommand(mock.Object, (e) => {FinishWaiting();});            
             lc.Execute(null);
