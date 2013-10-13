@@ -61,6 +61,15 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Žumπčka.
+        /// </summary>
+        public static string AppName {
+            get {
+                return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string General {

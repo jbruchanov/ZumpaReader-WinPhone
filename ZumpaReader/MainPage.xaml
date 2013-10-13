@@ -8,6 +8,7 @@
                             xmlns:vm="clr-namespace:ZumpaReader.ViewModel;assembly=ZumpaReader"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
+                            xmlns:res="clr-namespace:ZumpaReader.Resources"
                             x:Class="ZumpaReader.MainPage"
                             mc:Ignorable="d"
                             d:DesignWidth="480"
@@ -18,6 +19,7 @@
                             d:DataContext="{d:DesignData /SampleData/SampleMainPageViewModel.xaml}">
    
     <phone:PhoneApplicationPage.Resources>
+        <res:I18N x:Key="Labels" />
         <conv:BackgroundColorConverter x:Key="BackgroundConverter" />
         <vm:MainPageViewModel x:Key="ViewModel" />
     </phone:PhoneApplicationPage.Resources>
@@ -38,8 +40,8 @@
         <!--ContentPanel - place additional content here-->
         <StackPanel Grid.Row="0" Orientation="Vertical">
             <TextBlock Name="Title"
-                       Style="{StaticResource PageTitle}"                       
-                       Text="Žump&#960;čka" />
+                       Style="{StaticResource PageTitle}"
+                       Text="{Binding Path=Labels.AppName, Source={StaticResource Labels}}" />
             <Line Style="{StaticResource PageTitleDivider}" />
         </StackPanel>
         <Grid x:Name="ContentPanel"
