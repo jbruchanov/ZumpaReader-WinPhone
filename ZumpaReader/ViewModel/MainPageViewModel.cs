@@ -89,13 +89,22 @@ namespace ZumpaReader.ViewModel
 
         private void Bind()
         {
-            (Page as MainPage).ListBox.SelectionChanged += (o, e) => { OnItemClick(e.AddedItems[0] as ZumpaItem); };
+            (Page as MainPage).ListBox.SelectionChanged += (o, e) => {
+                if (e.AddedItems.Count > 0)
+                {
+                    ZumpaItem item = e.AddedItems[0] as ZumpaItem;
+                    OnItemClick(item);
+                }
+                
+            };
         }
 
         public void OnItemClick(ZumpaItem item)
         {
-            String url = HttpUtility.UrlEncode(item.ItemsUrl);
-            Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/ThreadPage.xaml?url=" + url, UriKind.RelativeOrAbsolute));
+            if (item == null) { return; }
+            String url = String.Format("?url={0}&title={1}", HttpUtility.UrlEncode(item.ItemsUrl), HttpUtility.UrlEncode(item.Subject));
+            Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/ThreadPage.xaml" + url, UriKind.RelativeOrAbsolute));
+            (Page as MainPage).ListBox.SelectedIndex = -1;
         }
     }
 }
