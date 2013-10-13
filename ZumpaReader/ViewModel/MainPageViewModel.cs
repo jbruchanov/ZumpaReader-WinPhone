@@ -18,6 +18,7 @@ using System.Windows.Controls;
 using System.Threading.Tasks;
 using Microsoft.Phone.Shell;
 using System.Net;
+using Microsoft.Phone.Controls;
 
 namespace ZumpaReader.ViewModel
 {
@@ -89,7 +90,8 @@ namespace ZumpaReader.ViewModel
 
         private void Bind()
         {
-            (Page as MainPage).ListBox.SelectionChanged += (o, e) => {
+            MainPage page = (Page as MainPage);
+            page.ListBox.SelectionChanged += (o, e) => {
                 if (e.AddedItems.Count > 0)
                 {
                     ZumpaItem item = e.AddedItems[0] as ZumpaItem;
@@ -97,6 +99,7 @@ namespace ZumpaReader.ViewModel
                 }
                 
             };
+            TiltEffect.SetIsTiltEnabled(page, true);
         }
 
         public void OnItemClick(ZumpaItem item)
