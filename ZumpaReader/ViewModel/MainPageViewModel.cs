@@ -107,7 +107,7 @@ namespace ZumpaReader.ViewModel
             if (item == null) { return; }
             String url = String.Format("?url={0}&title={1}", HttpUtility.UrlEncode(item.ItemsUrl), HttpUtility.UrlEncode(item.Subject));
             Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/ThreadPage.xaml" + url, UriKind.RelativeOrAbsolute));
-            (Page as MainPage).ListBox.SelectedIndex = -1;
+            (Page as MainPage).ListBox.SelectedItem = null;
         }
     }
 }

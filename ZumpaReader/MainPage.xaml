@@ -6,6 +6,7 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:vm="clr-namespace:ZumpaReader.ViewModel;assembly=ZumpaReader"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
                             x:Class="ZumpaReader.MainPage"
                             mc:Ignorable="d"
@@ -43,16 +44,11 @@
         </StackPanel>
         <Grid x:Name="ContentPanel"
               Grid.Row="1">
-            <ListBox ItemsSource="{Binding DataItems}"
-                     x:Name="ListBox"                                          
-                     Margin="0">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch" />                        
-                    </Style>
-                </ListBox.ItemContainerStyle>
-                <ListBox.ItemTemplate>
+            
+            <toolkit:LongListSelector ItemsSource="{Binding DataItems}"                    
+                    IsFlatList="True"
+                     x:Name="ListBox"                                                          >
+                <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}">
                             <ContentControl Content="{Binding}"
@@ -61,8 +57,8 @@
                                             ContentTemplate="{StaticResource ZumpaItemTemplate}" />
                         </Grid>                       
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </toolkit:LongListSelector.ItemTemplate>
+            </toolkit:LongListSelector>
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
