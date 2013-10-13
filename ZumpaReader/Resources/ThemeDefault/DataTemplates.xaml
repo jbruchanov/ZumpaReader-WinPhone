@@ -6,35 +6,9 @@
                     xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
-    <Style TargetType="TextBlock"
-           x:Name="PageTitle">
-        <Setter Property="Foreground"
-                Value="{StaticResource PhoneAccentBrush}" />
-        <Setter Property="FontSize"
-                Value="32" />
-        <Setter Property="Margin"
-                Value="5,0" />
-    </Style>
-
-    <Style TargetType="Line"
-           x:Name="PageTitleDivider">
-        <Setter Property="StrokeThickness"
-                Value="5" />
-        <Setter Property="Stroke"
-                Value="{StaticResource PhoneAccentBrush}" />
-        <Setter Property="X1"
-                Value="0" />
-        <Setter Property="X2"
-                Value="480" />
-    </Style>
-
-        <Style TargetType="TextBlock" x:Name="SubjectFontSize">
-        <Setter Property="FontSize"
-                Value="22" />
-    </Style>
-        <DataTemplate x:Name="ZumpaItemTemplate">
+    <DataTemplate x:Name="ZumpaItemTemplate">
         <Grid Margin="0,1">
-            <Grid>                
+            <Grid>
                 <Grid Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition />

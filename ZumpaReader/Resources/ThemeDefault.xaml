@@ -6,7 +6,8 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ThemeDefault/DataTemplates.xaml" />
         <ResourceDictionary Source="ThemeDefault/Colors.xaml" />
+        <ResourceDictionary Source="ThemeDefault/Styles.xaml" />
+        <ResourceDictionary Source="ThemeDefault/DataTemplates.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

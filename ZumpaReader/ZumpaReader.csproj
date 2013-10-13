@@ -131,6 +131,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\ThemeDefault\Styles.xaml">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\ThemeDefault\DataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
