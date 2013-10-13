@@ -6,9 +6,9 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
     <SolidColorBrush x:Name="RowBackgroundEven"
-                     Color="#22FFFFFF" />
+                     Color="#16FFFFFF" />
     <SolidColorBrush x:Name="RowBackgroundOdd"
-                     Color="Black" />
+                     Color="Transparent" />
     <SolidColorBrush x:Name="ZumpaYellow"
                      Color="#FFA710" />
     <SolidColorBrush x:Name="ZumpaWhite"
