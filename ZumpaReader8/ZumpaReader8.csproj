@@ -107,6 +107,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
@@ -166,9 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
-    <Reference Include="microsoft.phone.controls.toolkit">
-      <HintPath>..\..\amerioplayer\amerioplayer75\packages\wptoolkit.4.2012.10.30\lib\sl4-windowsphone71\microsoft.phone.controls.toolkit.dll</HintPath>
-    </Reference>
     <Reference Include="RemoteLogCore">
       <HintPath>..\packages\RemoteLog\RemoteLogCore.dll</HintPath>
     </Reference>
@@ -186,6 +184,11 @@
     </Page>
     <Page Include="..\ZumpaReader\Resources\ThemeDefault\DataTemplates.xaml">
       <Link>Resources\ThemeDefault\DataTemplates.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\ZumpaReader\Resources\ThemeDefault\Styles.xaml">
+      <Link>Resources\ThemeDefault\Styles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
