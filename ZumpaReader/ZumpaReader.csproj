@@ -89,10 +89,12 @@
     </Compile>
     <Compile Include="BasePage.cs" />
     <Compile Include="Commands\LoadCommand.cs" />
+    <Compile Include="Commands\OpenLinkCommand.cs" />
     <Compile Include="Converters\BackgroundColorConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Survey.cs" />
     <Compile Include="Model\ZumpaItemsResult.cs" />
     <Compile Include="Model\ZumpaSubItem.cs" />
@@ -101,6 +103,7 @@
     </Compile>
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
+    <Compile Include="ViewModel\ThreadPageViewModel.cs" />
     <Compile Include="WebService\IWebService.cs" />
     <Compile Include="WebService\WebService.cs" />
     <Compile Include="WebService\HttpService.cs" />
@@ -140,6 +143,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
     </Page>
     <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SampleData\SampleThreadPageViewModel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

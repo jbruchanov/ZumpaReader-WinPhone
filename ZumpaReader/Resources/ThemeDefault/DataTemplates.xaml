@@ -40,7 +40,8 @@
                         <TextBlock Text="{Binding Responses}"
                                    Grid.Row="1"
                                    FontSize="20"
-                                   Width="10"
+                                   Width="25"
+                                   TextAlignment="Center"
                                    Foreground="{StaticResource ZumpaWhite}"
                                    Margin="10,0,10,0" />
                         <TextBlock Text="{Binding ReadableDateTime}"

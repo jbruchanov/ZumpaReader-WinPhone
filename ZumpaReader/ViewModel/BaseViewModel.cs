@@ -37,5 +37,10 @@ namespace ZumpaReader.ViewModel
         public virtual void OnPageAttached() { }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public virtual void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            
+        }
     }
 }

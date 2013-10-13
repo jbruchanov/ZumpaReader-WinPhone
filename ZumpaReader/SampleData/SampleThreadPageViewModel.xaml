@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<vm:ThreadPageViewModel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:vm="clr-namespace:ZumpaReader.ViewModel;assembly=ZumpaReader"
+                        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                        xmlns:m="clr-namespace:ZumpaReader.Model">
+    <vm:ThreadPageViewModel.DataItems>
+        <m:ZumpaSubItem AuthorFake="Author 01"
+                        Time="1381269672000"
+                        Body="Very long subject" />
+        <m:ZumpaSubItem AuthorFake="Author 02"
+                        Time="1381270016000"
+                        Body="Subject" />
+        <m:ZumpaSubItem AuthorFake="Author 03"
+                        Time="1381270233000"
+                        Body="Blablabla blablalbla ablablablabllba balbalablbalbal balablbalbal">
+            <m:ZumpaSubItem.InsideUris>
+                <sys:String>http://www.google.com</sys:String>
+                <sys:String>http://www.novinky.cz</sys:String>
+            </m:ZumpaSubItem.InsideUris>
+        </m:ZumpaSubItem>
+    </vm:ThreadPageViewModel.DataItems>
+
+</vm:ThreadPageViewModel>
