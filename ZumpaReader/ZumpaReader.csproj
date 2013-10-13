@@ -50,6 +50,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
@@ -87,20 +88,35 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="BasePage.cs" />
+    <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\BaseLoadCommand.cs" />
+    <Compile Include="Commands\LoginCommand.cs" />
     <Compile Include="Commands\LoadThreadPageCommand.cs" />
     <Compile Include="Commands\LoadMainPageCommand.cs" />
+    <Compile Include="Commands\LogoutCommand.cs" />
     <Compile Include="Commands\OpenLinkCommand.cs" />
     <Compile Include="Converters\BackgroundColorConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Credentials.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="Model\Survey.cs" />
     <Compile Include="Model\ZumpaItemsResult.cs" />
     <Compile Include="Model\ZumpaSubItem.cs" />
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ThreadPage.xaml.cs">
       <DependentUpon>ThreadPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\I18N.cs" />
+    <Compile Include="Resources\Labels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
     <Compile Include="Utils\UIHelper.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -110,7 +126,6 @@
     <Compile Include="WebService\WebService.cs" />
     <Compile Include="WebService\HttpService.cs" />
     <Compile Include="ZumpaReaderResources.cs" />
-    <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Model\ZumpaItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
@@ -124,6 +139,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ThreadPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,6 +188,7 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\appbar.feature.settings.rest.png" />
     <Content Include="Images\appbar.next.rest.png" />
     <Content Include="Images\appbar.prev.rest.png" />
     <Content Include="Images\appbar.questionmark.rest.png" />
@@ -180,6 +200,10 @@
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+    <EmbeddedResource Include="Resources\Labels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ZumpaReaderResources.json" />
     <Content Include="Toolkit.Content\ApplicationBar.Email.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Play.png" />

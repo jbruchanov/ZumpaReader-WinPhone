@@ -27,6 +27,9 @@ namespace ZumpaReader.ViewModel
     {
         #region Fields and properties
 
+        private const int SETTINGS_INDEX = 0;
+        private const int RELOAD_INDEX = 1;
+
         private IWebService _client;
 
         public LoadMainPageCommand LoadCommand { get; private set; }
@@ -64,7 +67,7 @@ namespace ZumpaReader.ViewModel
             {
                 bool can = LoadCommand.CanExecute(null);
                 IsProgressVisible = !can;
-                (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).IsEnabled = can;
+                (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).IsEnabled = can;
             };
 
             NotifyPropertyChange("BackColorConverter");
@@ -78,11 +81,17 @@ namespace ZumpaReader.ViewModel
 
         public override void OnPageAttached()
         {
-            (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).Click += (o, e) => { 
+            (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
+            { 
                 DataItems.Clear();
                 LoadCommand.LoadURL = null;
                 _lastResult = null;
                 LoadCommand.Execute(null); 
+            };
+
+            (Page.ApplicationBar.Buttons[SETTINGS_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
+            {
+                Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/SettingsPage.xaml", UriKind.RelativeOrAbsolute));
             };
             LoadCommand.Execute(null);
         }

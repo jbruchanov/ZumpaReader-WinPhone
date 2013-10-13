@@ -74,6 +74,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppResourcesTest.cs" />
+    <Compile Include="AppSettingsTest.cs" />
     <Compile Include="Commands\LoadCommandTest.cs" />
     <Compile Include="Converters\BackgroundColorConverterTest.cs" />
     <Compile Include="Model\DynamicValuesTest.cs" />

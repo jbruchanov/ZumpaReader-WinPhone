@@ -1,0 +1,87 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="ZumpaReader.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:res="clr-namespace:ZumpaReader.Resources"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:vm="clr-namespace:ZumpaReader.ViewModel"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+                            shell:SystemTray.IsVisible="true">
+    <phone:PhoneApplicationPage.Resources>
+        <res:I18N x:Key="Labels" />
+        <vm:SettingsViewModel x:Name="ViewModel" />
+    </phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.DataContext>
+        <Binding Source="{StaticResource ViewModel}" />
+    </phone:PhoneApplicationPage.DataContext>
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsIndeterminate="True"
+                                 IsVisible="{Binding IsProgressVisible}" />
+    </shell:SystemTray.ProgressIndicator>
+    <!--LayoutRoot contains the root grid where all other page content is placed-->
+    <Grid x:Name="LayoutRoot"
+          Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!--ContentPanel - place additional content here-->
+        <StackPanel Grid.Row="0"
+                    Orientation="Vertical">
+            <TextBlock Name="Title"
+                       Style="{StaticResource PageTitle}"
+                       Text="Žump&#960;čka" />
+            <Line Style="{StaticResource PageTitleDivider}" />
+        </StackPanel>
+
+        <controls:Panorama Grid.Row="1">
+            <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.General}">
+                <StackPanel Margin="12,0,12,0"
+                            Orientation="Vertical">
+                    <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.UserName}" />
+                    <toolkit:PhoneTextBox Text="{Binding Login, Mode=TwoWay}" />
+                    <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.Password}" />
+                    <PasswordBox Password="{Binding Password, Mode=TwoWay}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="{Binding Source={StaticResource Labels},Path=Labels.Login}"
+                                Command="{Binding LoginCommand}" CommandParameter="{Binding}"
+                                Grid.Column="0" />
+                        <Button Content="{Binding Source={StaticResource Labels},Path=Labels.Logout}"
+                                Command="{Binding LogoutCommand}"
+                                CommandParameter="{Binding}"
+                                Grid.Column="1" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Status:"
+                                   Grid.Column="0"
+                                   FontSize="34"
+                                   Margin="0,0,10,0" />
+                        <TextBlock FontSize="28"
+                                   VerticalAlignment="Center"                                   
+                                   Grid.Column="1" />
+                    </Grid>
+                    <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.Nickname}" />
+                    <toolkit:PhoneTextBox Text="{Binding Nickname, Mode=TwoWay}"/>
+                </StackPanel>
+            </controls:PanoramaItem>
+        </controls:Panorama>
+    </Grid>
+
+</phone:PhoneApplicationPage>

@@ -18,7 +18,7 @@ namespace ZumpaReader.Commands
             _callback = resultCallback;            
         }
 
-        public async void Execute(object parameter)
+        public override async void Execute(object parameter)
         {
             CanExecuteIt = false;            
             var result = await WebService.DownloadItems(LoadURL);
