@@ -46,6 +46,8 @@ namespace ZumpaReader.ViewModel
 
         private string _threadUrl;
 
+        public LoadThreadPageCommand LoadCommand { get; private set; }
+
         public ICommand OpenLinkCommand {get; private set;}
         #endregion
 
@@ -54,8 +56,28 @@ namespace ZumpaReader.ViewModel
             WebService.WebService.WebServiceConfig c = new WebService.WebService.WebServiceConfig();
             c.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             _service = new HttpService(c);
+            
             OpenLinkCommand = new OpenLinkCommand();
+            
+            LoadCommand = new LoadThreadPageCommand(_service, (e) => Dispatcher.BeginInvoke(() => OnDownloadedPage(e.Context)));
+            LoadCommand.CanExecuteChanged += (o, e) =>
+            {
+                bool can = LoadCommand.CanExecute(null);
+                IsProgressVisible = !can;
+                (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).IsEnabled = can;
+            };
+            
             NotifyPropertyChange("BackColorConverter");
+        }
+
+        public override void OnPageAttached()
+        {
+            (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).Click += (o, e) => { LoadCommand.Execute(null); };
+        }
+
+        private void OnDownloadedPage(List<ZumpaSubItem> list)
+        {
+            DataItems = new ObservableCollection<ZumpaSubItem>(list);
         }
 
         public override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -74,16 +96,9 @@ namespace ZumpaReader.ViewModel
             if (Page.NavigationContext.QueryString.TryGetValue("url", out _threadUrl))
             {
                 _threadUrl = HttpUtility.UrlDecode(_threadUrl);
-                Load();
+                LoadCommand.LoadURL = _threadUrl;
+                LoadCommand.Execute(null);
             }        
-        }
-
-        public async void Load()
-        {
-            IsProgressVisible = true;
-            ZWS.ContextResult<List<ZumpaSubItem>> items = await _service.DownloadThread(_threadUrl);
-            DataItems = new ObservableCollection<ZumpaSubItem>(items.Context);
-            IsProgressVisible = false;
         }
 
         public int GetIndex(object o)

@@ -21,7 +21,7 @@ namespace ZumpaReader_UnitTests.Commands
         public void LoadCommandCanBeExecutedOnStart()
         {
             Mock<IWebService> mock = new Mock<IWebService>();            
-            LoadCommand lc = new LoadCommand(mock.Object, null);
+            LoadMainPageCommand lc = new LoadMainPageCommand(mock.Object, null);
             Assert.IsTrue(lc.CanExecute(null));
         }
 
@@ -33,7 +33,7 @@ namespace ZumpaReader_UnitTests.Commands
             {
                 return new Task<ZumpaReader.WebService.WebService.ContextResult<ZumpaItemsResult>>(() => null);
             });
-            LoadCommand lc = new LoadCommand(mock.Object, (e) => {});
+            LoadMainPageCommand lc = new LoadMainPageCommand(mock.Object, (e) => {});
             lc.Execute(null);
             Assert.IsFalse(lc.CanExecute(null));
         }
@@ -47,7 +47,7 @@ namespace ZumpaReader_UnitTests.Commands
             {
                 return new Task<ZumpaReader.WebService.WebService.ContextResult<ZumpaItemsResult>>(() => null);
             }).Verifiable();
-            LoadCommand lc = new LoadCommand(mock.Object, (e) => { });
+            LoadMainPageCommand lc = new LoadMainPageCommand(mock.Object, (e) => { });
             lc.LoadURL = url;
             lc.Execute(null);                                   
             mock.Verify( e=> e.DownloadItems(url));
@@ -61,17 +61,25 @@ namespace ZumpaReader_UnitTests.Commands
             {                
                 var t = new Task<ZumpaReader.WebService.WebService.ContextResult<ZumpaItemsResult>>( () => 
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(500);//w8 a little for dispatcher handle queue
                     return null;
                 });
                 t.Start();
                 return t;
             });
-            LoadCommand lc = new LoadCommand(mock.Object, (e) => {FinishWaiting();});            
+            int state = 0;
+            LoadMainPageCommand lc = new LoadMainPageCommand(mock.Object, (e) => {
+                Thread.Sleep(500);//w8 a little for dispatcher handle queue, canexecute change should be enqueued now
+                FinishWaiting(); 
+            });
+            lc.CanExecuteChanged += (o,e) => 
+            {
+                if (state == 0 && !lc.CanExecute(null)){state = 1;}
+                else if (state == 1 && lc.CanExecute(null)) { state = 2;}
+            };
             lc.Execute(null);
-            Assert.IsFalse(lc.CanExecute(null));
             TestWait(DEFAULT_TIMEOUT);
-            Assert.IsTrue(lc.CanExecute(null));
+            Assert.AreEqual(2, state); 
         }
     }
 }

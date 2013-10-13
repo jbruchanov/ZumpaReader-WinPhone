@@ -16,7 +16,7 @@ namespace ZumpaReader
 
         private bool _finished = false;
 
-        public const int DEFAULT_TIMEOUT = 5000;
+        public const int DEFAULT_TIMEOUT = 500000;
 
         protected void TestWait()
         {

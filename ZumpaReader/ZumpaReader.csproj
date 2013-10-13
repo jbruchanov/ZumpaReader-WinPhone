@@ -88,13 +88,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BasePage.cs" />
-    <Compile Include="Commands\LoadCommand.cs" />
+    <Compile Include="Commands\BaseLoadCommand.cs" />
+    <Compile Include="Commands\LoadThreadPageCommand.cs" />
+    <Compile Include="Commands\LoadMainPageCommand.cs" />
     <Compile Include="Commands\OpenLinkCommand.cs" />
     <Compile Include="Converters\BackgroundColorConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Survey.cs" />
     <Compile Include="Model\ZumpaItemsResult.cs" />
     <Compile Include="Model\ZumpaSubItem.cs" />

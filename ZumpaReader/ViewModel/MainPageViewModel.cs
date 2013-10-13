@@ -28,7 +28,7 @@ namespace ZumpaReader.ViewModel
 
         private IWebService _client;
 
-        public LoadCommand LoadCommand { get; private set; }
+        public LoadMainPageCommand LoadCommand { get; private set; }
 
         private ZumpaItemsResult _lastResult;
 
@@ -58,7 +58,7 @@ namespace ZumpaReader.ViewModel
             _client = new HttpService(c);
 
 
-            LoadCommand = new LoadCommand(_client, (e) => Dispatcher.BeginInvoke(() => OnDownloadedPage(e.Context)));
+            LoadCommand = new LoadMainPageCommand(_client, (e) => Dispatcher.BeginInvoke(() => OnDownloadedPage(e.Context)));
             LoadCommand.CanExecuteChanged += (o, e) =>
             {
                 bool can = LoadCommand.CanExecute(null);
