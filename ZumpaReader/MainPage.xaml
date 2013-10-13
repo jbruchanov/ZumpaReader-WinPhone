@@ -13,7 +13,7 @@
                             mc:Ignorable="d"
                             d:DesignWidth="480"
                             d:DesignHeight="768"
-                            SupportedOrientations="Portrait"
+                            SupportedOrientations="PortraitOrLandscape"
                             Orientation="Portrait"                            
                             shell:SystemTray.IsVisible="true"                            
                             d:DataContext="{d:DesignData /SampleData/SampleMainPageViewModel.xaml}">
@@ -41,8 +41,8 @@
         <StackPanel Grid.Row="0" Orientation="Vertical">
             <TextBlock Name="Title"
                        Style="{StaticResource PageTitle}"
-                       Text="{Binding Path=Labels.AppName, Source={StaticResource Labels}}" />
-            <Line Style="{StaticResource PageTitleDivider}" />
+                       Text="{Binding Path=Labels.AppName, Source={StaticResource Labels}}" />            
+            <Rectangle Style="{StaticResource PageTitleDivider}" />
         </StackPanel>
         <Grid x:Name="ContentPanel"
               Grid.Row="1">

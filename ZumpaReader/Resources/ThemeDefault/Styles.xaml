@@ -27,17 +27,13 @@
         <Setter Property="TextWrapping"
                 Value="Wrap" />
     </Style>
-
-    <Style TargetType="Line"
+    
+    <Style TargetType="Rectangle"
            x:Name="PageTitleDivider">
-        <Setter Property="StrokeThickness"
-                Value="5" />
-        <Setter Property="Stroke"
-                Value="{StaticResource PhoneAccentBrush}" />
-        <Setter Property="X1"
-                Value="0" />
-        <Setter Property="X2"
-                Value="480" />
+        <Setter Property="Height"
+                Value="4" />
+        <Setter Property="Fill"
+                Value="{StaticResource PhoneAccentBrush}" />        
     </Style>
 
     <Style TargetType="TextBlock"

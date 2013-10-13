@@ -40,7 +40,7 @@
             <TextBlock Name="Title"
                        Style="{StaticResource PageTitle}"
                        Text="{Binding Path=Labels.AppName, Source={StaticResource Labels}}" />
-            <Line Style="{StaticResource PageTitleDivider}" />
+            <Rectangle Style="{StaticResource PageTitleDivider}" />
         </StackPanel>
 
         <controls:Panorama Grid.Row="1">

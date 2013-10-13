@@ -9,7 +9,7 @@
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}"
-                            SupportedOrientations="Portrait"
+                            SupportedOrientations="PortraitOrLandscape"
                             Orientation="Portrait"
                             mc:Ignorable="d"
                             xmlns:vm="clr-namespace:ZumpaReader.ViewModel;assembly=ZumpaReader"
@@ -41,7 +41,7 @@
             <TextBlock Name="Title"
                        Style="{StaticResource PageTitle}"
                        Text="{Binding PageTitle}" />
-            <Line Style="{StaticResource PageTitleDivider}" />
+            <Rectangle Style="{StaticResource PageTitleDivider}" />
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
