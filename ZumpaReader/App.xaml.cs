@@ -63,6 +63,7 @@ namespace ZumpaReader
 
         private void InitializeRemoteLog()
         {
+            RemoteLog.RegisterUnhandledExceptionHandler();
             RemoteLog.Resend();
             RemoteLog.Init("ZumpaReaderWP", "http://rlog.scurab.com");         
         }
