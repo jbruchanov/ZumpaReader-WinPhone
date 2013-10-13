@@ -32,20 +32,21 @@ namespace ZumpaReader.Commands
 
         public event EventHandler CanExecuteChanged;
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
             _canExecute = false;            
             NotifyCanExecuteChanged();
-            _client.DownloadItems(LoadURL).ContinueWith( e =>
-            {
-                _canExecute = true;
-                if(_callback != null){
-                    _callback.Invoke(e.Result);
-                }
-                NotifyCanExecuteChanged();
-            });
-        }
 
+            var result = await _client.DownloadItems(LoadURL);
+
+            _canExecute = true;
+            if (_callback != null)
+            {
+                _callback.Invoke(result);
+            }
+            NotifyCanExecuteChanged();
+        }
+       
         private void NotifyCanExecuteChanged()
         {
             if (CanExecuteChanged != null)
