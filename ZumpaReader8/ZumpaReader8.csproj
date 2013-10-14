@@ -118,6 +118,12 @@
     <Content Include="..\ZumpaReader\Images\appbar.add.rest.png">
       <Link>Images\appbar.add.rest.png</Link>
     </Content>
+    <Content Include="..\ZumpaReader\Images\appbar.check.rest.png">
+      <Link>Images\appbar.check.rest.png</Link>
+    </Content>
+    <Content Include="..\ZumpaReader\Images\appbar.feature.camera.rest.png">
+      <Link>Images\appbar.feature.camera.rest.png</Link>
+    </Content>
     <Content Include="..\ZumpaReader\Images\appbar.feature.settings.rest.png">
       <Link>Images\appbar.feature.settings.rest.png</Link>
     </Content>
