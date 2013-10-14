@@ -58,16 +58,7 @@ namespace ZumpaReader.ViewModel
 
         public MainPageViewModel()
         {            
-            _client = HttpService.CreateInstance();
-
-
-            LoadCommand = new LoadMainPageCommand(_client, (e) => Dispatcher.BeginInvoke(() => OnDownloadedPage(e.Context)));
-            LoadCommand.CanExecuteChanged += (o, e) =>
-            {
-                bool can = LoadCommand.CanExecute(null);
-                IsProgressVisible = !can;
-                (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).IsEnabled = can;
-            };
+           
 
             NotifyPropertyChange("BackColorConverter");
 
@@ -99,15 +90,27 @@ namespace ZumpaReader.ViewModel
             (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
             {
                 Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/PostPage.xaml", UriKind.RelativeOrAbsolute));
-            };
-
-            LoadCommand.Execute(null);
+            };            
         }
 
         public override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;
+
+            _client = HttpService.CreateInstance();
+
+            LoadCommand = new LoadMainPageCommand(_client, (ea) => Dispatcher.BeginInvoke(() => OnDownloadedPage(ea.Context)));
+            LoadCommand.CanExecuteChanged += (o, ea) =>
+            {
+                bool can = LoadCommand.CanExecute(null);
+                IsProgressVisible = !can;
+                (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).IsEnabled = can;
+            };
+            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.New) 
+            { 
+                LoadCommand.Execute(null);
+            }
         }
 
         public virtual void OnDownloadedPage(ZumpaItemsResult zumpaItemsResult)
