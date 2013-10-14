@@ -9,6 +9,7 @@ using System.Windows.Input;
 using ZumpaReader.Commands;
 using ZumpaReader.Model;
 using ZumpaReader.Pages;
+using ZumpaReader.Utils;
 using ZumpaReader.WebService;
 using ZWS = ZumpaReader.WebService.WebService;
 
@@ -74,7 +75,8 @@ namespace ZumpaReader.ViewModel
             (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).Click += (o, e) => { LoadCommand.Execute(null); };
             (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
             {
-                Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/SendPage.xaml", UriKind.RelativeOrAbsolute));
+                string url = String.Format("?{0}={1}&{2}={3}", PostPageViewModel.THREAD_ID, StringUtils.ExtractThreadId(LoadCommand.LoadURL), PostPageViewModel.SUBJECT, HttpUtility.UrlEncode(PageTitle));
+                Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/PostPage.xaml" + url, UriKind.RelativeOrAbsolute));
             };            
         }
 

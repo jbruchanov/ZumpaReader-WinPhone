@@ -81,8 +81,11 @@ namespace ZumpaReader.ViewModel
         public override void OnPageAttached()
         {
             (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
-            { 
-                DataItems.Clear();
+            {
+                if (DataItems != null) 
+                { 
+                    DataItems.Clear();
+                }
                 LoadCommand.LoadURL = null;
                 _lastResult = null;
                 LoadCommand.Execute(null); 
@@ -95,7 +98,7 @@ namespace ZumpaReader.ViewModel
 
             (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
             {
-                Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/SendPage.xaml", UriKind.RelativeOrAbsolute));
+                Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/PostPage.xaml", UriKind.RelativeOrAbsolute));
             };
 
             LoadCommand.Execute(null);
