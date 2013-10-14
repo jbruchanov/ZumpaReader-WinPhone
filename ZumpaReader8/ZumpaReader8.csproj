@@ -139,6 +139,9 @@
     <Content Include="..\ZumpaReader\Images\appbar.refresh.rest.png">
       <Link>Images\appbar.refresh.rest.png</Link>
     </Content>
+    <Content Include="appicon_medium.png" />
+    <Content Include="appicon_small.png" />
+    <Content Include="appicon_tile.png" />
     <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

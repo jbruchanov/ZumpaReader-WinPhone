@@ -219,6 +219,8 @@
     <Content Include="Images\appbar.prev.rest.png" />
     <Content Include="Images\appbar.questionmark.rest.png" />
     <Content Include="Images\appbar.refresh.rest.png" />
+    <Content Include="Images\appicon_medium.png" />
+    <Content Include="Images\appicon_small.png" />
     <Content Include="ReadMe.Coding4Fun.Toolkit.txt" />
     <Content Include="README_FIRST.txt" />
     <Content Include="SplashScreenImage.jpg" />
