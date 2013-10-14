@@ -96,6 +96,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="TestCase.cs" />
+    <Compile Include="Utils\StringUtilsTest.cs" />
     <Compile Include="WebService\HttpServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
