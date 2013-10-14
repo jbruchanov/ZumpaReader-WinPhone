@@ -65,7 +65,11 @@ namespace ZumpaReader
         {
             RemoteLog.RegisterUnhandledExceptionHandler();
             RemoteLog.Resend();
-            RemoteLog.Init("ZumpaReaderWP", "http://rlog.scurab.com");         
+            RemoteLog.Init("ZumpaReaderWP", "http://rlw.scurab.com");         
+            RemoteLog.RegistrationFinished += (o,e) =>
+            {
+                //RLog.D(this, "AppStart");
+            };
         }
 
         // Code to execute when the application is launching (eg, from Start)
