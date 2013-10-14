@@ -152,9 +152,12 @@ namespace ZumpaReader.ViewModel
 
         public void LoadNextPage()
         {
-            if (null != _lastResult && LoadCommand.CanExecuteIt) { 
-                LoadCommand.LoadURL = _lastResult.NextPage;
-                LoadCommand.Execute(null);
+            if (null != _lastResult && LoadCommand.CanExecuteIt) {
+                if (LoadCommand.LoadURL == null || !LoadCommand.LoadURL.Equals(_lastResult.NextPage)) 
+                { 
+                    LoadCommand.LoadURL = _lastResult.NextPage;
+                    LoadCommand.Execute(null);
+                }
             }
         }
     }
