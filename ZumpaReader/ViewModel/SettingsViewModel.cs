@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Coding4Fun.Toolkit.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using ZumpaReader.Commands;
+using ZumpaReader.Converters;
 using ZumpaReader.Model;
 using ZumpaReader.WebService;
 
@@ -30,6 +33,12 @@ namespace ZumpaReader.ViewModel
             set { AppSettings.ResponseName = value; NotifyPropertyChange(); }
         }
 
+        public bool IsLoggedIn
+        {
+            get {return AppSettings.IsLoggedIn; }
+            set {AppSettings.IsLoggedIn = value; NotifyPropertyChange(); }
+        }
+
         private bool _isProgressVisible;
         public bool IsProgressVisible
         {
@@ -37,9 +46,7 @@ namespace ZumpaReader.ViewModel
             set { _isProgressVisible = value; NotifyPropertyChange(); }
         }
 
-        public ICommand LoginCommand { get; private set; }
-
-        public ICommand LogoutCommand { get; private set; }
+        public LoginCommand LoginCommand { get; private set; }
 
         #endregion
 
@@ -49,17 +56,26 @@ namespace ZumpaReader.ViewModel
             c.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             c.LastAnswerAuthor = true;
             var service = new HttpService(c);
-            //LoginCommand = new LoginCommand(service);
-            //LoginCommand.CanExecuteChanged += Command_CanExecuteChanged;
-            //LogoutCommand = new LogoutCommand(service);
-            //LoginCommand.CanExecuteChanged += Command_CanExecuteChanged;
-            //NotifyPropertyChange("LoginCommand");
-            //NotifyPropertyChange("LogoutCommand");
+            LoginCommand = new LoginCommand(service);
+            LoginCommand.CommandFinished += (o,e) =>
+            {
+                string title = e.IsSuccessful ? ":)" : ":(";                                
+                string msg = String.Format("{0} {1}", 
+                                    e.Type == LoginEventArgs.TaskType.Login ? Resources.Labels.Login : Resources.Labels.Logout,
+                                    e.IsSuccessful ? Resources.Labels.Successful : Resources.Labels.Unsuccessful);
+                ShowToast(title, msg);                
+            };
+        }        
+
+        private void ShowToast(string title, string message)
+        {
+            ToastPrompt tp = new ToastPrompt{ Message = message, Title = title};
+            tp.Show();
         }
 
-        private void Command_CanExecuteChanged(object sender, EventArgs e)
+        public string Convert(bool value)
         {
-            IsProgressVisible = !(LoginCommand.CanExecute(null) && LogoutCommand.CanExecute(null));
+            return value ? Resources.Labels.Login : Resources.Labels.Logout;
         }
     }
 }

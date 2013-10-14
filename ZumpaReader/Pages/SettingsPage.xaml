@@ -10,6 +10,7 @@
     xmlns:res="clr-namespace:ZumpaReader.Resources"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:vm="clr-namespace:ZumpaReader.ViewModel"
+    xmlns:conv="clr-namespace:ZumpaReader.Converters"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -19,6 +20,9 @@
     <phone:PhoneApplicationPage.Resources>
         <res:I18N x:Key="Labels" />
         <vm:SettingsViewModel x:Name="ViewModel" />
+        <conv:BooleanToStringConverter x:Key="BooleanConverter"
+                                       TrueValue="{Binding Path=Labels.Logout, Source={StaticResource Labels}}"
+                                       FalseValue="{Binding Path=Labels.Login, Source={StaticResource Labels}}" />
     </phone:PhoneApplicationPage.Resources>
     <phone:PhoneApplicationPage.DataContext>
         <Binding Source="{StaticResource ViewModel}" />
@@ -51,32 +55,11 @@
                     <toolkit:PhoneTextBox Text="{Binding Login, Mode=TwoWay}" />
                     <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.Password}" />
                     <PasswordBox Password="{Binding Password, Mode=TwoWay}" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Button Content="{Binding Source={StaticResource Labels},Path=Labels.Login}"
-                                Command="{Binding LoginCommand}" CommandParameter="{Binding}"
-                                Grid.Column="0" />
-                        <Button Content="{Binding Source={StaticResource Labels},Path=Labels.Logout}"
-                                Command="{Binding LogoutCommand}"
-                                CommandParameter="{Binding}"
-                                Grid.Column="1" />
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Status:"
-                                   Grid.Column="0"
-                                   FontSize="34"
-                                   Margin="0,0,10,0" />
-                        <TextBlock FontSize="28"
-                                   VerticalAlignment="Center"                                   
-                                   Grid.Column="1" />
-                    </Grid>
+                    <Button Content="{Binding IsLoggedIn, Converter={StaticResource BooleanConverter}}"
+                            Command="{Binding LoginCommand}"
+                            CommandParameter="{Binding}"
+                            Margin="100,0"
+                            Grid.Column="0" />                        
                     <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.Nickname}" />
                     <toolkit:PhoneTextBox Text="{Binding Nickname, Mode=TwoWay}"/>
                 </StackPanel>

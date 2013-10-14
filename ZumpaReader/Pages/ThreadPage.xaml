@@ -19,6 +19,7 @@
     <phone:PhoneApplicationPage.Resources>
         <conv:BackgroundColorConverter x:Key="BackgroundConverter" />
         <vm:ThreadPageViewModel x:Key="ViewModel" />
+        
     </phone:PhoneApplicationPage.Resources>
     <phone:PhoneApplicationPage.DataContext>
         <Binding Source="{StaticResource ViewModel}" />
@@ -53,7 +54,7 @@
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,1">
-                            <Grid>
+                            <Grid Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}">
                                 <Grid Margin="5">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -80,16 +81,23 @@
                                                TextWrapping="Wrap" />
                                     <ListBox ItemsSource="{Binding InsideUris}"
                                              Grid.Row="2"
+                                             Margin="5"
+                                             Background="Transparent"
                                              ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                                        <ListBox.ItemTemplate>
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem">
+                                                <Setter Property="HorizontalContentAlignment"
+                                                        Value="Stretch" />
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                            <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <Button Content="{Binding}"
+                                                <Button Content="{Binding}"                                                
                                                         Command="{Binding Source={StaticResource ViewModel}, Path=OpenLinkCommand}"
                                                         CommandParameter="{Binding}"
                                                         FontSize="16"
                                                         HorizontalAlignment="Stretch"
-                                                        FontWeight="Light"
-                                                        Width="480">
+                                                        FontWeight="Light">                                                        
                                                 </Button>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
@@ -107,6 +115,9 @@
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.refresh.rest.png"
                                             x:Name="ReloadButton"
                                             Text="Reload" />
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.add.rest.png"
+                                            x:Name="Send"
+                                            Text="Send" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

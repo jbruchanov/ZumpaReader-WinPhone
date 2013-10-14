@@ -102,8 +102,8 @@ namespace ZumpaReader.ViewModel
         }
 
         public int GetIndex(object o)
-        {
-            return DataItems.IndexOf(o as ZumpaSubItem);
+        {            
+            return DataItems == null ? 0 : DataItems.IndexOf(o as ZumpaSubItem);
         }
     }
 }

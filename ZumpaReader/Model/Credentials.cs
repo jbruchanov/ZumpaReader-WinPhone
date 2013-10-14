@@ -8,6 +8,7 @@ namespace ZumpaReader.Model
     public interface Credentials
     {
         string Login { get; }
-        string Password { get; }
+        string Password { get; set; }
+        bool IsLoggedIn { get; set; }
     }
 }
