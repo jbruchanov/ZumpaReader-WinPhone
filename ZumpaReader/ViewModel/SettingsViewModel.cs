@@ -51,11 +51,8 @@ namespace ZumpaReader.ViewModel
         #endregion
 
         public SettingsViewModel()
-        {
-            var c = new WebService.WebService.WebServiceConfig();
-            c.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
-            c.LastAnswerAuthor = true;
-            var service = new HttpService(c);
+        {            
+            var service = HttpService.CreateInstance();
             LoginCommand = new LoginCommand(service);
             LoginCommand.CommandFinished += (o,e) =>
             {

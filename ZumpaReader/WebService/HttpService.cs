@@ -201,5 +201,19 @@ namespace ZumpaReader.WebService
             string jsonResponse = await PostData(Config.BaseURL + IMAGE, data, TYPE_IMAGE);
             return Parse<string>(jsonResponse);
         }
+
+        public static HttpService CreateInstance()
+        {
+            var c = new WebService.WebServiceConfig();
+            c.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
+            if (AppSettings.IsLoggedIn)
+            {
+                c.Cookies = AppSettings.CookieString;
+                c.FakeNickName = AppSettings.NickOrResponseName;
+                c.NickName = AppSettings.Login;
+            }
+            c.LastAnswerAuthor = true;
+            return new HttpService(c);
+        }
     }
 }

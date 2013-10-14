@@ -20,6 +20,7 @@ using Microsoft.Phone.Shell;
 using System.Net;
 using Microsoft.Phone.Controls;
 using ZumpaReader.Utils;
+using ZumpaReader.Pages;
 
 namespace ZumpaReader.ViewModel
 {
@@ -56,11 +57,8 @@ namespace ZumpaReader.ViewModel
         #endregion
 
         public MainPageViewModel()
-        {
-            WebService.WebService.WebServiceConfig c = new WebService.WebService.WebServiceConfig();
-            c.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
-            c.LastAnswerAuthor = true;
-            _client = new HttpService(c);
+        {            
+            _client = HttpService.CreateInstance();
 
 
             LoadCommand = new LoadMainPageCommand(_client, (e) => Dispatcher.BeginInvoke(() => OnDownloadedPage(e.Context)));

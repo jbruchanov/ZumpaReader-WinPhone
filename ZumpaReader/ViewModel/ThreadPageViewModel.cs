@@ -54,9 +54,7 @@ namespace ZumpaReader.ViewModel
 
         public ThreadPageViewModel()
         {
-            WebService.WebService.WebServiceConfig c = new WebService.WebService.WebServiceConfig();
-            c.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
-            _service = new HttpService(c);
+            _service = HttpService.CreateInstance();
             
             OpenLinkCommand = new OpenLinkCommand();
             
