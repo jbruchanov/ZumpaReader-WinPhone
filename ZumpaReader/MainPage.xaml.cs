@@ -17,6 +17,7 @@ namespace ZumpaReader
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        private const string ViewModel = "ViewModel";
         // Constructor
         public MainPage() : base()
         {
@@ -24,7 +25,7 @@ namespace ZumpaReader
 
             ApplicationBar.BackgroundColor = (App.Current.Resources["ApplicationBarBackground"] as SolidColorBrush).Color;
 
-            BaseViewModel model = Resources["ViewModel"] as BaseViewModel;
+            BaseViewModel model = Resources[ViewModel] as BaseViewModel;
             if (model != null)
             {
                 model.Page = this;
@@ -33,11 +34,21 @@ namespace ZumpaReader
 
         private void Footer_Loaded(object sender, RoutedEventArgs e)
         {
-            MainPageViewModel model = Resources["ViewModel"] as MainPageViewModel;
+            MainPageViewModel model = Resources[ViewModel] as MainPageViewModel;
             if (model != null)
             {
                 model.LoadNextPage();
             }
         }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            BaseViewModel model = Resources[ViewModel] as BaseViewModel;
+            if (model != null)
+            {
+                model.OnNavigatedTo(e);
+            }
+        }        
     }
 }

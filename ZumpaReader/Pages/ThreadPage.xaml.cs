@@ -15,12 +15,13 @@ namespace ZumpaReader.Pages
 {
     public partial class ThreadPage : PhoneApplicationPage
     {
+        private const string ViewModel = "ViewModel";
         public ThreadPage()
         {
             InitializeComponent();
             ApplicationBar.BackgroundColor = (App.Current.Resources["ApplicationBarBackground"] as SolidColorBrush).Color;
 
-            BaseViewModel model = Resources["ViewModel"] as BaseViewModel;
+            BaseViewModel model = Resources[ViewModel] as BaseViewModel;
             if (model != null)
             {
                 model.Page = this;
@@ -30,16 +31,11 @@ namespace ZumpaReader.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            BaseViewModel model = Resources["ViewModel"] as BaseViewModel;
+            BaseViewModel model = Resources[ViewModel] as BaseViewModel;
             if (model != null)
             {
                 model.OnNavigatedTo(e);
             }            
-        }
-
-        private void Button_TextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
-        {
-
-        }
+        }            
     }
 }

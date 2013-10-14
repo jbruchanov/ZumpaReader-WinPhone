@@ -34,7 +34,7 @@ namespace ZumpaReader.ViewModel
             }
         }
 
-        public virtual void OnPageAttached() { }
+        public virtual void OnPageAttached() {}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

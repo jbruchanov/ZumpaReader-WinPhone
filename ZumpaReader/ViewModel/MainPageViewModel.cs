@@ -29,6 +29,7 @@ namespace ZumpaReader.ViewModel
 
         private const int SETTINGS_INDEX = 0;
         private const int RELOAD_INDEX = 1;
+        private const int ADD_INDEX = 2;
 
         private IWebService _client;
 
@@ -93,7 +94,19 @@ namespace ZumpaReader.ViewModel
             {
                 Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/SettingsPage.xaml", UriKind.RelativeOrAbsolute));
             };
+
+            (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
+            {
+                Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/SendPage.xaml", UriKind.RelativeOrAbsolute));
+            };
+
             LoadCommand.Execute(null);
+        }
+
+        public override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;
         }
 
         public virtual void OnDownloadedPage(ZumpaItemsResult zumpaItemsResult)

@@ -78,6 +78,7 @@
                                             Text="Reload" />
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.add.rest.png"
                                             x:Name="Send"
+                                            IsEnabled="False"
                                             Text="Send" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

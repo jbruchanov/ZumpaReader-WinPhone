@@ -16,7 +16,8 @@ namespace ZumpaReader.ViewModel
 {
     public class ThreadPageViewModel : BaseViewModel, ZumpaReader.Converters.BackgroundColorConverter.IGetIndexEvaluator
     {
-
+        private const int RELOAD_INDEX = 0;
+        private const int ADD_INDEX = 1;
         #region fields
         
         private string _pageTitle;
@@ -72,7 +73,11 @@ namespace ZumpaReader.ViewModel
 
         public override void OnPageAttached()
         {
-            (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).Click += (o, e) => { LoadCommand.Execute(null); };
+            (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).Click += (o, e) => { LoadCommand.Execute(null); };
+            (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
+            {
+                Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/SendPage.xaml", UriKind.RelativeOrAbsolute));
+            };            
         }
 
         private void OnDownloadedPage(List<ZumpaSubItem> list)
@@ -82,7 +87,8 @@ namespace ZumpaReader.ViewModel
 
         public override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            Bind();
+            Bind();            
+            (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;            
         }
 
         private void Bind()
