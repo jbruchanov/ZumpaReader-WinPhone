@@ -115,6 +115,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\ZumpaReader\Images\appbar.add.rest.png">
+      <Link>Images\appbar.add.rest.png</Link>
+    </Content>
     <Content Include="..\ZumpaReader\Images\appbar.feature.settings.rest.png">
       <Link>Images\appbar.feature.settings.rest.png</Link>
     </Content>
