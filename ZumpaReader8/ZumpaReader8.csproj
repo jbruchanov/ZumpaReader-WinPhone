@@ -139,6 +139,15 @@
     <Content Include="..\ZumpaReader\Images\appbar.refresh.rest.png">
       <Link>Images\appbar.refresh.rest.png</Link>
     </Content>
+    <Content Include="..\ZumpaReader\Images\appicon_medium.png">
+      <Link>Images\appicon_medium.png</Link>
+    </Content>
+    <Content Include="..\ZumpaReader\Images\appicon_small.png">
+      <Link>Images\appicon_small.png</Link>
+    </Content>
+    <Content Include="..\ZumpaReader\Images\appicon_tile.png">
+      <Link>Images\appicon_tile.png</Link>
+    </Content>
     <Content Include="appicon_medium.png" />
     <Content Include="appicon_small.png" />
     <Content Include="appicon_tile.png" />

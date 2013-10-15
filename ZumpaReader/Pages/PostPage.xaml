@@ -5,6 +5,7 @@
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}"
@@ -44,35 +45,123 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel"
-              Grid.Row="1"
-              Margin="12,0,12,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{Binding Path=Labels.Subject, Source={StaticResource Labels}}" />
-            <toolkit:PhoneTextBox Grid.Row="1"
-                                  InputScope="Chat"
-                                  Text="{Binding Subject, Mode=TwoWay}"/>
-            <TextBlock Grid.Row="2" Text="{Binding Path=Labels.Subject, Source={StaticResource Labels}}" />
-            <toolkit:PhoneTextBox Grid.Row="3"
-                                  AcceptsReturn="True"
-                                  InputScope="Chat"
-                                  Text="{Binding Message, Mode=TwoWay}" />
-        </Grid>
+
+
+        <controls:Panorama Grid.Row="1"
+                           Margin="5">
+            <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.General}">
+                <Grid x:Name="ContentPanel">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Text="{Binding Path=Labels.Subject, Source={StaticResource Labels}}" />
+                    <toolkit:PhoneTextBox Grid.Row="1"
+                                          InputScope="Chat"
+                                          Text="{Binding Subject, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="2"
+                               Text="{Binding Path=Labels.Message, Source={StaticResource Labels}}" />
+                    <toolkit:PhoneTextBox Grid.Row="3"
+                                          AcceptsReturn="True"
+                                          InputScope="Chat"
+                                          Text="{Binding Message, Mode=TwoWay}" />
+                </Grid>
+            </controls:PanoramaItem>
+            <controls:PanoramaItem Header="Photo"
+                                   Name="PhotoPanoramaItem">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Original"
+                                   Grid.Row="1"
+                                   Grid.Column="0" />
+                        <TextBlock Text="Resolution"
+                                   Grid.Row="0"
+                                   Grid.Column="1" />
+                        <TextBlock Text="Size"
+                                   Grid.Row="0"
+                                   Grid.Column="2" />
+                        <TextBlock Text="New"
+                                   Grid.Row="2"
+                                   Grid.Column="0" />
+                        <TextBlock Text="{Binding OriginalPhotoResolution}"
+                                   Grid.Row="1"
+                                   Grid.Column="1" />
+                        <TextBlock Text="{Binding OriginalSize}"
+                                   Grid.Row="1"
+                                   Grid.Column="2" />
+                        <TextBlock Text="{Binding NewPhotoResolution}"
+                                   Grid.Row="2"
+                                   Grid.Column="1" />
+                        <TextBlock Text="{Binding NewSize}"
+                                   Grid.Row="2"
+                                   Grid.Column="2" />
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="1/1"
+                                Grid.Column="0"
+                                Command="{Binding ImageOperationCommand}"
+                                CommandParameter="1" />
+                        <Button Content="1/2"
+                                Grid.Column="1"
+                                Command="{Binding ImageOperationCommand}"
+                                CommandParameter="2" />
+                        <Button Content="1/4"
+                                Grid.Column="2"
+                                Command="{Binding ImageOperationCommand}"
+                                CommandParameter="4" />
+                        <Button Content="1/8"
+                                Grid.Column="3"
+                                Command="{Binding ImageOperationCommand}"
+                                CommandParameter="8" />
+                        <Button Content="RR"
+                                Grid.Column="4"
+                                Command="{Binding ImageOperationCommand}"
+                                CommandParameter="90" />
+                    </Grid>
+                    <Image Name="image"
+                           Source="{Binding Photo}"
+                           Stretch="Uniform"
+                           Grid.Row="2" />
+                    <Button Grid.Row="3" Content="Upload" Command="{Binding UploadCommand}" />
+                </Grid>
+                
+            </controls:PanoramaItem>
+        </controls:Panorama>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.feature.camera.rest.png"
                                             x:Name="Photo"
-                                            IsEnabled="False"
                                             Text="Photo" />
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.check.rest.png"
                                             x:Name="Send"
-                                            Text="Send" />            
+                                            Text="Send" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

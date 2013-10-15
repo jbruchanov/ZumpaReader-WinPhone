@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using ZumpaReader.ViewModel;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ZumpaReader.Pages
 {
@@ -35,7 +36,7 @@ namespace ZumpaReader.Pages
             if (model != null)
             {
                 model.OnNavigatedTo(e);
-            }
+            }            
         }
     }
 }

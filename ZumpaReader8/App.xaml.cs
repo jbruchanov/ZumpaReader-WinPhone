@@ -148,15 +148,32 @@ namespace ZumpaReader8
         /// <param name="frame"></param>
         private void SetUriMapper(PhoneApplicationFrame frame)
         {
-            var mapper = new UriMapper();                        
-            // Here you map "MainPage.xaml" to "Songslist.xaml"
-            mapper.UriMappings.Add(new UriMapping
-            {
-                Uri = new Uri("/MainPage.xaml", UriKind.Relative),
-                MappedUri = new Uri("/ZumpaReader;component/MainPage.xaml", UriKind.RelativeOrAbsolute)
-            });
+            RootFrame.UriMapper = new CustomUriMapper();
+        }
 
-            RootFrame.UriMapper = mapper;
+        class CustomUriMapper : UriMapperBase
+        {
+            public override Uri MapUri(Uri uri)
+            {
+                string tempUri = uri.ToString();
+                string mappedUri;
+
+                // Launch from the photo share picker.
+                // Incoming URI example: /MainPage.xaml?Action=ShareContent&FileId=%7BA3D54E2D-7977-4E2B-B92D-3EB126E5D168%7D
+                if ((tempUri.Contains("ShareContent")) && (tempUri.Contains("FileId")))
+                {
+                    // Redirect to PhotoShare.xaml.
+                    mappedUri = tempUri.Replace("/MainPage.xaml", "/ZumpaReader;component/Pages/PostPage.xaml");
+                    return new Uri(mappedUri, UriKind.Relative);
+                }
+                else if ("/MainPage.xaml".Equals(tempUri))
+                {                    
+                    return new Uri("/ZumpaReader;component/MainPage.xaml", UriKind.RelativeOrAbsolute);
+                }
+
+                // Otherwise perform normal launch.
+                return uri;
+            }
         }
 
         // Do not add any additional code to this method
