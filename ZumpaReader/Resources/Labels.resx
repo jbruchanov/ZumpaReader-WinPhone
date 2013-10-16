@@ -123,6 +123,9 @@
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
+  <data name="LastAuthor" xml:space="preserve">
+    <value>Last author</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>

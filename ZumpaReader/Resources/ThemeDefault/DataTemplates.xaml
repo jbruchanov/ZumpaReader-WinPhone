@@ -47,7 +47,7 @@
                         <TextBlock Text="{Binding ReadableDateTime}"
                                    Grid.Row="1"
                                    FontSize="14"
-                                   Width="33"
+                                   MinWidth="33"
                                    VerticalAlignment="Bottom"
                                    Foreground="{StaticResource ZumpaYellow}"
                                    />

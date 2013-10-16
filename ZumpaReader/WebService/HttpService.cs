@@ -212,7 +212,7 @@ namespace ZumpaReader.WebService
                 c.FakeNickName = AppSettings.NickOrResponseName;
                 c.NickName = AppSettings.Login;
             }
-            c.LastAnswerAuthor = true;
+            c.LastAnswerAuthor = AppSettings.LastAuthor;
             return new HttpService(c);
         }
     }

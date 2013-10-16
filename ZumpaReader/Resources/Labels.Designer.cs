@@ -79,6 +79,15 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last author.
+        /// </summary>
+        public static string LastAuthor {
+            get {
+                return ResourceManager.GetString("LastAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string Login {

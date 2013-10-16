@@ -62,6 +62,8 @@
                             Grid.Column="0" />                        
                     <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.Nickname}" />
                     <toolkit:PhoneTextBox Text="{Binding Nickname, Mode=TwoWay}"/>
+                    <toolkit:ToggleSwitch IsChecked="{Binding LastAuthor, Mode=TwoWay}"
+                                          Content="{Binding Source={StaticResource Labels},Path=Labels.LastAuthor}" />
                 </StackPanel>
             </controls:PanoramaItem>
         </controls:Panorama>

@@ -61,12 +61,14 @@
                                Text="{Binding Path=Labels.Subject, Source={StaticResource Labels}}" />
                     <toolkit:PhoneTextBox Grid.Row="1"
                                           InputScope="Chat"
+                                          TextWrapping="Wrap"
                                           Text="{Binding Subject, Mode=TwoWay}" />
-                    <TextBlock Grid.Row="2" TextWrapping="Wrap"
+                    <TextBlock Grid.Row="2"
                                Text="{Binding Path=Labels.Message, Source={StaticResource Labels}}" />
                     <toolkit:PhoneTextBox Grid.Row="3"
                                           AcceptsReturn="True"
                                           InputScope="Chat"
+                                          TextWrapping="Wrap"
                                           Text="{Binding Message, Mode=TwoWay}" />
                 </Grid>
             </controls:PanoramaItem>
