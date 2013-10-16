@@ -58,10 +58,7 @@ namespace ZumpaReader.ViewModel
 
         public MainPageViewModel()
         {            
-           
-
             NotifyPropertyChange("BackColorConverter");
-
         }
 
         public int GetIndex(object o)
