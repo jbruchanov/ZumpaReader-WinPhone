@@ -68,30 +68,15 @@ namespace ZumpaReader.ViewModel
             set { _photo = value; NotifyPropertyChange(); }
         }
 
-        private string _originalResolution;
-        public string OriginalPhotoResolution
-        {
-            get { return _originalResolution; }
-            set { _originalResolution = value; NotifyPropertyChange(); }
-        }
-
-        private int _originalSize;
-
-        public int OriginalSize
-        {
-            get { return _originalSize; }
-            set { _originalSize = value; NotifyPropertyChange(); }
-        }
-
         private string _newResolution;
-        public string NewPhotoResolution
+        public string PhotoResolution
         {
             get { return _newResolution; }
             set { _newResolution = value; NotifyPropertyChange(); }
         }
 
-        private int _newSize;
-        public int NewSize
+        private string _newSize;
+        public string PhotoSize
         {
             get { return _newSize; }
             set { _newSize = value; NotifyPropertyChange(); }
@@ -145,7 +130,7 @@ namespace ZumpaReader.ViewModel
                     });
                 });
                 return;
-            }
+            }            
 
             string title = null;
             if (Page.NavigationContext.QueryString.TryGetValue(SUBJECT, out title))
@@ -171,56 +156,52 @@ namespace ZumpaReader.ViewModel
             // Ensure that there is at least one key in the query string, and check whether the "FileId" key is present.
             if (queryStrings.ContainsKey(FileId))
             {
-                // Retrieve the photo from the media library using the FileID passed to the app.
                 string fileId = queryStrings[FileId];
                 MediaLibrary library = new MediaLibrary();
                 Picture photoFromLibrary = library.GetPictureFromToken(fileId);
-
-                // Create a BitmapImage object and add set it as the image control source.
-                // To retrieve a full-resolution image, use the GetImage() method instead.
-                OriginalPhotoResolution = string.Format("{0}x{1}", photoFromLibrary.Width, photoFromLibrary.Height);
-                OriginalSize = (int)photoFromLibrary.GetImage().Length;
-
-                (Page.ApplicationBar.Buttons[PHOTO_INDEX] as ApplicationBarIconButton).IsEnabled = false;
-
-                ImageOperationCommand = new ImageOperationCommand(fileId, (e) => { OnPhotoChanged(e); });
-                ImageOperationCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !ImageOperationCommand.CanExecute(null); };
-                ImageOperationCommand.Execute("1");//Load default image
-
-                UploadCommand = new UploadImageCommand(_webService, (link) => { Message += String.Format("\n<{0}>", link); });
-                UploadCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !UploadCommand.CanExecute(null); };
+                InitImaging(null, fileId);
             }
-            else
-            {
-                (Page as PostPage).PhotoPanoramaItem.Visibility = System.Windows.Visibility.Collapsed;
-            }
+        }
+
+        private void InitImaging(Stream stream, string fileId)
+        {
+            ImageOperationCommand = stream != null 
+                                        ? new ImageOperationCommand(stream, (e) => { OnPhotoChanged(e); })
+                                        : new ImageOperationCommand(fileId, (e) => { OnPhotoChanged(e); });
+            
+            ImageOperationCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !ImageOperationCommand.CanExecute(null); };
+            ImageOperationCommand.Execute("1");//Load default image
+
+            UploadCommand = new UploadImageCommand(_webService, (link) => { Message += String.Format("\n<{0}>", link); });
+            UploadCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !UploadCommand.CanExecute(null); };
         }
 
         public async void OnPhotoChanged(BitmapSource source)
         {
             Photo = source;
-            NewPhotoResolution = string.Format("{0}x{1}", source.PixelWidth, source.PixelHeight);
+            PhotoResolution = string.Format("{0}x{1}", source.PixelWidth, source.PixelHeight);
             using (MemoryStream ms = await UploadImageCommand.SaveToJpegAsync(source))
             {
-                NewSize = (int)ms.Length;
+                PhotoSize = String.Format("{0:#,###0} B", ms.Length); 
             }
         }
 
-        public virtual void OnPhotoTaking()
+        public void OnPhotoTaking()
         {
             CameraCaptureTask task = new CameraCaptureTask();
             task.Completed += (o, e) => { OnPhotoTaken(e); };
+            task.Show();
         }
 
         public void OnPhotoTaken(PhotoResult e)
         {
             if (e.TaskResult == TaskResult.OK)
             {
-
+                InitImaging(e.ChosenPhoto, null);
             }
         }
 
-        public virtual void OnSending()
+        public void OnSending()
         {
             object focusObj = FocusManager.GetFocusedElement();
             if (focusObj != null && focusObj is PhoneTextBox)

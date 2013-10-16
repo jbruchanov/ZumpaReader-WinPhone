@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace ZumpaReader.Commands
     public class ImageOperationCommand : BaseCommand
     {
         private readonly string _fileId;
+
+        private readonly Stream _stream;
 
         private Action<WriteableBitmap> _callback;
 
@@ -25,16 +28,33 @@ namespace ZumpaReader.Commands
             CanExecuteIt = true;
         }
 
+        public ImageOperationCommand(Stream stream, Action<WriteableBitmap> callback)
+        {
+            _stream = stream;
+            _callback = callback;
+            CanExecuteIt = true;
+        }
+
         /// <summary>
         /// Load Image from library
         /// </summary>
         /// <returns></returns>
         private WriteableBitmap LoadImage()
         {
-            MediaLibrary library = new MediaLibrary();
-            Picture photoFromLibrary = library.GetPictureFromToken(_fileId);
+            Stream source = null;
+            if (!string.IsNullOrEmpty(_fileId))
+            {
+                MediaLibrary library = new MediaLibrary();
+                Picture photoFromLibrary = library.GetPictureFromToken(_fileId);
+                source = photoFromLibrary.GetImage();                
+            }
+            else
+            {
+                source = _stream;
+            }
+
             BitmapImage image = new BitmapImage();
-            image.SetSource(photoFromLibrary.GetImage());
+            image.SetSource(source);
             return new WriteableBitmap(image);
         }
 
@@ -78,7 +98,7 @@ namespace ZumpaReader.Commands
             else
             {
                 int v = 1;
-                if (Int32.TryParse(parameter, out v))
+                if (Int32.TryParse(parameter, out v) && v != 1)
                 {
                     _lastScale = 1f / v;
                     image = Scale(image, _lastScale);

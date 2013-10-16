@@ -85,36 +85,22 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
-                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Original"
+                        <TextBlock Text="{Binding Path=Labels.Resolution, Source={StaticResource Labels}}"
+                                   Grid.Row="0"
+                                   Grid.Column="0" />
+                        <TextBlock Text="{Binding Path=Labels.Size, Source={StaticResource Labels}}"
                                    Grid.Row="1"
                                    Grid.Column="0" />
-                        <TextBlock Text="Resolution"
+                        <TextBlock Text="{Binding PhotoResolution}"
                                    Grid.Row="0"
                                    Grid.Column="1" />
-                        <TextBlock Text="Size"
-                                   Grid.Row="0"
-                                   Grid.Column="2" />
-                        <TextBlock Text="New"
-                                   Grid.Row="2"
-                                   Grid.Column="0" />
-                        <TextBlock Text="{Binding OriginalPhotoResolution}"
+                        <TextBlock Text="{Binding PhotoSize}"
                                    Grid.Row="1"
-                                   Grid.Column="1" />
-                        <TextBlock Text="{Binding OriginalSize}"
-                                   Grid.Row="1"
-                                   Grid.Column="2" />
-                        <TextBlock Text="{Binding NewPhotoResolution}"
-                                   Grid.Row="2"
-                                   Grid.Column="1" />
-                        <TextBlock Text="{Binding NewSize}"
-                                   Grid.Row="2"
                                    Grid.Column="2" />
                     </Grid>
                     <Grid Grid.Row="1">

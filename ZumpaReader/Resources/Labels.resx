@@ -150,11 +150,17 @@
   <data name="Photo" xml:space="preserve">
     <value>Photo</value>
   </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>Resolution</value>
+  </data>
   <data name="RotateRight" xml:space="preserve">
     <value>↷</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>Send</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
   </data>
   <data name="SmileHappy" xml:space="preserve">
     <value>:)</value>

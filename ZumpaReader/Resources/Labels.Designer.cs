@@ -160,6 +160,15 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resolution.
+        /// </summary>
+        public static string Resolution {
+            get {
+                return ResourceManager.GetString("Resolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ↷.
         /// </summary>
         public static string RotateRight {
@@ -174,6 +183,15 @@ namespace ZumpaReader.Resources {
         public static string Send {
             get {
                 return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        public static string Size {
+            get {
+                return ResourceManager.GetString("Size", resourceCulture);
             }
         }
         
