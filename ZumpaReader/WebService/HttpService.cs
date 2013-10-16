@@ -85,8 +85,8 @@ namespace ZumpaReader.WebService
             }
 
             if (!String.IsNullOrEmpty(Config.Cookies)) { pars[PARAM_COOKIES] = Config.Cookies; }
-            if (!String.IsNullOrEmpty(Config.NickName)) { pars[PARAM_FAKE_NICK] = Config.NickName; }
-            if (!String.IsNullOrEmpty(Config.FakeNickName)) { pars[PARAM_USER_NAME] = Config.FakeNickName; }
+            if (!String.IsNullOrEmpty(Config.FakeNickName)) { pars[PARAM_FAKE_NICK] = Config.FakeNickName; }
+            else if (!String.IsNullOrEmpty(Config.NickName)) { pars[PARAM_USER_NAME] = Config.NickName; }
             pars[PARAM_LAST_ANSWER_AUTHOR] = Convert.ToString(Config.LastAnswerAuthor);
             return JsonConvert.SerializeObject(pars);
         }
