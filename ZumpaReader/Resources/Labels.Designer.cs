@@ -124,6 +124,15 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not logged in!.
+        /// </summary>
+        public static string NotLoggedIn {
+            get {
+                return ResourceManager.GetString("NotLoggedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {
@@ -142,11 +151,38 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ↷.
+        /// </summary>
+        public static string RotateRight {
+            get {
+                return ResourceManager.GetString("RotateRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string Send {
             get {
                 return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to :).
+        /// </summary>
+        public static string SmileHappy {
+            get {
+                return ResourceManager.GetString("SmileHappy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to :(.
+        /// </summary>
+        public static string SmileSad {
+            get {
+                return ResourceManager.GetString("SmileSad", resourceCulture);
             }
         }
         
