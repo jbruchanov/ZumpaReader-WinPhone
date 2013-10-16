@@ -56,7 +56,7 @@ namespace ZumpaReader.ViewModel
             LoginCommand = new LoginCommand(service);
             LoginCommand.CommandFinished += (o,e) =>
             {
-                string title = e.IsSuccessful ? ":)" : ":(";                                
+                string title = e.IsSuccessful ? Resources.Labels.SmileHappy : Resources.Labels.SmileSad;                                
                 string msg = String.Format("{0} {1}", 
                                     e.Type == LoginEventArgs.TaskType.Login ? Resources.Labels.Login : Resources.Labels.Logout,
                                     e.IsSuccessful ? Resources.Labels.Successful : Resources.Labels.Unsuccessful);
