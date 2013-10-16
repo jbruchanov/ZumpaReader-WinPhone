@@ -47,7 +47,7 @@
         <!--ContentPanel - place additional content here-->
 
 
-        <controls:Panorama Grid.Row="1"
+        <controls:Panorama Grid.Row="1" Name="Panorama"                           
                            Margin="5">
             <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.General}">
                 <Grid x:Name="ContentPanel">
@@ -62,7 +62,7 @@
                     <toolkit:PhoneTextBox Grid.Row="1"
                                           InputScope="Chat"
                                           Text="{Binding Subject, Mode=TwoWay}" />
-                    <TextBlock Grid.Row="2"
+                    <TextBlock Grid.Row="2" TextWrapping="Wrap"
                                Text="{Binding Path=Labels.Message, Source={StaticResource Labels}}" />
                     <toolkit:PhoneTextBox Grid.Row="3"
                                           AcceptsReturn="True"
@@ -139,16 +139,17 @@
                                 Grid.Column="3"
                                 Command="{Binding ImageOperationCommand}"
                                 CommandParameter="8" />
-                        <Button Content="RR"
+                        <Button Content="{Binding Path=Labels.RotateRight, Source={StaticResource Labels}}"
                                 Grid.Column="4"
                                 Command="{Binding ImageOperationCommand}"
                                 CommandParameter="90" />
                     </Grid>
                     <Image Name="image"
-                           Source="{Binding Photo}"
-                           Stretch="Uniform"
+                           Source="{Binding Photo}"                           
                            Grid.Row="2" />
-                    <Button Grid.Row="3" Content="Upload" Command="{Binding UploadCommand}" />
+                    <Button Grid.Row="3" Content="Upload" 
+                    Command="{Binding UploadCommand}" 
+                    CommandParameter="{Binding Photo}" />
                 </Grid>
                 
             </controls:PanoramaItem>

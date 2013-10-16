@@ -17,6 +17,9 @@ using System.IO;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Threading;
 
 namespace ZumpaReader.ViewModel
 {
@@ -24,20 +27,20 @@ namespace ZumpaReader.ViewModel
     {
         public const string SUBJECT = "title";
         public const string THREAD_ID = "threadId";
+        private const string FileId = "FileId";
 
         private const int PHOTO_INDEX = 0;
         private const int SEND_INDEX = 1;
 
-        private string _title;
-
+        #region BindingProperties
+        private string _subject;
         public string Subject
         {
-            get { return _title; }
-            set { _title = value; NotifyPropertyChange(); }
+            get { return _subject; }
+            set { _subject = value; NotifyPropertyChange(); }
         }
 
         private string _message;
-
         public string Message
         {
             get { return _message; }
@@ -57,8 +60,6 @@ namespace ZumpaReader.ViewModel
             get { return _isProgressVisible; }
             set { _isProgressVisible = value; NotifyPropertyChange(); }
         }
-
-        internal BitmapSource OriginalPhoto { get; set; }
 
         private BitmapSource _photo;
         public BitmapSource Photo
@@ -96,32 +97,55 @@ namespace ZumpaReader.ViewModel
             set { _newSize = value; NotifyPropertyChange(); }
         }
 
-        public ImageOperationCommand _imageOperationCommand;
+        private ImageOperationCommand _imageOperationCommand;
         public ImageOperationCommand ImageOperationCommand
         {
             get { return _imageOperationCommand; }
             set { _imageOperationCommand = value; NotifyPropertyChange(); }
         }
 
-        public UploadCommand _uploadCommand;
-        public UploadCommand UploadCommand
+        private UploadImageCommand _uploadCommand;
+        public UploadImageCommand UploadCommand
         {
             get { return _uploadCommand; }
             set { _uploadCommand = value; NotifyPropertyChange(); }
         }
-        
 
-        public SendMessageCommand SendMessageCommand { get; set; }
+        private SendMessageCommand _sendMessageCommand;
+        public SendMessageCommand SendMessageCommand
+        {
+            get { return _sendMessageCommand; }
+            set { _sendMessageCommand = value; NotifyPropertyChange(); }
+        }
+
+        #endregion
+
+        private IWebService _webService;
 
         public PostPageViewModel()
         {
-            SendMessageCommand = new SendMessageCommand(HttpService.CreateInstance());
-            SendMessageCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = SendMessageCommand.CanExecute(null); };
+            _webService = HttpService.CreateInstance();
+            SendMessageCommand = new SendMessageCommand(_webService);
+            SendMessageCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !SendMessageCommand.CanExecute(null); };
         }
 
         public override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            if (!AppSettings.IsLoggedIn)
+            {
+                ThreadPool.QueueUserWorkItem((stateInfo) =>
+                {
+                    Dispatcher.BeginInvoke(() =>
+                    {
+                        MessageBox.Show(Resources.Labels.SmileSad, Resources.Labels.NotLoggedIn, MessageBoxButton.OK);
+                        (Page as PostPage).Panorama.IsEnabled = false;
+                        Page.ApplicationBar.IsVisible = false;
+                    });
+                });
+                return;
+            }
 
             string title = null;
             if (Page.NavigationContext.QueryString.TryGetValue(SUBJECT, out title))
@@ -134,8 +158,8 @@ namespace ZumpaReader.ViewModel
                 }
             }
 
-            (Page.ApplicationBar.Buttons[PHOTO_INDEX] as ApplicationBarIconButton).Click += (o, ea) => { OnTakePhoto(); };
-            (Page.ApplicationBar.Buttons[SEND_INDEX] as ApplicationBarIconButton).Click += (o, ea) => { OnSend(); };
+            (Page.ApplicationBar.Buttons[PHOTO_INDEX] as ApplicationBarIconButton).Click += (o, ea) => { OnPhotoTaking(); };
+            (Page.ApplicationBar.Buttons[SEND_INDEX] as ApplicationBarIconButton).Click += (o, ea) => { OnSending(); };
             TryInitPhoto();
         }
 
@@ -145,23 +169,26 @@ namespace ZumpaReader.ViewModel
             IDictionary<string, string> queryStrings = Page.NavigationContext.QueryString;
 
             // Ensure that there is at least one key in the query string, and check whether the "FileId" key is present.
-            if (queryStrings.ContainsKey("FileId"))
+            if (queryStrings.ContainsKey(FileId))
             {
                 // Retrieve the photo from the media library using the FileID passed to the app.
+                string fileId = queryStrings[FileId];
                 MediaLibrary library = new MediaLibrary();
-                Picture photoFromLibrary = library.GetPictureFromToken(queryStrings["FileId"]);
+                Picture photoFromLibrary = library.GetPictureFromToken(fileId);
 
                 // Create a BitmapImage object and add set it as the image control source.
                 // To retrieve a full-resolution image, use the GetImage() method instead.
                 OriginalPhotoResolution = string.Format("{0}x{1}", photoFromLibrary.Width, photoFromLibrary.Height);
-                Photo = new BitmapImage();
-                Stream s = photoFromLibrary.GetImage();
-                OriginalSize = (int)s.Length;
-                Photo.SetSource(s);
+                OriginalSize = (int)photoFromLibrary.GetImage().Length;
+
                 (Page.ApplicationBar.Buttons[PHOTO_INDEX] as ApplicationBarIconButton).IsEnabled = false;
-                OriginalPhoto = Photo;
-                ImageOperationCommand = new ImageOperationCommand(this);
-                UploadCommand = new UploadCommand(this);
+
+                ImageOperationCommand = new ImageOperationCommand(fileId, (e) => { OnPhotoChanged(e); });
+                ImageOperationCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !ImageOperationCommand.CanExecute(null); };
+                ImageOperationCommand.Execute("1");//Load default image
+
+                UploadCommand = new UploadImageCommand(_webService, (link) => { Message += String.Format("\n<{0}>", link); });
+                UploadCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !UploadCommand.CanExecute(null); };
             }
             else
             {
@@ -169,13 +196,23 @@ namespace ZumpaReader.ViewModel
             }
         }
 
-        public virtual void OnTakePhoto()
+        public async void OnPhotoChanged(BitmapSource source)
         {
-            CameraCaptureTask task = new CameraCaptureTask();
-            task.Completed += (o, e) => { OnTakenPhoto(e); };
+            Photo = source;
+            NewPhotoResolution = string.Format("{0}x{1}", source.PixelWidth, source.PixelHeight);
+            using (MemoryStream ms = await UploadImageCommand.SaveToJpegAsync(source))
+            {
+                NewSize = (int)ms.Length;
+            }
         }
 
-        public void OnTakenPhoto(PhotoResult e)
+        public virtual void OnPhotoTaking()
+        {
+            CameraCaptureTask task = new CameraCaptureTask();
+            task.Completed += (o, e) => { OnPhotoTaken(e); };
+        }
+
+        public void OnPhotoTaken(PhotoResult e)
         {
             if (e.TaskResult == TaskResult.OK)
             {
@@ -183,7 +220,7 @@ namespace ZumpaReader.ViewModel
             }
         }
 
-        public virtual void OnSend()
+        public virtual void OnSending()
         {
             object focusObj = FocusManager.GetFocusedElement();
             if (focusObj != null && focusObj is PhoneTextBox)
@@ -194,16 +231,16 @@ namespace ZumpaReader.ViewModel
 
             if (string.IsNullOrEmpty(Subject) || string.IsNullOrEmpty(Message))
             {
-                new ToastPrompt { Title = ":(", Message = Resources.Labels.MissingSubjectOrMessage }.Show();
+                new ToastPrompt { Title = Resources.Labels.SmileSad, Message = Resources.Labels.MissingSubjectOrMessage }.Show();
                 return;
             }
 
-            SendMessageCommand.Execute(this, (e) => OnSendResponse(e));
+            SendMessageCommand.Execute(this, (e) => OnSentResponse(e));
         }
 
-        public void OnSendResponse(bool success)
+        public void OnSentResponse(bool success)
         {
-            new ToastPrompt { Title = success ? ":)" : ":(" }.Show();
+            new ToastPrompt { Title = success ? Resources.Labels.SmileHappy : Resources.Labels.SmileSad }.Show();
             if (success && Page.NavigationService.CanGoBack)
             {
                 Page.NavigationService.GoBack();
@@ -211,171 +248,5 @@ namespace ZumpaReader.ViewModel
         }
     }
 
-    public class ImageOperationCommand : ICommand
-    {
-        private bool _get;
-        private bool Can
-        {
-            get { return _get; }
-            set { _get = value; _viewModel.IsProgressVisible = !value; Notify(); }
-        }
-        public bool CanExecute(object parameter)
-        {
-            return Can && !("90".Equals(parameter) && _viewModel.NewSize == 0);//don't let rotate not resized images
-        }
 
-        public event EventHandler CanExecuteChanged;
-
-        private PostPageViewModel _viewModel;
-        public ImageOperationCommand(PostPageViewModel model)
-        {
-            _viewModel = model;
-            Can = true;
-        }
-
-        public void Execute(object parameter)
-        {
-            Can = false;
-            string op = (string)parameter;
-            BitmapImage newImage = null;
-            int size = 0;
-            if ("1".Equals(op))
-            {
-                _viewModel.Photo = _viewModel.OriginalPhoto;
-                _viewModel.NewSize = 0;
-                _viewModel.NewPhotoResolution = "";
-            }
-            else if ("90".Equals(op))
-            {
-                newImage = Convert(GenerateConstrainedBitmap((_viewModel.Photo as BitmapImage), 1, true), out size);                
-            }
-            else
-            {
-                int v = Int32.Parse(op);
-                float ratio = 1f/v;
-                newImage = Convert(GenerateConstrainedBitmap((_viewModel.OriginalPhoto as BitmapImage), ratio, false), out size);                
-            }
-            if (newImage != null) 
-            { 
-                _viewModel.Photo = newImage;
-                _viewModel.NewSize = size;
-                _viewModel.NewPhotoResolution = string.Format("{0}x{1}", newImage.PixelWidth, newImage.PixelHeight); ;
-            }
-
-            Can = true;
-        }
-
-        private void Notify()
-        {
-            if (CanExecuteChanged != null)
-            {
-                CanExecuteChanged.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        private WriteableBitmap GenerateConstrainedBitmap(BitmapImage sourceImage, float scale, bool rotation)
-        {
-            int scaledWidth = (int)(sourceImage.PixelWidth * scale);
-            int scaledHeight = (int)(sourceImage.PixelHeight * scale);            
-            // Create a transform to render the image rotated and scaled
-            var transform = new TransformGroup();
-            if (rotation)
-            {                 
-                var rt = new RotateTransform()
-                {
-                    Angle = 90,
-                    CenterX = (sourceImage.PixelWidth / 2.0),
-                    CenterY = (sourceImage.PixelHeight / 2.0)
-                };
-                transform.Children.Add(rt);
-            }
-            if (scale != 1) 
-            {
-                var st = new ScaleTransform()
-                {
-                    ScaleX = scale,
-                    ScaleY = scale,
-                    //CenterX = (sourceImage.PixelWidth / 2.0),
-                    //CenterY = (sourceImage.PixelHeight / 2.0)
-                };
-                transform.Children.Add(st);
-            }
-
-            // Resize to specified target size
-            var tempImage = new Image()
-            {
-                Stretch = Stretch.Fill,
-                Width = sourceImage.PixelWidth,
-                Height = sourceImage.PixelHeight,
-                Source = sourceImage,
-            };
-            tempImage.UpdateLayout();
-
-            // Render to a writeable bitmap
-            var writeableBitmap = new WriteableBitmap(scaledWidth, scaledHeight);
-            writeableBitmap.Render(tempImage, transform);
-            writeableBitmap.Invalidate();            
-            return writeableBitmap;
-        }
-
-        private BitmapImage Convert(WriteableBitmap writeBmp, out int size)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                writeBmp.SaveJpeg(ms, (int)writeBmp.PixelWidth, (int)writeBmp.PixelHeight, 0, 80);
-                size = (int)ms.Length;
-                BitmapImage bmp = new BitmapImage();
-                bmp.SetSource(ms);
-                return bmp;
-            }
-        }
-    }
-
-    public class UploadCommand : ICommand
-    {
-        private bool _get;
-        private bool Can
-        {
-            get { return _get; }
-            set { _get = value; _viewModel.IsProgressVisible = !value; Notify(); }
-        }
-        public bool CanExecute(object parameter)
-        {
-            return Can;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        private PostPageViewModel _viewModel;
-        public UploadCommand(PostPageViewModel model)
-        {
-            _viewModel = model;
-            Can = true;
-        }
-
-        public async void Execute(object parameter)
-        {
-            Can = false;
-
-            HttpService service = HttpService.CreateInstance();
-            using (MemoryStream ms = new MemoryStream())
-            {   
-                WriteableBitmap wb = new WriteableBitmap(_viewModel.Photo);
-                wb.SaveJpeg(ms, (int)wb.PixelWidth, (int)wb.PixelHeight, 0, 100);                                
-                var res = await service.UploadImage(ms.ToArray());
-                _viewModel.Message += String.Format("\n<{0}>", res.Context);
-                Debug.WriteLine(res.Context);
-            }            
-            Can = true;
-        }
-                     
-
-        private void Notify()
-        {
-            if (CanExecuteChanged != null)
-            {
-                CanExecuteChanged.Invoke(this, EventArgs.Empty);
-            }
-        }       
-    }
 }
