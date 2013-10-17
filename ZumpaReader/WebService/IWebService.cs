@@ -19,5 +19,7 @@ namespace ZumpaReader.WebService
         Task<WebService.ContextResult<Survey>> VoteSurvey(int id, int vote);
 
         Task<WebService.ContextResult<string>> UploadImage(byte[] data);
+
+        Task<bool> RegisterPushURI(string username, string uid, string pushUrl);
     }
 }

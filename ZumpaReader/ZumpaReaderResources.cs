@@ -13,6 +13,7 @@ namespace ZumpaReader
         public enum Keys
         {
             WebServiceURL,
+            ZumpaPushRegisterURL,
             Login,
             Password
         }

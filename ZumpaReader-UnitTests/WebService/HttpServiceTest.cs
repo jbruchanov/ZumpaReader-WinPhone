@@ -94,7 +94,7 @@ namespace ZumpaReader_UnitTests.WebService
             {
                 ZWS.ContextResult<LoginResult> result = e.Result;
                 Assert.IsNotNull(e);
-                Assert.IsFalse(result.Context.Result);                
+                Assert.IsFalse(result.Context.Result);
                 FinishWaiting();
             });
             TestWait(DEFAULT_TIMEOUT);
@@ -155,7 +155,7 @@ namespace ZumpaReader_UnitTests.WebService
         {
             HttpService client = new HttpService();
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
-            client.Config.NickName =  ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
+            client.Config.NickName = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
             string username = client.Config.NickName;
             string password = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password];
             string cookie = null;
@@ -175,7 +175,7 @@ namespace ZumpaReader_UnitTests.WebService
                 Assert.IsTrue(result.Context);
                 FinishWaiting();
             });
-            
+
             TestWait(DEFAULT_TIMEOUT);
 
             client.Logout().ContinueWith((e) =>
@@ -232,7 +232,7 @@ namespace ZumpaReader_UnitTests.WebService
         [TestMethod]
         [Ignore]//manual test
         public void TestUploadImage()
-        {                                   
+        {
             HttpService client = new HttpService();
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             client.Config.NickName = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
@@ -270,18 +270,36 @@ namespace ZumpaReader_UnitTests.WebService
         }
 
         private byte[] GenerateSimpleImage()
-        {            
+        {
             byte[] data = null;
-            RunInMainThread( () =>
+            RunInMainThread(() =>
             {
-                WriteableBitmap wb = new WriteableBitmap(200,200);
+                WriteableBitmap wb = new WriteableBitmap(200, 200);
                 MemoryStream mem = new MemoryStream();
-                wb.SaveJpeg(mem, wb.PixelWidth, wb.PixelHeight, 0, 100);            
+                wb.SaveJpeg(mem, wb.PixelWidth, wb.PixelHeight, 0, 100);
                 data = mem.ToArray();
                 FinishWaiting();
             });
             TestWait(DEFAULT_TIMEOUT);
             return data;
+        }
+
+        [Asynchronous]
+        [TestMethod]
+        [Ignore]//manual test
+        public void TestPushURIRegistration()
+        {
+            HttpService client = new HttpService();
+            string username = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
+            string uid = "test";
+            string uri = "test";
+            client.RegisterPushURI(username, uid, uri).ContinueWith((e) =>
+            {
+                bool result = e.Result;
+                Assert.IsTrue(result);
+                FinishWaiting();
+            });
+            TestWait(DEFAULT_TIMEOUT);
         }
     }
 }

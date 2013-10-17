@@ -215,5 +215,17 @@ namespace ZumpaReader.WebService
             c.LastAnswerAuthor = AppSettings.LastAuthor;
             return new HttpService(c);
         }
+
+        public override async Task<bool> RegisterPushURI(string username, string uid, string pushUrl)
+        {
+            string mainUrl = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.ZumpaPushRegisterURL];
+            string queryString = String.Format("?user={0}&uid={1}&regid={2}&platform=windowsphone&register",
+                                               HttpUtility.UrlEncode(username),
+                                               HttpUtility.UrlEncode(uid),
+                                               HttpUtility.UrlEncode(pushUrl));
+            string url = mainUrl + queryString;                                               
+            string result = await new WebClient().DownloadStringTaskAsync(url);
+            return "[OK]".Equals(result);
+        }
     }
 }

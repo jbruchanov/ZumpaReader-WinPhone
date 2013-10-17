@@ -116,5 +116,15 @@ namespace ZumpaReader.WebService
         /// <param name="data"></param>
         /// <returns>Context result with url of the image</returns>
         public abstract Task<ContextResult<string>> UploadImage(byte[] data);
+
+
+        /// <summary>
+        /// Send push url to server to register receiving
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="uid"></param>
+        /// <param name="pushUrl"></param>
+        /// <returns></returns>
+        public abstract Task<bool> RegisterPushURI(string username, string uid, string pushUrl);        
     }
 }
