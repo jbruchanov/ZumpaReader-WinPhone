@@ -30,6 +30,7 @@ namespace ZumpaReader.Commands
                 args.LogoutResult = result.Context;
                 if (result.Context)
                 {
+                    AppSettings.ZumpaUID = null;
                     ClearLogin(creds);
                 }
             }
@@ -41,6 +42,7 @@ namespace ZumpaReader.Commands
                 creds.IsLoggedIn = context.Result;
                 args.LoginResult = context;
                 AppSettings.CookieString = context.Cookies;
+                AppSettings.ZumpaUID = context.UID;
                 if (!context.Result)
                 {
                     ClearLogin(creds);
