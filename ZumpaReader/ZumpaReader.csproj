@@ -125,6 +125,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Credentials.cs" />
+    <Compile Include="Model\LoginResult.cs" />
     <Compile Include="Pages\PostPage.xaml.cs">
       <DependentUpon>PostPage.xaml</DependentUpon>
     </Compile>

@@ -62,10 +62,23 @@ namespace ZumpaReader.ViewModel
             LoginCommand = new LoginCommand(service);
             LoginCommand.CommandFinished += (o,e) =>
             {
-                string title = e.IsSuccessful ? Resources.Labels.SmileHappy : Resources.Labels.SmileSad;                                
-                string msg = String.Format("{0} {1}", 
-                                    e.Type == LoginEventArgs.TaskType.Login ? Resources.Labels.Login : Resources.Labels.Logout,
-                                    e.IsSuccessful ? Resources.Labels.Successful : Resources.Labels.Unsuccessful);
+                string title, msg;
+                if (e.Type == LoginEventArgs.TaskType.Login)
+                {
+                    title = String.Format("{0} {1} {2}", 
+                    e.LoginResult.Result ? Resources.Labels.SmileHappy : Resources.Labels.SmileSad,
+                    Resources.Labels.Login,
+                    e.LoginResult.Result ? Resources.Labels.Successful : Resources.Labels.Unsuccessful
+                    );                    
+                    msg = e.LoginResult.ZumpaResult;
+                }
+                else
+                {
+                    title = e.LogoutResult ? Resources.Labels.SmileHappy : Resources.Labels.SmileSad;
+                    msg = String.Format("{0} {1}", Resources.Labels.Logout,
+                                    e.LogoutResult ? Resources.Labels.Successful : Resources.Labels.Unsuccessful);
+                }
+                
                 ShowToast(title, msg);                
             };
         }        

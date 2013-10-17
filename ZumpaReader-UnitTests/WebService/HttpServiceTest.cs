@@ -73,10 +73,12 @@ namespace ZumpaReader_UnitTests.WebService
             string password = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password];
             client.Login(username, password).ContinueWith((e) =>
             {
-                ZWS.ContextResult<string> result = e.Result;
+                ZWS.ContextResult<LoginResult> result = e.Result;
                 Assert.IsNotNull(e);
-                Assert.IsTrue(result.Context.Length > 0);
-                Assert.IsTrue(result.Context.Contains("portal_lln"));
+                Assert.IsTrue(result.Context.Result);
+                Assert.IsTrue(result.Context.Cookies.Length > 0);
+                Assert.IsTrue(result.Context.UID.Length > 0);
+                Assert.IsTrue(result.Context.ZumpaResult.Length > 0);
                 FinishWaiting();
             });
             TestWait(DEFAULT_TIMEOUT);
@@ -90,10 +92,9 @@ namespace ZumpaReader_UnitTests.WebService
             client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
             client.Login("X", "X").ContinueWith((e) =>
             {
-                ZWS.ContextResult<string> result = e.Result;
+                ZWS.ContextResult<LoginResult> result = e.Result;
                 Assert.IsNotNull(e);
-                Assert.IsTrue(result.Context.Length > 0);
-                Assert.IsFalse(result.Context.Contains("portal_lln"));
+                Assert.IsFalse(result.Context.Result);                
                 FinishWaiting();
             });
             TestWait(DEFAULT_TIMEOUT);
@@ -110,7 +111,11 @@ namespace ZumpaReader_UnitTests.WebService
             string cookie = null;
             client.Login(username, password).ContinueWith((e) =>
             {
-                cookie = e.Result.Context;
+                cookie = e.Result.Context.Cookies;
+                Assert.IsTrue(e.Result.Context.Result);
+                Assert.IsTrue(e.Result.Context.Cookies.Length > 0);
+                Assert.IsTrue(e.Result.Context.UID.Length > 0);
+                Assert.IsTrue(e.Result.Context.ZumpaResult.Length > 0);
                 Assert.IsTrue(cookie.Contains("portal_lln"));
                 FinishWaiting();
             });
@@ -156,8 +161,7 @@ namespace ZumpaReader_UnitTests.WebService
             string cookie = null;
             client.Login(username, password).ContinueWith((e) =>
             {
-                cookie = e.Result.Context;
-                Assert.IsTrue(cookie.Contains("portal_lln"));
+                Assert.IsTrue(e.Result.Context.Result);
                 FinishWaiting();
             });
             TestWait(DEFAULT_TIMEOUT);
@@ -196,8 +200,7 @@ namespace ZumpaReader_UnitTests.WebService
             string cookie = null;
             client.Login(username, password).ContinueWith((e) =>
             {
-                cookie = e.Result.Context;
-                Assert.IsTrue(cookie.Contains("portal_lln"));
+                Assert.IsTrue(e.Result.Context.Result);
                 FinishWaiting();
             });
             TestWait(DEFAULT_TIMEOUT);
@@ -238,8 +241,7 @@ namespace ZumpaReader_UnitTests.WebService
             string cookie = null;
             client.Login(username, password).ContinueWith((e) =>
             {
-                cookie = e.Result.Context;
-                Assert.IsTrue(cookie.Contains("portal_lln"));
+                Assert.IsTrue(e.Result.Context.Result);
                 FinishWaiting();
             });
             TestWait(DEFAULT_TIMEOUT);

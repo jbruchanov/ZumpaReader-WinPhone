@@ -85,7 +85,7 @@ namespace ZumpaReader.WebService
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public abstract Task<WebService.ContextResult<string>> Login(string username, string password);
+        public abstract Task<WebService.ContextResult<LoginResult>> Login(string username, string password);
 
         /// <summary>
         /// 

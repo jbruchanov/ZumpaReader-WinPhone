@@ -14,8 +14,6 @@ namespace ZumpaReader.Commands
 
         public event EventHandler<LoginEventArgs> CommandFinished;
 
-        private const string LOGIN_SUCC_TOKEN = "portal_lln=";
-
         public LoginCommand(IWebService service)
         {
             _service = service;
@@ -25,32 +23,28 @@ namespace ZumpaReader.Commands
         {
             Credentials creds = (Credentials)parameter;
             CanExecuteIt = false;
-            LoginEventArgs args = new LoginEventArgs { Type = creds.IsLoggedIn ? LoginEventArgs.TaskType.Logout : LoginEventArgs.TaskType.Login};
+            LoginEventArgs args = new LoginEventArgs { Type = creds.IsLoggedIn ? LoginEventArgs.TaskType.Logout : LoginEventArgs.TaskType.Login };
             if (creds.IsLoggedIn)
             {
                 var result = await _service.Logout();
-                args.IsSuccessful = result.Context;
+                args.LogoutResult = result.Context;
                 if (result.Context)
-                {                    
-                    ClearLogin(creds);                    
+                {
+                    ClearLogin(creds);
                 }
             }
             else
             {
                 var result = await _service.Login(creds.Login, creds.Password);
-                string cookie = result.Context;
-                if (cookie.Contains(LOGIN_SUCC_TOKEN))
+                LoginResult context = result.Context;
+
+                creds.IsLoggedIn = context.Result;
+                args.LoginResult = context;
+                AppSettings.CookieString = context.Cookies;
+                if (!context.Result)
                 {
-                    args.IsSuccessful = true;                    
-                    AppSettings.CookieString = cookie;
-                    creds.IsLoggedIn = true;
-                }
-                else
-                {
-                    args.IsSuccessful = false;
                     ClearLogin(creds);
                 }
-
             }
             CanExecuteIt = true;
             OnCommandFinished(args);
@@ -80,6 +74,7 @@ namespace ZumpaReader.Commands
         }
 
         public TaskType Type { get; set; }
-        public bool IsSuccessful { get; set; }
+        public LoginResult LoginResult { get; set; }
+        public bool LogoutResult { get; set; }
     }
 }

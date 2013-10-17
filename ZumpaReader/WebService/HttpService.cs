@@ -147,11 +147,11 @@ namespace ZumpaReader.WebService
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns>Cookie string value</returns>
-        public async override Task<WebService.ContextResult<string>> Login(string username, string password)
+        public async override Task<WebService.ContextResult<LoginResult>> Login(string username, string password)
         {
             string @params = JsonParamsCreator(PARAM_USER_NAME, username, PARAM_USER_PASSWORD, password);
             string jsonResponse = await PostData(Config.BaseURL + LOGIN, @params);
-            return Parse<string>(jsonResponse);
+            return Parse<LoginResult>(jsonResponse);
         }
 
         /// <summary>
