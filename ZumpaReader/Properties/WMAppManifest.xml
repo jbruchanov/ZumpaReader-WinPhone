@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{89acc630-9d04-4107-9b66-f48baa3045ff}" Title="Žumπčka" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Jiri Bruchanov" Description="Žumπčka reader Windows Phone version" Publisher="ZumpaReader" BitsPerPixel="32">
+  <App xmlns="" ProductID="{89acc630-9d04-4107-9b66-f48baa3045ff}" Title="Žumπčka" RuntimeType="Silverlight" Version="1.0.0.1" Genre="apps.normal" Author="Jiri Bruchanov" Description="Žumπčka reader Windows Phone version" Publisher="ZumpaReader" BitsPerPixel="32">
     <IconPath IsRelative="true" IsResource="false">Images\appicon_small.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
