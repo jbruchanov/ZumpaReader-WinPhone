@@ -148,6 +148,9 @@
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.feature.camera.rest.png"
                                             x:Name="Photo"
                                             Text="Photo" />
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.folder.rest.png"
+                                            x:Name="Library"
+                                            Text="Library" />
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.check.rest.png"
                                             x:Name="Send"
                                             Text="Send" />

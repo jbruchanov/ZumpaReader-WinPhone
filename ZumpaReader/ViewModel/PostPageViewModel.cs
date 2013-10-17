@@ -30,7 +30,8 @@ namespace ZumpaReader.ViewModel
         private const string FileId = "FileId";
 
         private const int PHOTO_INDEX = 0;
-        private const int SEND_INDEX = 1;
+        private const int LIBRARY_INDEX = 1;
+        private const int SEND_INDEX = 2;
 
         #region BindingProperties
         private string _subject;
@@ -111,7 +112,11 @@ namespace ZumpaReader.ViewModel
         {
             _webService = HttpService.CreateInstance();
             SendMessageCommand = new SendMessageCommand(_webService);
-            SendMessageCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !SendMessageCommand.CanExecute(null); };
+            SendMessageCommand.CanExecuteChanged += (o, e) => 
+            { 
+                IsProgressVisible = !SendMessageCommand.CanExecute(null); 
+                (Page.ApplicationBar.Buttons[SEND_INDEX] as ApplicationBarIconButton).IsEnabled = !IsProgressVisible;
+            };
         }
 
         public override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -144,6 +149,7 @@ namespace ZumpaReader.ViewModel
             }
 
             (Page.ApplicationBar.Buttons[PHOTO_INDEX] as ApplicationBarIconButton).Click += (o, ea) => { OnPhotoTaking(); };
+            (Page.ApplicationBar.Buttons[LIBRARY_INDEX] as ApplicationBarIconButton).Click += (o, ea) => { OnImageChoosing(); };
             (Page.ApplicationBar.Buttons[SEND_INDEX] as ApplicationBarIconButton).Click += (o, ea) => { OnSending(); };
             TryInitPhoto();
         }
@@ -174,6 +180,21 @@ namespace ZumpaReader.ViewModel
 
             UploadCommand = new UploadImageCommand(_webService, (link) => { Message += String.Format("\n<{0}>", link); });
             UploadCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !UploadCommand.CanExecute(null); };
+        }
+
+        public void OnImageChoosing()
+        {
+            PhotoChooserTask task = new PhotoChooserTask();
+            task.Completed += (o,e) => { OnImageChosen(e) ;};
+            task.Show();
+        }
+
+        private void OnImageChosen(PhotoResult e)
+        {
+            if (e.TaskResult == TaskResult.OK) 
+            {
+                InitImaging(e.ChosenPhoto, null);
+            }
         }
 
         public async void OnPhotoChanged(BitmapSource source)

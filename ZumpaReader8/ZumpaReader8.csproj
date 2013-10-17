@@ -127,6 +127,9 @@
     <Content Include="..\ZumpaReader\Images\appbar.feature.settings.rest.png">
       <Link>Images\appbar.feature.settings.rest.png</Link>
     </Content>
+    <Content Include="..\ZumpaReader\Images\appbar.folder.rest.png">
+      <Link>Images\appbar.folder.rest.png</Link>
+    </Content>
     <Content Include="..\ZumpaReader\Images\appbar.next.rest.png">
       <Link>Images\appbar.next.rest.png</Link>
     </Content>

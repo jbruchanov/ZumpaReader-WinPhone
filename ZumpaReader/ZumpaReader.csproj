@@ -128,7 +128,9 @@
     <Compile Include="Pages\PostPage.xaml.cs">
       <DependentUpon>PostPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\PushHelper.cs" />
     <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\UriMapper.cs" />
     <Compile Include="ViewModel\PostPageViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="Model\Survey.cs" />
@@ -224,6 +226,7 @@
     <Content Include="Images\appbar.check.rest.png" />
     <Content Include="Images\appbar.feature.camera.rest.png" />
     <Content Include="Images\appbar.feature.settings.rest.png" />
+    <Content Include="Images\appbar.folder.rest.png" />
     <Content Include="Images\appbar.next.rest.png" />
     <Content Include="Images\appbar.prev.rest.png" />
     <Content Include="Images\appbar.questionmark.rest.png" />
