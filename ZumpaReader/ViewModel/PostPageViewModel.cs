@@ -26,6 +26,7 @@ namespace ZumpaReader.ViewModel
     public class PostPageViewModel : BaseViewModel, HasPostInformation
     {
         public const string SUBJECT = "title";
+        public const string REPLY_TO = "replyto";
         public const string THREAD_ID = "threadId";
         private const string FileId = "FileId";
 
@@ -146,6 +147,12 @@ namespace ZumpaReader.ViewModel
                 {
                     ThreadID = threadId;
                 }
+            }
+
+            string replyto = null;
+            if (Page.NavigationContext.QueryString.TryGetValue(REPLY_TO, out replyto))
+            {
+                Message += String.Format("@{0}: \n", replyto);
             }
 
             (Page.ApplicationBar.Buttons[PHOTO_INDEX] as ApplicationBarIconButton).Click += (o, ea) => { OnPhotoTaking(); };

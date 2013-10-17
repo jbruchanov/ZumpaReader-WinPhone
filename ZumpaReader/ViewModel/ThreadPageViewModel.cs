@@ -51,6 +51,8 @@ namespace ZumpaReader.ViewModel
         public LoadThreadPageCommand LoadCommand { get; private set; }
 
         public ICommand OpenLinkCommand {get; private set;}
+
+        public ReplyCommand ReplyCommand { get; private set; }
         #endregion
 
         public ThreadPageViewModel()
@@ -71,12 +73,11 @@ namespace ZumpaReader.ViewModel
         }
 
         public override void OnPageAttached()
-        {
+        {            
             (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).Click += (o, e) => { LoadCommand.Execute(null); };
             (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
             {
-                string url = String.Format("?{0}={1}&{2}={3}", PostPageViewModel.THREAD_ID, StringUtils.ExtractThreadId(LoadCommand.LoadURL), PostPageViewModel.SUBJECT, HttpUtility.UrlEncode(PageTitle));
-                Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/PostPage.xaml" + url, UriKind.RelativeOrAbsolute));
+                ReplyCommand.Execute(null);
             };            
         }
 
@@ -116,7 +117,9 @@ namespace ZumpaReader.ViewModel
                 _threadUrl = String.Format("http://portal2.dkm.cz/phorum/read.php?f=2&i={0}&t={0}", threadId);
                 LoadCommand.LoadURL = _threadUrl;
                 LoadCommand.Execute(null);
-            }        
+            }
+
+            ReplyCommand = new ReplyCommand(StringUtils.ExtractThreadId(_threadUrl), PageTitle, Page.NavigationService);
         }
 
         public int GetIndex(object o)

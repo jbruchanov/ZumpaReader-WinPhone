@@ -150,6 +150,9 @@
   <data name="Photo" xml:space="preserve">
     <value>Photo</value>
   </data>
+  <data name="ReplyTo" xml:space="preserve">
+    <value>Reply to...</value>
+  </data>
   <data name="Resolution" xml:space="preserve">
     <value>Resolution</value>
   </data>

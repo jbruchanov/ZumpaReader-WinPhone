@@ -160,6 +160,15 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reply to....
+        /// </summary>
+        public static string ReplyTo {
+            get {
+                return ResourceManager.GetString("ReplyTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resolution.
         /// </summary>
         public static string Resolution {

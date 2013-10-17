@@ -117,6 +117,7 @@
     <Compile Include="Commands\LoadThreadPageCommand.cs" />
     <Compile Include="Commands\LoadMainPageCommand.cs" />
     <Compile Include="Commands\OpenLinkCommand.cs" />
+    <Compile Include="Commands\ReplyCommand.cs" />
     <Compile Include="Commands\SendMessageCommand.cs" />
     <Compile Include="Commands\UploadImageCommand.cs" />
     <Compile Include="Converters\BackgroundColorConverter.cs" />
