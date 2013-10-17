@@ -9,6 +9,7 @@ using Microsoft.Phone.Shell;
 using ZumpaReader.Resources;
 using RemoteLogCore;
 using ZumpaReader.Utils;
+using ZumpaReader;
 
 namespace ZumpaReader8
 {
@@ -62,8 +63,9 @@ namespace ZumpaReader8
         {
             RLog.Mode = RLog.ALL;
             RemoteLog.RegisterUnhandledExceptionHandler();
+            RemoteLog.SetOwner(AppSettings.Login);
             RemoteLog.Resend();            
-            RemoteLog.Init("ZumpaReaderWP", "http://rlw.scurab.com");
+            RemoteLog.Init("ZumpaReaderWP", ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.RemoteLogURL]);
             RemoteLog.RegistrationFinished += (o, e) =>
             {
                 //RLog.D(this, "AppStart");

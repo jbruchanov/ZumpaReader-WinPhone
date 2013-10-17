@@ -15,7 +15,8 @@ namespace ZumpaReader
             WebServiceURL,
             ZumpaPushRegisterURL,
             Login,
-            Password
+            Password,
+            RemoteLogURL
         }
 
         private const string FILE_NAME = "ZumpaReaderResources.json";
