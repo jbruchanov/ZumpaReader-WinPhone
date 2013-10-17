@@ -8,6 +8,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using ZumpaReader.Resources;
 using RemoteLogCore;
+using ZumpaReader.Utils;
 
 namespace ZumpaReader8
 {
@@ -54,8 +55,7 @@ namespace ZumpaReader8
                 // Caution:- Use this under debug mode only. Application that disables user idle detection will continue to run
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
-            }
-            InitializeRemoteLog();
+            }            
         }
 
         private void InitializeRemoteLog()
@@ -140,6 +140,9 @@ namespace ZumpaReader8
 
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
+
+            InitializeRemoteLog();
+            PushHelper.Register();
         }
 
         /// <summary>
@@ -148,32 +151,7 @@ namespace ZumpaReader8
         /// <param name="frame"></param>
         private void SetUriMapper(PhoneApplicationFrame frame)
         {
-            RootFrame.UriMapper = new CustomUriMapper();
-        }
-
-        class CustomUriMapper : UriMapperBase
-        {
-            public override Uri MapUri(Uri uri)
-            {
-                string tempUri = uri.ToString();
-                string mappedUri;
-
-                // Launch from the photo share picker.
-                // Incoming URI example: /MainPage.xaml?Action=ShareContent&FileId=%7BA3D54E2D-7977-4E2B-B92D-3EB126E5D168%7D
-                if ((tempUri.Contains("ShareContent")) && (tempUri.Contains("FileId")))
-                {
-                    // Redirect to PhotoShare.xaml.
-                    mappedUri = tempUri.Replace("/MainPage.xaml", "/ZumpaReader;component/Pages/PostPage.xaml");
-                    return new Uri(mappedUri, UriKind.Relative);
-                }
-                else if ("/MainPage.xaml".Equals(tempUri))
-                {                    
-                    return new Uri("/ZumpaReader;component/MainPage.xaml", UriKind.RelativeOrAbsolute);
-                }
-
-                // Otherwise perform normal launch.
-                return uri;
-            }
+            RootFrame.UriMapper = new ZumpaUriMapper();
         }
 
         // Do not add any additional code to this method

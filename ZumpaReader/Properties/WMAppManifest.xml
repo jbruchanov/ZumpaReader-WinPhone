@@ -5,6 +5,8 @@
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
       <Capability Name="ID_CAP_MEDIALIB" />
+      <Capability Name="ID_CAP_IDENTITY_DEVICE" />
+      <Capability Name="ID_CAP_PUSH_NOTIFICATION" />
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
@@ -19,9 +21,7 @@
       </PrimaryToken>
     </Tokens>
     <Extensions>
-      <Extension ExtensionName="Photos_Extra_Share"
-             ConsumerID="{5B04B775-356B-4AA0-AAF8-6491FFEA5632}"
-             TaskID="_default" />
+      <Extension ExtensionName="Photos_Extra_Share" ConsumerID="{5B04B775-356B-4AA0-AAF8-6491FFEA5661}" TaskID="_default" />
     </Extensions>
   </App>
 </Deployment>

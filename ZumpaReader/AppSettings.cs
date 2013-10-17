@@ -11,7 +11,7 @@ namespace ZumpaReader
     {
         private enum PropertyKeys
         {
-            CookieString, Login, Password, IsLoggedIn, ResponseName, LastAuthor
+            CookieString, Login, Password, IsLoggedIn, ResponseName, LastAuthor, PushURI
         }
 
         private static readonly IsolatedStorageSettings _storage = IsolatedStorageSettings.ApplicationSettings;
@@ -122,6 +122,23 @@ namespace ZumpaReader
                 _storage[PropertyKeys.LastAuthor.ToString()] = value;
                 _storage.Save();
             }
-        }     
+        }
+
+        public static string PushURI
+        {
+            get
+            {
+                string result;
+                if (!_storage.TryGetValue<string>(PropertyKeys.PushURI.ToString(), out result))
+                    result = null;
+                return result;
+            }
+
+            set
+            {
+                _storage[PropertyKeys.PushURI.ToString()] = value;
+                _storage.Save();
+            }
+        }
     }
 }
