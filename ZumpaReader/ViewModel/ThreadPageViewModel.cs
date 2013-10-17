@@ -98,10 +98,22 @@ namespace ZumpaReader.ViewModel
             {
                 PageTitle = title;
             }
+            else
+            {
+                PageTitle = Resources.Labels.AppName;
+            }
 
             if (Page.NavigationContext.QueryString.TryGetValue("url", out _threadUrl))
             {
                 _threadUrl = HttpUtility.UrlDecode(_threadUrl);
+                LoadCommand.LoadURL = _threadUrl;
+                LoadCommand.Execute(null);
+            }
+
+            string threadId = null;
+            if (Page.NavigationContext.QueryString.TryGetValue("ThreadID", out threadId)) //push style notification
+            {                
+                _threadUrl = String.Format("http://portal2.dkm.cz/phorum/read.php?f=2&i={0}&t={0}", threadId);
                 LoadCommand.LoadURL = _threadUrl;
                 LoadCommand.Execute(null);
             }        

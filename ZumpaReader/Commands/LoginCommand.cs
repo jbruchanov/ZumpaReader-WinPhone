@@ -43,7 +43,14 @@ namespace ZumpaReader.Commands
                 args.LoginResult = context;
                 AppSettings.CookieString = context.Cookies;
                 AppSettings.ZumpaUID = context.UID;
-                if (!context.Result)
+                if (context.Result)
+                {
+                    if (!String.IsNullOrEmpty(AppSettings.PushURI)) 
+                    { 
+                        await _service.RegisterPushURI(creds.Login, context.UID, AppSettings.PushURI);
+                    }
+                }
+                else
                 {
                     ClearLogin(creds);
                 }

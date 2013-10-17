@@ -85,7 +85,7 @@ namespace ZumpaReader.ViewModel
 
         private void ShowToast(string title, string message)
         {
-            ToastPrompt tp = new ToastPrompt{ Message = message, Title = title};
+            ToastPrompt tp = new ToastPrompt{ Message = message, Title = title, TextOrientation = System.Windows.Controls.Orientation.Vertical};
             tp.Show();
         }
 

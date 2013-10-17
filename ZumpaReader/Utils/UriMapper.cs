@@ -25,6 +25,10 @@ namespace ZumpaReader.Utils
             {
                 return new Uri("/ZumpaReader;component/MainPage.xaml", UriKind.RelativeOrAbsolute);
             }
+            else if (tempUri != null && tempUri.StartsWith("/Pages/ThreadPage.xaml"))
+            {
+                return new Uri(tempUri.Replace("/Pages/ThreadPage.xaml", "/ZumpaReader;component/Pages/ThreadPage.xaml"), UriKind.RelativeOrAbsolute);
+            }
 
             // Otherwise perform normal launch.
             return uri;
