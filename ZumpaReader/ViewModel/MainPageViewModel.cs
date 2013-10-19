@@ -156,7 +156,7 @@ namespace ZumpaReader.ViewModel
         public void OnItemClick(ZumpaItem item)
         {
             if (item == null) { return; }
-            String url = String.Format("?url={0}&title={1}", HttpUtility.UrlEncode(item.ItemsUrl), HttpUtility.UrlEncode(item.Subject));
+            String url = String.Format("?url={0}&title={1}&favorite={2}", HttpUtility.UrlEncode(item.ItemsUrl), HttpUtility.UrlEncode(item.Subject), item.IsFavourite);
             Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/ThreadPage.xaml" + url, UriKind.RelativeOrAbsolute));
             (Page as MainPage).ListBox.SelectedItem = null;
         }

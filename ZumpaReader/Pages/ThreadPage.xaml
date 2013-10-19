@@ -121,6 +121,9 @@
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.favs.addto.rest.png"
+                                            x:Name="FavButton"
+                                            Text="Favorite" />
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.refresh.rest.png"
                                             x:Name="ReloadButton"
                                             Text="Reload" />

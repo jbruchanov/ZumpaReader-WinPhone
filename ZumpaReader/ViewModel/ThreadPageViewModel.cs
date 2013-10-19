@@ -17,10 +17,11 @@ namespace ZumpaReader.ViewModel
 {
     public class ThreadPageViewModel : BaseViewModel, ZumpaReader.Converters.BackgroundColorConverter.IGetIndexEvaluator
     {
-        private const int RELOAD_INDEX = 0;
-        private const int ADD_INDEX = 1;
+        private const int FAV_INDEX = 0;
+        private const int RELOAD_INDEX = 1;
+        private const int ADD_INDEX = 2;
         #region fields
-        
+
         private string _pageTitle;
 
         public string PageTitle
@@ -28,7 +29,7 @@ namespace ZumpaReader.ViewModel
             get { return _pageTitle; }
             set { _pageTitle = value; NotifyPropertyChange(); }
         }
-        
+
         private ObservableCollection<ZumpaSubItem> _dataItems;
         public ObservableCollection<ZumpaSubItem> DataItems
         {
@@ -47,36 +48,46 @@ namespace ZumpaReader.ViewModel
         private HttpService _service;
 
         private string _threadUrl;
+        private string _threadId;
 
         public LoadThreadPageCommand LoadCommand { get; private set; }
 
-        public ICommand OpenLinkCommand {get; private set;}
+        public ICommand OpenLinkCommand { get; private set; }
 
         public ReplyCommand ReplyCommand { get; private set; }
+
+        private SwitchFavoriteThreadCommand _switchFavoriteThreadCommand;
+
+        private bool _isFavorite = false;
         #endregion
 
         public ThreadPageViewModel()
         {
-            _service = HttpService.CreateInstance();                        
-            
+            _service = HttpService.CreateInstance();
+
+            _switchFavoriteThreadCommand = new SwitchFavoriteThreadCommand(_service, (result) => { if (result) { _isFavorite = !_isFavorite; ReinitFavoriteButton(); } });
+            _switchFavoriteThreadCommand.CanExecuteChanged += (o, e) => { 
+                IsProgressVisible = !_switchFavoriteThreadCommand.CanExecuteIt;
+                (Page.ApplicationBar.Buttons[FAV_INDEX] as ApplicationBarIconButton).IsEnabled = _switchFavoriteThreadCommand.CanExecuteIt;
+            };
+
             LoadCommand = new LoadThreadPageCommand(_service, (e) => Dispatcher.BeginInvoke(() => OnDownloadedPage(e.Context)));
             LoadCommand.CanExecuteChanged += (o, e) =>
             {
-                bool can = LoadCommand.CanExecute(null);
-                IsProgressVisible = !can;
-                (Page.ApplicationBar.Buttons[0] as ApplicationBarIconButton).IsEnabled = can;
+                IsProgressVisible = !LoadCommand.CanExecuteIt;
+                (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).IsEnabled = LoadCommand.CanExecuteIt;
             };
-            
+
             NotifyPropertyChange("BackColorConverter");
         }
 
         public override void OnPageAttached()
-        {            
+        {
             (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).Click += (o, e) => { LoadCommand.Execute(null); };
             (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
             {
                 ReplyCommand.Execute(null);
-            };            
+            };
         }
 
         private void OnDownloadedPage(List<ZumpaSubItem> list)
@@ -88,11 +99,12 @@ namespace ZumpaReader.ViewModel
         {
             Bind();
             OpenLinkCommand = new OpenLinkCommand(Page.NavigationService);
-            (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;            
+            (Page.ApplicationBar.Buttons[FAV_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;
+            (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;
         }
 
         private void Bind()
-        {            
+        {
             string title = null;
             if (Page.NavigationContext.QueryString.TryGetValue("title", out title))
             {
@@ -110,19 +122,40 @@ namespace ZumpaReader.ViewModel
                 LoadCommand.Execute(null);
             }
 
-            string threadId = null;
-            if (Page.NavigationContext.QueryString.TryGetValue("ThreadID", out threadId)) //push style notification
-            {                
-                _threadUrl = String.Format("http://portal2.dkm.cz/phorum/read.php?f=2&i={0}&t={0}", threadId);
+            string fav = null;
+            if (Page.NavigationContext.QueryString.TryGetValue("favorite", out fav))
+            {
+                _isFavorite = Convert.ToBoolean(fav);
+            }
+
+            if (Page.NavigationContext.QueryString.TryGetValue("ThreadID", out _threadId)) //push style notification
+            {
+                _threadUrl = String.Format("http://portal2.dkm.cz/phorum/read.php?f=2&i={0}&t={0}", _threadId);
                 LoadCommand.LoadURL = _threadUrl;
                 LoadCommand.Execute(null);
             }
+            else
+            {
+                _threadId = Utils.StringUtils.ExtractThreadId(_threadUrl);
+            }
+
+            var favButton = (Page.ApplicationBar.Buttons[FAV_INDEX] as ApplicationBarIconButton);
+            ReinitFavoriteButton();
+            favButton.Click += (o, e) => { _switchFavoriteThreadCommand.Execute(_threadId); };
 
             ReplyCommand = new ReplyCommand(StringUtils.ExtractThreadId(_threadUrl), PageTitle, Page.NavigationService);
         }
 
+        private void ReinitFavoriteButton()
+        {
+            var favButton = (Page.ApplicationBar.Buttons[FAV_INDEX] as ApplicationBarIconButton);
+            favButton.IconUri = _isFavorite
+                                ? new Uri("/Images/appbar.favs.rest.png", UriKind.RelativeOrAbsolute)
+                                : new Uri("/Images/appbar.favs.addto.rest.png", UriKind.RelativeOrAbsolute);
+        }
+
         public int GetIndex(object o)
-        {            
+        {
             return DataItems == null ? 0 : DataItems.IndexOf(o as ZumpaSubItem);
         }
     }

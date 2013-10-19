@@ -78,7 +78,7 @@ namespace ZumpaReader_UnitTests.Commands
                 else if (state == 1 && lc.CanExecute(null)) { state = 2;}
             };
             lc.Execute(null);
-            TestWait(DEFAULT_TIMEOUT);
+            TestWait(DEFAULT_TIMEOUT*3);
             Assert.AreEqual(2, state); 
         }
     }
