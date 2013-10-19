@@ -57,9 +57,7 @@ namespace ZumpaReader.ViewModel
 
         public ThreadPageViewModel()
         {
-            _service = HttpService.CreateInstance();
-            
-            OpenLinkCommand = new OpenLinkCommand();
+            _service = HttpService.CreateInstance();                        
             
             LoadCommand = new LoadThreadPageCommand(_service, (e) => Dispatcher.BeginInvoke(() => OnDownloadedPage(e.Context)));
             LoadCommand.CanExecuteChanged += (o, e) =>
@@ -88,7 +86,8 @@ namespace ZumpaReader.ViewModel
 
         public override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            Bind();            
+            Bind();
+            OpenLinkCommand = new OpenLinkCommand(Page.NavigationService);
             (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;            
         }
 

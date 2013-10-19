@@ -131,6 +131,7 @@
       <DependentUpon>PostPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\PushHelper.cs" />
+    <Compile Include="Utils\RLogHelper.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Utils\UriMapper.cs" />
     <Compile Include="ViewModel\PostPageViewModel.cs" />
