@@ -35,6 +35,7 @@ namespace ZumpaReader.WebService
         private const string PARAM_SURVEY_ID = "SurveyID";
         private const string PARAM_SURVEY_ITEM = "SurveyItem";
         private const string PARAM_LAST_ANSWER_AUTHOR = "LastAnswerAuthor";
+        private const string PARAM_FILTER_TYPE = "FilterType";
 
 
         private const string TYPE_JSON = "application/json";
@@ -84,10 +85,11 @@ namespace ZumpaReader.WebService
                 }
             }
 
-            if (!String.IsNullOrEmpty(Config.Cookies)) { pars[PARAM_COOKIES] = Config.Cookies; }
+            if (!String.IsNullOrEmpty(Config.Cookies)) { pars[PARAM_COOKIES] = Config.Cookies; }            
             if (!String.IsNullOrEmpty(Config.FakeNickName)) { pars[PARAM_FAKE_NICK] = Config.FakeNickName; }
             else if (!String.IsNullOrEmpty(Config.NickName)) { pars[PARAM_USER_NAME] = Config.NickName; }
             pars[PARAM_LAST_ANSWER_AUTHOR] = Convert.ToString(Config.LastAnswerAuthor);
+            pars[PARAM_FILTER_TYPE] = Convert.ToString(Config.FilterType);
             return JsonConvert.SerializeObject(pars);
         }
 
@@ -202,6 +204,22 @@ namespace ZumpaReader.WebService
             return Parse<string>(jsonResponse);
         }
 
+        public override async Task<bool> RegisterPushURI(string username, string uid, string pushUrl)
+        {
+            string mainUrl = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.ZumpaPushRegisterURL];
+            string queryString = String.Format("?user={0}&uid={1}&regid={2}&platform=windowsphone&register",
+                                               HttpUtility.UrlEncode(username),
+                                               HttpUtility.UrlEncode(uid),
+                                               HttpUtility.UrlEncode(pushUrl));
+            string url = mainUrl + queryString;
+            string result = await new WebClient().DownloadStringTaskAsync(url);
+            return "[OK]".Equals(result);
+        }
+
+        /// <summary>
+        /// Crete instance of webservice with current user's settings
+        /// </summary>
+        /// <returns></returns>
         public static HttpService CreateInstance()
         {
             var c = new WebService.WebServiceConfig();
@@ -211,21 +229,10 @@ namespace ZumpaReader.WebService
                 c.Cookies = AppSettings.CookieString;
                 c.FakeNickName = AppSettings.NickOrResponseName;
                 c.NickName = AppSettings.Login;
+                c.FilterType = AppSettings.Filter;
             }
             c.LastAnswerAuthor = AppSettings.LastAuthor;
             return new HttpService(c);
-        }
-
-        public override async Task<bool> RegisterPushURI(string username, string uid, string pushUrl)
-        {
-            string mainUrl = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.ZumpaPushRegisterURL];
-            string queryString = String.Format("?user={0}&uid={1}&regid={2}&platform=windowsphone&register",
-                                               HttpUtility.UrlEncode(username),
-                                               HttpUtility.UrlEncode(uid),
-                                               HttpUtility.UrlEncode(pushUrl));
-            string url = mainUrl + queryString;                                               
-            string result = await new WebClient().DownloadStringTaskAsync(url);
-            return "[OK]".Equals(result);
         }
     }
 }

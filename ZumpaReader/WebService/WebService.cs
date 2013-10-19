@@ -22,6 +22,8 @@ namespace ZumpaReader.WebService
             public string FakeNickName { get; set; }
 
             public bool LastAnswerAuthor { get; set; }
+
+            public int FilterType { get; set; }
         }
 
         /// <summary>
@@ -125,6 +127,6 @@ namespace ZumpaReader.WebService
         /// <param name="uid"></param>
         /// <param name="pushUrl"></param>
         /// <returns></returns>
-        public abstract Task<bool> RegisterPushURI(string username, string uid, string pushUrl);        
+        public abstract Task<bool> RegisterPushURI(string username, string uid, string pushUrl);
     }
 }

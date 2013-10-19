@@ -45,12 +45,21 @@ namespace ZumpaReader.ViewModel
             set { AppSettings.LastAuthor = value; NotifyPropertyChange(); }
         }
 
+        public int Filter
+        {
+            get { return AppSettings.Filter; }
+            set { AppSettings.Filter = value; NotifyPropertyChange(); }
+        }
+
+
         private bool _isProgressVisible;
         public bool IsProgressVisible
         {
             get { return _isProgressVisible; }
             set { _isProgressVisible = value; NotifyPropertyChange(); }
         }
+
+
 
         public LoginCommand LoginCommand { get; private set; }
 

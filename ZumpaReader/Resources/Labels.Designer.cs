@@ -70,6 +70,42 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Favourite threads.
+        /// </summary>
+        public static string FilterFav {
+            get {
+                return ResourceManager.GetString("FilterFav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string FilterOff {
+            get {
+                return ResourceManager.GetString("FilterOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Own threads.
+        /// </summary>
+        public static string FilterOwn {
+            get {
+                return ResourceManager.GetString("FilterOwn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string General {

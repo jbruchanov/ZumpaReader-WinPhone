@@ -120,6 +120,18 @@
   <data name="AppName" xml:space="preserve">
     <value>Žumπčka</value>
   </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="FilterFav" xml:space="preserve">
+    <value>Favourite threads</value>
+  </data>
+  <data name="FilterOff" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="FilterOwn" xml:space="preserve">
+    <value>Own threads</value>
+  </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>

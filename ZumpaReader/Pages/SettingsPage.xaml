@@ -49,6 +49,7 @@
 
         <controls:Panorama Grid.Row="1">
             <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.General}">
+                <ScrollViewer>
                 <StackPanel Margin="12,0,12,0"
                             Orientation="Vertical">
                     <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.UserName}" />
@@ -64,7 +65,17 @@
                     <toolkit:PhoneTextBox Text="{Binding Nickname, Mode=TwoWay}"/>
                     <toolkit:ToggleSwitch IsChecked="{Binding LastAuthor, Mode=TwoWay}"
                                           Content="{Binding Source={StaticResource Labels},Path=Labels.LastAuthor}" />
+                    <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.Filter}" />
+                    <toolkit:ListPicker 
+                    SelectedIndex="{Binding Filter, Mode=TwoWay}"
+                    IsEnabled="{Binding IsLoggedIn}"
+                     >
+                        <toolkit:ListPickerItem Content="{Binding Source={StaticResource Labels},Path=Labels.FilterOff}" />
+                        <toolkit:ListPickerItem Content="{Binding Source={StaticResource Labels},Path=Labels.FilterOwn}" />
+                        <toolkit:ListPickerItem Content="{Binding Source={StaticResource Labels},Path=Labels.FilterFav}" />
+                    </toolkit:ListPicker>
                 </StackPanel>
+                </ScrollViewer>
             </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>

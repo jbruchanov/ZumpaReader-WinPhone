@@ -79,6 +79,7 @@ namespace ZumpaReader.Commands
             creds.IsLoggedIn = false;
             creds.Password = string.Empty;
             AppSettings.CookieString = string.Empty;
+            AppSettings.Filter = 0;
         }
 
         public virtual void OnCommandFinished(LoginEventArgs args)
