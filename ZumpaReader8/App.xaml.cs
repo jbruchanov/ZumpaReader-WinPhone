@@ -38,6 +38,8 @@ namespace ZumpaReader8
             // Language display initialization
             InitializeLanguage();
 
+            ThemeManager.ToDarkTheme();
+
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
             {

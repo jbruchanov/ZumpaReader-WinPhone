@@ -130,6 +130,7 @@
     <Compile Include="Pages\PostPage.xaml.cs">
       <DependentUpon>PostPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ThemeManager.cs" />
     <Compile Include="Utils\PushHelper.cs" />
     <Compile Include="Utils\RLogHelper.cs" />
     <Compile Include="Utils\StringUtils.cs" />
