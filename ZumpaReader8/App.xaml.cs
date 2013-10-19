@@ -58,20 +58,7 @@ namespace ZumpaReader8
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }            
         }
-
-        private void InitializeRemoteLog()
-        {
-            RLog.Mode = RLog.ALL;
-            RemoteLog.RegisterUnhandledExceptionHandler();
-            RemoteLog.SetOwner(AppSettings.Login);
-            RemoteLog.Resend();            
-            RemoteLog.Init("ZumpaReaderWP", ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.RemoteLogURL]);
-            RemoteLog.RegistrationFinished += (o, e) =>
-            {
-                //RLog.D(this, "AppStart");
-            };
-        }
-
+   
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
@@ -143,7 +130,7 @@ namespace ZumpaReader8
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
 
-            InitializeRemoteLog();
+            RLogHelper.Register();
             PushHelper.Register();
         }
 

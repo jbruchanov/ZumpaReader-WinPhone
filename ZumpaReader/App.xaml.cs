@@ -62,18 +62,6 @@ namespace ZumpaReader
             
         }
 
-        private void InitializeRemoteLog()
-        {
-            RemoteLog.RegisterUnhandledExceptionHandler();
-            RemoteLog.Resend();
-            RemoteLog.SetOwner(AppSettings.Login);
-            RemoteLog.Init("ZumpaReaderWP", ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.RemoteLogURL]);
-            RemoteLog.RegistrationFinished += (o,e) =>
-            {
-                //RLog.D(this, "AppStart");
-            };
-        }
-
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
@@ -141,7 +129,7 @@ namespace ZumpaReader
             phoneApplicationInitialized = true;
 
             RootFrame.UriMapper = new UriMapper();
-            InitializeRemoteLog();
+            RLogHelper.Register();
             PushHelper.Register();
         }
 
