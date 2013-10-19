@@ -167,7 +167,7 @@ namespace ZumpaReader.WebService
 
         public async override Task<ContextResult<List<ZumpaSubItem>>> DownloadThread(string url)
         {
-            string @params = JsonParamsCreator(PARAM_THREAD_URL, url);
+            string @params = JsonParamsCreator(PARAM_THREAD_URL, url);            
             string jsonResponse = await PostData(Config.BaseURL + THREAD, @params);
             return Parse<List<ZumpaSubItem>>(jsonResponse);
         }

@@ -74,9 +74,16 @@ namespace ZumpaReader.Commands
             WriteableBitmap result = null;
             if (param != null)
             {
-                result = Convert(param);
+                try
+                {
+                    result = Convert(param);
+                }
+                catch (Exception e)
+                {
+                    ShowError(e);
+                }                
             }
-            if (_callback != null)
+            if (_callback != null && result != null)
             {
                 _callback.Invoke(result);
             }

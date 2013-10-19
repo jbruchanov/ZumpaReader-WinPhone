@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coding4Fun.Toolkit.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,11 @@ namespace ZumpaReader.Commands
             }
         }
 
-        public abstract void Execute(object parameter);        
+        public abstract void Execute(object parameter);
+
+        public void ShowError(Exception e)
+        {
+            new ToastPrompt { Message = e.Message }.Show();
+        }
     }
 }

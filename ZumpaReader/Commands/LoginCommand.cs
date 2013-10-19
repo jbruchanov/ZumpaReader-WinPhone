@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ZumpaReader.Model;
 using ZumpaReader.WebService;
@@ -23,6 +24,21 @@ namespace ZumpaReader.Commands
         {
             Credentials creds = (Credentials)parameter;
             CanExecuteIt = false;
+            try
+            {
+                LoginEventArgs args = await Execute(creds);
+                OnCommandFinished(args);
+            }
+            catch (Exception e)
+            {
+                ShowError(e);
+            }
+            CanExecuteIt = true;
+            
+        }
+
+        private async Task<LoginEventArgs> Execute(Credentials creds)
+        {
             LoginEventArgs args = new LoginEventArgs { Type = creds.IsLoggedIn ? LoginEventArgs.TaskType.Logout : LoginEventArgs.TaskType.Login };
             if (creds.IsLoggedIn)
             {
@@ -45,8 +61,8 @@ namespace ZumpaReader.Commands
                 AppSettings.ZumpaUID = context.UID;
                 if (context.Result)
                 {
-                    if (!String.IsNullOrEmpty(AppSettings.PushURI)) 
-                    { 
+                    if (!String.IsNullOrEmpty(AppSettings.PushURI))
+                    {
                         await _service.RegisterPushURI(creds.Login, context.UID, AppSettings.PushURI);
                     }
                 }
@@ -55,8 +71,7 @@ namespace ZumpaReader.Commands
                     ClearLogin(creds);
                 }
             }
-            CanExecuteIt = true;
-            OnCommandFinished(args);
+            return args;
         }
 
         private void ClearLogin(Credentials creds)

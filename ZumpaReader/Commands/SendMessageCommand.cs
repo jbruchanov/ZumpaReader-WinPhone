@@ -24,10 +24,19 @@ namespace ZumpaReader.Commands
         public async void Execute(object parameter, Action<bool> callback)
         {
             CanExecuteIt = false;
-            HasPostInformation info = (HasPostInformation)parameter;
-            var result = await _webService.SendMessage(info.Subject, info.Message, info.ThreadID);
+            WebService.WebService.ContextResult<bool> result = null;
+            try
+            {
+                HasPostInformation info = (HasPostInformation)parameter;
+                result = await _webService.SendMessage(info.Subject, info.Message, info.ThreadID);
+            }
+            catch (Exception e)
+            {
+                ShowError(e);
+            }
             CanExecuteIt = true;
-            if (callback != null) { 
+            
+            if (callback != null && result != null) { 
                 Deployment.Current.Dispatcher.BeginInvoke( () => callback.Invoke(result.Context));
             }
         }

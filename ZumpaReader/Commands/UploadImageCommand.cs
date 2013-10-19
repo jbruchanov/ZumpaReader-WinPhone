@@ -32,14 +32,21 @@ namespace ZumpaReader.Commands
         public override async void Execute(object parameter)
         {
             CanExecuteIt = false;
-            BitmapSource source = (parameter as BitmapSource);            
-            using (MemoryStream ms = await SaveToJpegAsync(source))
-            {                
-                var res = await _service.UploadImage(ms.ToArray());
-                if (_callback != null)
+            try
+            {
+                BitmapSource source = (parameter as BitmapSource);
+                using (MemoryStream ms = await SaveToJpegAsync(source))
                 {
-                    _callback.Invoke(res.Context);
-                }                
+                    var res = await _service.UploadImage(ms.ToArray());
+                    if (_callback != null)
+                    {
+                        _callback.Invoke(res.Context);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ShowError(e);
             }
             CanExecuteIt = true;
         }

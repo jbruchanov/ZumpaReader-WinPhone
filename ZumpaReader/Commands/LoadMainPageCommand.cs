@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coding4Fun.Toolkit.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,11 +21,20 @@ namespace ZumpaReader.Commands
 
         public override async void Execute(object parameter)
         {
-            CanExecuteIt = false;            
-            var result = await WebService.DownloadItems(LoadURL);
-            CanExecuteIt = true;        
+            CanExecuteIt = false;
+            ZumpaReader.WebService.WebService.ContextResult<ZumpaItemsResult> result = null;
+            try
+            {
+                result = await WebService.DownloadItems(LoadURL);
+            }
+            catch (Exception e)
+            {
+                ShowError(e);
+            }
 
-            if (_callback != null)
+            CanExecuteIt = true;
+
+            if (_callback != null && result != null)
             {
                 _callback.Invoke(result);                
             }
