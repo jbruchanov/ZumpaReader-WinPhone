@@ -20,6 +20,8 @@ namespace ZumpaReader.WebService
 
         Task<WebService.ContextResult<string>> UploadImage(byte[] data);
 
+        Task<WebService.ContextResult<bool>> SwitchThreadFavourite(int threadId);
+
         Task<bool> RegisterPushURI(string username, string uid, string pushUrl);
     }
 }

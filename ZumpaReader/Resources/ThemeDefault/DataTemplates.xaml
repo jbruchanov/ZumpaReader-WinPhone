@@ -4,19 +4,22 @@
                     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
+                    xmlns:cmd="clr-namespace:ZumpaReader.Commands;assembly=ZumpaReader"
+                    xmlns:res="clr-namespace:ZumpaReader.Resources;assembly=ZumpaReader"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
+    <conv:StripColorConverter x:Name="StripColorConverter" />
+
     <DataTemplate x:Name="ZumpaItemTemplate">    
-        <Grid Margin="0,1">
-            <Grid.Resources>
-                <conv:StripColorConverter x:Name="StripColorConverter" />
-            </Grid.Resources>
+        <Grid Margin="0,1">                   
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Background="{Binding Converter={StaticResource StripColorConverter}}" />
+                <Grid Grid.Column="0"
+                      Background="{Binding Converter={StaticResource StripColorConverter}}" />
                 <Grid Grid.Column="1" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition />

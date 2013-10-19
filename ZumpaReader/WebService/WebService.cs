@@ -121,6 +121,12 @@ namespace ZumpaReader.WebService
 
 
         /// <summary>
+        /// Switch favourite flag to thread
+        /// </summary>
+        /// <param name="threadId"></param>
+        /// <returns></returns>
+        public abstract Task<WebService.ContextResult<bool>> SwitchThreadFavourite(int threadId);
+        /// <summary>
         /// Send push url to server to register receiving
         /// </summary>
         /// <param name="username"></param>

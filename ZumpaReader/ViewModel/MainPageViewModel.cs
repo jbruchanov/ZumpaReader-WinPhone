@@ -53,11 +53,18 @@ namespace ZumpaReader.ViewModel
             set { _isProgressVisible = value; NotifyPropertyChange(); }
         }
 
+        private SwitchFavoriteThreadCommand _switchFavoriteThreadCommand;
+        public SwitchFavoriteThreadCommand SwitchFavoriteThreadCommand
+        {
+            get { return _switchFavoriteThreadCommand; }
+            set { _switchFavoriteThreadCommand = value; NotifyPropertyChange(); }
+        }
+
 
         #endregion
 
         public MainPageViewModel()
-        {            
+        {
             NotifyPropertyChange("BackColorConverter");
         }
 
@@ -70,13 +77,13 @@ namespace ZumpaReader.ViewModel
         {
             (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
             {
-                if (DataItems != null) 
-                { 
+                if (DataItems != null)
+                {
                     DataItems.Clear();
                 }
                 LoadCommand.LoadURL = null;
                 _lastResult = null;
-                LoadCommand.Execute(null); 
+                LoadCommand.Execute(null);
             };
 
             (Page.ApplicationBar.Buttons[SETTINGS_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
@@ -87,7 +94,7 @@ namespace ZumpaReader.ViewModel
             (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).Click += (o, e) =>
             {
                 Page.NavigationService.Navigate(new Uri("/ZumpaReader;component/Pages/PostPage.xaml", UriKind.RelativeOrAbsolute));
-            };            
+            };
         }
 
         public override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -97,6 +104,9 @@ namespace ZumpaReader.ViewModel
 
             _client = HttpService.CreateInstance();
 
+            SwitchFavoriteThreadCommand = new Commands.SwitchFavoriteThreadCommand(_client);
+            SwitchFavoriteThreadCommand.CanExecuteChanged += (o,e1) => { IsProgressVisible = !SwitchFavoriteThreadCommand.CanExecuteIt;};
+
             LoadCommand = new LoadMainPageCommand(_client, (ea) => Dispatcher.BeginInvoke(() => OnDownloadedPage(ea.Context)));
             LoadCommand.CanExecuteChanged += (o, ea) =>
             {
@@ -104,8 +114,8 @@ namespace ZumpaReader.ViewModel
                 IsProgressVisible = !can;
                 (Page.ApplicationBar.Buttons[RELOAD_INDEX] as ApplicationBarIconButton).IsEnabled = can;
             };
-            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.New) 
-            { 
+            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.New)
+            {
                 LoadCommand.Execute(null);
             }
         }
@@ -130,15 +140,16 @@ namespace ZumpaReader.ViewModel
         private void Bind()
         {
             MainPage page = (Page as MainPage);
-            page.ListBox.SelectionChanged += (o, e) => {
+            page.ListBox.SelectionChanged += (o, e) =>
+            {
                 if (e.AddedItems.Count > 0)
                 {
                     ZumpaItem item = e.AddedItems[0] as ZumpaItem;
                     OnItemClick(item);
                 }
-                
+
             };
-                        
+
             TiltEffect.SetIsTiltEnabled(page, true);
         }
 
@@ -152,9 +163,10 @@ namespace ZumpaReader.ViewModel
 
         public void LoadNextPage()
         {
-            if (null != _lastResult && LoadCommand.CanExecuteIt) {
-                if (LoadCommand.LoadURL == null || !LoadCommand.LoadURL.Equals(_lastResult.NextPage)) 
-                { 
+            if (null != _lastResult && LoadCommand.CanExecuteIt)
+            {
+                if (LoadCommand.LoadURL == null || !LoadCommand.LoadURL.Equals(_lastResult.NextPage))
+                {
                     LoadCommand.LoadURL = _lastResult.NextPage;
                     LoadCommand.Execute(null);
                 }

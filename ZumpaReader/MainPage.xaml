@@ -8,16 +8,16 @@
                             xmlns:vm="clr-namespace:ZumpaReader.ViewModel;assembly=ZumpaReader"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
-                            xmlns:res="clr-namespace:ZumpaReader.Resources"
+                            xmlns:res="clr-namespace:ZumpaReader.Resources;assembly=ZumpaReader"
                             x:Class="ZumpaReader.MainPage"
                             mc:Ignorable="d"
                             d:DesignWidth="480"
                             d:DesignHeight="768"
                             SupportedOrientations="PortraitOrLandscape"
-                            Orientation="Portrait"                            
-                            shell:SystemTray.IsVisible="true"                            
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="true"
                             d:DataContext="{d:DesignData /SampleData/SampleMainPageViewModel.xaml}">
-   
+
     <phone:PhoneApplicationPage.Resources>
         <res:I18N x:Key="Labels" />
         <conv:BackgroundColorConverter x:Key="BackgroundConverter" />
@@ -38,31 +38,40 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <!--ContentPanel - place additional content here-->
-        <StackPanel Grid.Row="0" Orientation="Vertical">
+        <StackPanel Grid.Row="0"
+                    Orientation="Vertical">
             <TextBlock Name="Title"
                        Style="{StaticResource PageTitle}"
-                       Text="{Binding Path=Labels.AppName, Source={StaticResource Labels}}" />            
+                       Text="{Binding Path=Labels.AppName, Source={StaticResource Labels}}" />
             <Rectangle Style="{StaticResource PageTitleDivider}" />
         </StackPanel>
         <Grid x:Name="ContentPanel"
               Grid.Row="1">
-            
-            <toolkit:LongListSelector ItemsSource="{Binding DataItems}"                    
-                    IsFlatList="True"
-                     x:Name="ListBox"                                                          >
+
+            <toolkit:LongListSelector ItemsSource="{Binding DataItems}"
+                                      IsFlatList="True"
+                                      x:Name="ListBox">
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Grid Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}">
+                            <toolkit:ContextMenuService.ContextMenu>
+                                <toolkit:ContextMenu Name="ContextMenu">
+                                    <toolkit:MenuItem Header="{Binding Path=Labels.Favorite, Source={StaticResource Labels}}"
+                                                      Command="{Binding Source={StaticResource ViewModel}, Path=SwitchFavoriteThreadCommand}"
+                                                      CommandParameter="{Binding}" />
+                                </toolkit:ContextMenu>
+                            </toolkit:ContextMenuService.ContextMenu>
                             <ContentControl Content="{Binding}"
                                             HorizontalAlignment="Stretch"
                                             HorizontalContentAlignment="Stretch"
                                             ContentTemplate="{StaticResource ZumpaItemTemplate}" />
-                        </Grid>                       
+                        </Grid>
                     </DataTemplate>
                 </toolkit:LongListSelector.ItemTemplate>
                 <toolkit:LongListSelector.ListFooterTemplate>
                     <DataTemplate>
-                        <Grid x:Name="Footer" Loaded="Footer_Loaded" />
+                        <Grid x:Name="Footer"
+                              Loaded="Footer_Loaded" />
                     </DataTemplate>
                 </toolkit:LongListSelector.ListFooterTemplate>
             </toolkit:LongListSelector>

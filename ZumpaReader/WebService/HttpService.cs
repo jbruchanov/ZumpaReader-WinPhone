@@ -20,6 +20,7 @@ namespace ZumpaReader.WebService
         private const string THREAD = "/thread";
         private const string POST = "/post";
         private const string SURVEY = "/survey";
+        private const string FAVOURITE = "/favorite";
         private const string IMAGE = "/image";       
         private const string HTTP_POST = "POST";
 
@@ -204,6 +205,15 @@ namespace ZumpaReader.WebService
             return Parse<string>(jsonResponse);
         }
 
+        public async override Task<WebService.ContextResult<bool>> SwitchThreadFavourite(int threadId)
+        {
+            EnsureLoggedIn();
+
+            string @params = JsonParamsCreator(PARAM_THREAD_ID, threadId);
+            string jsonResponse = await PostData(Config.BaseURL + FAVOURITE, @params);
+            return Parse<bool>(jsonResponse);
+        }
+
         public override async Task<bool> RegisterPushURI(string username, string uid, string pushUrl)
         {
             string mainUrl = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.ZumpaPushRegisterURL];
@@ -234,5 +244,6 @@ namespace ZumpaReader.WebService
             c.LastAnswerAuthor = AppSettings.LastAuthor;
             return new HttpService(c);
         }
+        
     }
 }

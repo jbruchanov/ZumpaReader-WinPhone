@@ -120,6 +120,9 @@
   <data name="AppName" xml:space="preserve">
     <value>Žumπčka</value>
   </data>
+  <data name="Favorite" xml:space="preserve">
+    <value>Favorite</value>
+  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
   </data>
