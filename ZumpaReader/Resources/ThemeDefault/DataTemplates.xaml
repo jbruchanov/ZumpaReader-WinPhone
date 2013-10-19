@@ -6,14 +6,22 @@
                     xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
-    <DataTemplate x:Name="ZumpaItemTemplate">
+    <DataTemplate x:Name="ZumpaItemTemplate">    
         <Grid Margin="0,1">
+            <Grid.Resources>
+                <conv:StripColorConverter x:Name="StripColorConverter" />
+            </Grid.Resources>
             <Grid>
-                <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Background="{Binding Converter={StaticResource StripColorConverter}}" />
+                <Grid Grid.Column="1" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
-                    </Grid.RowDefinitions>
+                    </Grid.RowDefinitions>                    
                     <TextBlock Text="{Binding Subject}"
                                Grid.Row="0"
                                HorizontalAlignment="Stretch"

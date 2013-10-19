@@ -14,6 +14,13 @@
     <SolidColorBrush x:Name="ZumpaWhite"
                      Color="#EFEFEF" />
 
+    <SolidColorBrush x:Name="StripOwnThread"
+                     Color="Cyan" />
+    <SolidColorBrush x:Name="StripResponseThread"
+                     Color="Red" />
+    <SolidColorBrush x:Name="StripFavThread"
+                     Color="OrangeRed" />
+
     <SolidColorBrush x:Name="ApplicationBarBackground"
                      Color="#212021" />
 
