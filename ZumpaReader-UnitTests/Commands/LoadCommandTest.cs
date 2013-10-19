@@ -53,33 +53,5 @@ namespace ZumpaReader_UnitTests.Commands
             mock.Verify( e=> e.DownloadItems(url));
         }
 
-        [TestMethod]
-        public void LoadCommandCallDownloadItemsAfterSuccessfulDownload()
-        {
-            var mock = new Mock<IWebService>();            
-            mock.Setup(e => e.DownloadItems(null)).Returns(() =>
-            {                
-                var t = new Task<ZumpaReader.WebService.WebService.ContextResult<ZumpaItemsResult>>( () => 
-                {
-                    Thread.Sleep(500);//w8 a little for dispatcher handle queue
-                    return null;
-                });
-                t.Start();
-                return t;
-            });
-            int state = 0;
-            LoadMainPageCommand lc = new LoadMainPageCommand(mock.Object, (e) => {
-                Thread.Sleep(500);//w8 a little for dispatcher handle queue, canexecute change should be enqueued now
-                FinishWaiting(); 
-            });
-            lc.CanExecuteChanged += (o,e) => 
-            {
-                if (state == 0 && !lc.CanExecute(null)){state = 1;}
-                else if (state == 1 && lc.CanExecute(null)) { state = 2;}
-            };
-            lc.Execute(null);
-            TestWait(DEFAULT_TIMEOUT*3);
-            Assert.AreEqual(2, state); 
-        }
     }
 }
