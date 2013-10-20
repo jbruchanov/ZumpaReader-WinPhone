@@ -14,12 +14,25 @@ namespace ZumpaReader
             CookieString, Login, Password, IsLoggedIn, ResponseName, LastAuthor, PushURI, ZumpaUID, Filter
         }
 
-        private static readonly IsolatedStorageSettings _storage = IsolatedStorageSettings.ApplicationSettings;
+        static AppSettings()
+        {
+            if (!System.ComponentModel.DesignerProperties.IsInDesignTool)
+            {
+                _storage = IsolatedStorageSettings.ApplicationSettings;
+            }
+            else
+            {
+                _storage = null;
+            }
+        }
+
+        private static readonly IsolatedStorageSettings _storage;
 
         public static string CookieString
         {
             get
             {
+                if (_storage == null) return "";
                 string result = null;
                 _storage.TryGetValue<string>(PropertyKeys.CookieString.ToString(), out result);
                 return result;
@@ -36,6 +49,7 @@ namespace ZumpaReader
         {
             get
             {
+                if(_storage == null) return "";
                 string result = null;
                 _storage.TryGetValue<string>(PropertyKeys.Login.ToString(), out result);
                 return result;
@@ -52,6 +66,7 @@ namespace ZumpaReader
         {
             get
             {
+                if (_storage == null) return "";
                 string result = null;
                 _storage.TryGetValue<string>(PropertyKeys.ResponseName.ToString(), out result);
                 return result;
@@ -67,6 +82,7 @@ namespace ZumpaReader
         public static string NickOrResponseName
         {
             get{
+                if (_storage == null) return "";
                 string s = ResponseName;
                 if (string.IsNullOrEmpty(s))
                     s = Login;
@@ -78,6 +94,7 @@ namespace ZumpaReader
         {
             get
             {
+                if (_storage == null) return "";
                 string result = null;
                 _storage.TryGetValue<string>(PropertyKeys.Password.ToString(), out result);
                 return result;
@@ -94,6 +111,7 @@ namespace ZumpaReader
         {
             get
             {
+                if (_storage == null) return false;
                 bool result = false;
                 if (!_storage.TryGetValue<bool>(PropertyKeys.IsLoggedIn.ToString(), out result))
                     result = false;
@@ -111,6 +129,7 @@ namespace ZumpaReader
         {
             get
             {
+                if (_storage == null) return false;
                 bool result = false;
                 if (!_storage.TryGetValue<bool>(PropertyKeys.LastAuthor.ToString(), out result))
                     result = false;
@@ -128,6 +147,7 @@ namespace ZumpaReader
         {
             get
             {
+                if (_storage == null) return "";
                 string result;
                 if (!_storage.TryGetValue<string>(PropertyKeys.PushURI.ToString(), out result))
                     result = null;
@@ -145,6 +165,7 @@ namespace ZumpaReader
         {
             get
             {
+                if (_storage == null) return "";
                 string result;
                 if (!_storage.TryGetValue<string>(PropertyKeys.ZumpaUID.ToString(), out result))
                     result = null;
@@ -162,6 +183,7 @@ namespace ZumpaReader
         {
             get
             {
+                if (_storage == null) return 0;
                 int result = 0;
                 _storage.TryGetValue<int>(PropertyKeys.Filter.ToString(), out result);
                 return result;
