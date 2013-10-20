@@ -52,6 +52,12 @@ namespace ZumpaReader.ViewModel
             set { AppSettings.Filter = value; NotifyPropertyChange(); }
         }
 
+        public bool AutoLoadImages
+        {
+            get { return AppSettings.AutoLoadImages; }
+            set { AppSettings.AutoLoadImages = value; NotifyPropertyChange(); }
+        }
+
 
         private bool _isProgressVisible;
         public bool IsProgressVisible
@@ -111,7 +117,7 @@ namespace ZumpaReader.ViewModel
         }
 
         public static bool IsEmulator()
-        {         
+        {
             return "XDeviceEmulator".Equals(new DeviceDataProvider().GetDevice().Model);
         }
     }

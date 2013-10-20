@@ -11,7 +11,7 @@ namespace ZumpaReader
     {
         private enum PropertyKeys
         {
-            CookieString, Login, Password, IsLoggedIn, ResponseName, LastAuthor, PushURI, ZumpaUID, Filter
+            CookieString, Login, Password, IsLoggedIn, ResponseName, LastAuthor, PushURI, ZumpaUID, Filter, AutoLoadImages
         }
 
         static AppSettings()
@@ -192,6 +192,23 @@ namespace ZumpaReader
             set
             {
                 _storage[PropertyKeys.Filter.ToString()] = value;
+                _storage.Save();
+            }
+        }
+
+        public static bool AutoLoadImages
+        {
+            get
+            {
+                if (_storage == null) return false;
+                bool result = true;
+                _storage.TryGetValue<bool>(PropertyKeys.AutoLoadImages.ToString(), out result);
+                return result;
+            }
+
+            set
+            {
+                _storage[PropertyKeys.AutoLoadImages.ToString()] = value;
                 _storage.Save();
             }
         }

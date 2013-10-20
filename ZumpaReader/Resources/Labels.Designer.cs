@@ -70,6 +70,15 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto load.
+        /// </summary>
+        public static string AutoLoad {
+            get {
+                return ResourceManager.GetString("AutoLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Favorite.
         /// </summary>
         public static string Favorite {
@@ -120,6 +129,15 @@ namespace ZumpaReader.Resources {
         public static string General {
             get {
                 return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images.
+        /// </summary>
+        public static string Images {
+            get {
+                return ResourceManager.GetString("Images", resourceCulture);
             }
         }
         

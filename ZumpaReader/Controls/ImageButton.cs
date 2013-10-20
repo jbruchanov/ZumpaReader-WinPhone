@@ -17,10 +17,12 @@ namespace ZumpaReader.Controls
         protected override void OnContentChanged(object oldContent, object newContent)
         {
             string link = newContent as string;
-            if (ImageLoader.IsImageLink(link))
-            {
-                Content = new ProgressBar { IsIndeterminate = true, MinHeight = 32, MinWidth = 200 };                    
-                LoadImageAsync(link);
+            if (AppSettings.AutoLoadImages) { 
+                if (ImageLoader.IsImageLink(link))
+                {
+                    Content = new ProgressBar { IsIndeterminate = true, MinHeight = 32, MinWidth = 200 };                    
+                    LoadImageAsync(link);
+                }
             }
         }
 
