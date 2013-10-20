@@ -50,7 +50,7 @@ namespace ZumpaReader.Model
             {
                 if (_date == null)
                 {
-                    StringUtils.ConvertDateTime(Time);
+                    _date = StringUtils.ConvertDateTime(Time);
                 }
                 return _date;
             }
