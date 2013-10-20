@@ -61,7 +61,9 @@ namespace ZumpaReader.ViewModel
 
         public ICommand OpenLinkCommand { get; private set; }
 
-        public ReplyCommand ReplyCommand { get; private set; }
+        public ReplyCommand ReplyCommand { get; private set; }        
+
+        public bool ReloadDataNavigationBack {get;set;}
 
         private SwitchFavoriteThreadCommand _switchFavoriteThreadCommand;
 
@@ -70,6 +72,8 @@ namespace ZumpaReader.ViewModel
 
         public ThreadPageViewModel()
         {
+            ReloadDataNavigationBack = true;
+
             _service = HttpService.CreateInstance();
 
             _switchFavoriteThreadCommand = new SwitchFavoriteThreadCommand(_service, (result) => { if (result) { _isFavorite = !_isFavorite; ReinitFavoriteButton(); } });
@@ -119,10 +123,21 @@ namespace ZumpaReader.ViewModel
 
         public override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            Bind();
-            OpenLinkCommand = new OpenLinkCommand(Page.NavigationService);
-            (Page.ApplicationBar.Buttons[FAV_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;
-            (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;
+            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
+            {
+                if (ReloadDataNavigationBack && LoadCommand.CanExecuteIt)
+                {
+                    LoadCommand.Execute(null);
+                }
+                ReloadDataNavigationBack = true;
+            }
+            else
+            { 
+                Bind();
+                OpenLinkCommand = new OpenLinkCommand(Page.NavigationService);
+                (Page.ApplicationBar.Buttons[FAV_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;
+                (Page.ApplicationBar.Buttons[ADD_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;
+            }
         }
 
         private void Bind()

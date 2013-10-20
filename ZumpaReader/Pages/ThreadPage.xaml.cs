@@ -35,7 +35,22 @@ namespace ZumpaReader.Pages
             if (model != null)
             {
                 model.OnNavigatedTo(e);
-            }            
-        }            
+            }         
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            ThreadPageViewModel model = Resources[ViewModel] as ThreadPageViewModel;
+            if (model != null)
+            {
+                model.ReloadDataNavigationBack = !"app://external/".Equals(e.Uri.ToString());
+            }                 
+        }
     }
 }
