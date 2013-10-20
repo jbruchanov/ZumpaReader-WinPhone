@@ -58,6 +58,12 @@ namespace ZumpaReader.ViewModel
             set { AppSettings.AutoLoadImages = value; NotifyPropertyChange(); }
         }
 
+        private string _storageValues;
+        public string StorageValues
+        {
+            get { return _storageValues; }
+            set { _storageValues = value; NotifyPropertyChange(); }
+        }
 
         private bool _isProgressVisible;
         public bool IsProgressVisible
@@ -65,8 +71,6 @@ namespace ZumpaReader.ViewModel
             get { return _isProgressVisible; }
             set { _isProgressVisible = value; NotifyPropertyChange(); }
         }
-
-
 
         public LoginCommand LoginCommand { get; private set; }
 
@@ -103,6 +107,7 @@ namespace ZumpaReader.ViewModel
                 Login = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
                 Password = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password];
             }
+            StorageValues = Resources.Labels.InProgress;
         }
 
         private void ShowToast(string title, string message)
@@ -119,6 +124,10 @@ namespace ZumpaReader.ViewModel
         public static bool IsEmulator()
         {
             return "XDeviceEmulator".Equals(new DeviceDataProvider().GetDevice().Model);
+        }
+
+        private static string ConvertStorageValues(long images, long freeSpace){
+            return String.Format("{0}:{1}\nFree{2}:{3}", Resources.Labels.Downloaded, images, Resources.Labels.Free, freeSpace);
         }
     }
 }

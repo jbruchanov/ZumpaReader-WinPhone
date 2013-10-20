@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using ZumpaReader.Model;
 
 namespace ZumpaReader.Utils
 {
@@ -13,15 +14,19 @@ namespace ZumpaReader.Utils
     {
         private Random _random = new Random((int)DateTime.Now.Ticks);
 
-        private Dictionary<string, string> _cache = new Dictionary<string, string>();
+        private Dictionary<string, ImageRecord> _cache;
 
         private IsolatedStorageFile _storage;
 
-        static string[] IMAGE_EXTS = { "jpg", "jpeg", "gif", "png", "bmp" };        
+        static string[] IMAGE_EXTS = { "jpg", "jpeg", "gif", "png", "bmp" };
+
+        private ZumpaDB _database;
 
         public ImageLoader()
         {
             _storage = IsolatedStorageFile.GetUserStoreForApplication();
+            _database = new ZumpaDB();
+            _cache = LoadMemoryCache();
         }
 
         /// <summary>
@@ -31,15 +36,17 @@ namespace ZumpaReader.Utils
         /// <returns></returns>
         public async Task<Stream> LoadAsync(string link)
         {
-            string localFile = null;
+            link = link.ToLower();
+
+            ImageRecord record = null;
             Stream s = null;
-            if (!_cache.TryGetValue(link, out localFile))
+            if (!_cache.TryGetValue(link, out record))
             {
                 s = await SaveLinkAsync(link);
             }
             else
-            {                
-                var t = new Task<Stream>(() => LoadFile(localFile));                
+            {
+                var t = new Task<Stream>(() => LoadFile(record.File));
                 t.Start();
                 s = await t;
             }
@@ -51,7 +58,7 @@ namespace ZumpaReader.Utils
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public Stream LoadFile(string file)
+        private Stream LoadFile(string file)
         {
             if (_storage.FileExists(file))
             {
@@ -65,22 +72,19 @@ namespace ZumpaReader.Utils
         /// </summary>
         /// <param name="link"></param>
         /// <returns></returns>
-        public async Task<Stream> SaveLinkAsync(string link)
+        private async Task<Stream> SaveLinkAsync(string link)
         {
             string file = GenerateRandomFileName(ExtractExt(link));
-
-            if (_storage.FileExists(file))
-            {
-                //this should not happen
-            }
             Stream imageStream = null;
+            long len = 0;
             using (IsolatedStorageFileStream fileStream = _storage.CreateFile(file))
             {
                 imageStream = await LoadLinkAsync(link);
                 await imageStream.CopyToAsync(fileStream);
+                len = imageStream.Position;
                 imageStream.Position = 0;
             }
-            _cache[link] = file;
+            _cache[link] = SaveLinkToDb(link, file, len);
             return imageStream;
         }
 
@@ -89,7 +93,7 @@ namespace ZumpaReader.Utils
         /// </summary>
         /// <param name="link"></param>
         /// <returns></returns>
-        public bool IsLoaded(string link)
+        private bool IsLoaded(string link)
         {
             return _cache.ContainsKey(link);
         }
@@ -99,7 +103,7 @@ namespace ZumpaReader.Utils
         /// </summary>
         /// <param name="link"></param>
         /// <returns></returns>
-        public async Task<Stream> LoadLinkAsync(string link)
+        private async Task<Stream> LoadLinkAsync(string link)
         {
             var wc = new WebClient();
             Stream s = await wc.OpenReadTaskAsync(link);
@@ -132,20 +136,82 @@ namespace ZumpaReader.Utils
         /// </summary>
         /// <param name="link"></param>
         /// <returns></returns>
-        public static bool IsImageLink(string link)
+        public bool IsImageLink(string link)
         {
             if (!String.IsNullOrEmpty(link))
             {
                 link = link.ToLower();
-                foreach (var item in IMAGE_EXTS)
+                if (!IsInvalidImageLink(link))
                 {
-                    if (link.EndsWith(item))
+                    foreach (var item in IMAGE_EXTS)
                     {
-                        return true;
+                        if (link.EndsWith(item))
+                        {
+                            return true;
+                        }
                     }
                 }
             }
             return false;
+        }
+
+        private bool IsInvalidImageLink(string link)
+        {
+            ImageRecord ir = null;
+            if (_cache.TryGetValue(link, out ir))
+            {
+                return !ir.IsValid;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Call this if link doesn't target image
+        /// </summary>
+        /// <param name="link"></param>
+        public void NotifyInvalidLink(string link)
+        {
+            ImageRecord item = null;
+            if (_cache.TryGetValue(link, out item))
+            {
+                if (item.IsValid)
+                {
+                    item.IsValid = false;
+                    ZumpaDB.Instance.SubmitChanges();
+                }
+            }
+        }
+
+        private Dictionary<string, ImageRecord> LoadMemoryCache()
+        {
+            return ZumpaDB.Instance.Images.ToDictionary((e) => e.Link);
+        }
+
+        /// <summary>
+        /// Save record to db
+        /// </summary>
+        /// <param name="link"></param>
+        /// <param name="file"></param>
+        /// <param name="size"></param>
+        private ImageRecord SaveLinkToDb(string link, string file, long size)
+        {
+            ImageRecord rec = new ImageRecord { Link = link, File = file, Size = size, IsValid = true };
+            ZumpaDB.Instance.Images.InsertOnSubmit(rec);
+            ZumpaDB.Instance.SubmitChanges();
+            return rec;
+        }
+
+        /// <summary>
+        /// Get file from db
+        /// </summary>
+        /// <param name="link"></param>
+        /// <returns></returns>
+        private string GetFile(string link)
+        {
+            ImageRecord item = (from q in ZumpaDB.Instance.Images
+                                where q.IsValid && q.Link.Equals(link)
+                                select q).FirstOrDefault();
+            return item != null ? item.File : null;
         }
     }
 }

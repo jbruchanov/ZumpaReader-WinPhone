@@ -123,6 +123,9 @@
   <data name="AutoLoad" xml:space="preserve">
     <value>Auto load</value>
   </data>
+  <data name="Downloaded" xml:space="preserve">
+    <value>Downloaded</value>
+  </data>
   <data name="Favorite" xml:space="preserve">
     <value>Favorite</value>
   </data>
@@ -138,11 +141,17 @@
   <data name="FilterOwn" xml:space="preserve">
     <value>Own threads</value>
   </data>
+  <data name="Free" xml:space="preserve">
+    <value>Free</value>
+  </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="Images" xml:space="preserve">
     <value>Images</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>In progress...</value>
   </data>
   <data name="LastAuthor" xml:space="preserve">
     <value>Last author</value>
@@ -191,6 +200,9 @@
   </data>
   <data name="SmileSad" xml:space="preserve">
     <value>:(</value>
+  </data>
+  <data name="StorageValues" xml:space="preserve">
+    <value>Storage values</value>
   </data>
   <data name="Subject" xml:space="preserve">
     <value>Subject</value>

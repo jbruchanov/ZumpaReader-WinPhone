@@ -78,6 +78,8 @@
                 <StackPanel>
                     <toolkit:ToggleSwitch IsChecked="{Binding AutoLoadImages, Mode=TwoWay}"
                                           Content="{Binding Source={StaticResource Labels},Path=Labels.AutoLoad}" />
+                    <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.StorageValues}" />
+                    <TextBlock Text="{Binding StorageValues}" Margin="15,0" FontSize="24" />
                 </StackPanel>
             </controls:PanoramaItem>
         </controls:Panorama>

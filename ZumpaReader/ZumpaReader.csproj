@@ -84,6 +84,7 @@
     <Reference Include="RemoteLogCore">
       <HintPath>..\..\..\..\Visual Studio WinPhone Workspace\ZumpaReader\packages\RemoteLogCore.dll</HintPath>
     </Reference>
+    <Reference Include="system.data.linq" />
     <Reference Include="System.Runtime">
       <HintPath>..\packages\Microsoft.Bcl.1.0.19\lib\sl4-windowsphone71\System.Runtime.dll</HintPath>
     </Reference>
@@ -129,7 +130,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Credentials.cs" />
+    <Compile Include="Model\ImageRecord.cs" />
     <Compile Include="Model\LoginResult.cs" />
+    <Compile Include="Model\ZumpaDB.cs" />
     <Compile Include="Pages\PostPage.xaml.cs">
       <DependentUpon>PostPage.xaml</DependentUpon>
     </Compile>

@@ -14,6 +14,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using RemoteLogCore;
 using ZumpaReader.Utils;
+using ZumpaReader.Model;
 
 namespace ZumpaReader
 {
@@ -60,8 +61,6 @@ namespace ZumpaReader
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
-
-            
         }
 
         // Code to execute when the application is launching (eg, from Start)

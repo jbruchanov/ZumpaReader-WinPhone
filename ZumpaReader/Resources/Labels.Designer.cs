@@ -79,6 +79,15 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloaded.
+        /// </summary>
+        public static string Downloaded {
+            get {
+                return ResourceManager.GetString("Downloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Favorite.
         /// </summary>
         public static string Favorite {
@@ -124,6 +133,15 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Free.
+        /// </summary>
+        public static string Free {
+            get {
+                return ResourceManager.GetString("Free", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string General {
@@ -138,6 +156,15 @@ namespace ZumpaReader.Resources {
         public static string Images {
             get {
                 return ResourceManager.GetString("Images", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In progress....
+        /// </summary>
+        public static string InProgress {
+            get {
+                return ResourceManager.GetString("InProgress", resourceCulture);
             }
         }
         
@@ -282,6 +309,15 @@ namespace ZumpaReader.Resources {
         public static string SmileSad {
             get {
                 return ResourceManager.GetString("SmileSad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Storage values.
+        /// </summary>
+        public static string StorageValues {
+            get {
+                return ResourceManager.GetString("StorageValues", resourceCulture);
             }
         }
         

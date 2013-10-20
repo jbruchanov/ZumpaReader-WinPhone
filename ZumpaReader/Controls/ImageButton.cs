@@ -12,15 +12,21 @@ namespace ZumpaReader.Controls
 {
     public class ImageButton : Button
     {
+        private static ImageLoader _loader;
 
-        static ImageLoader _loader = new ImageLoader();
+        static ImageButton()
+        {
+            _loader = new ImageLoader();
+        }
+
         protected override void OnContentChanged(object oldContent, object newContent)
         {
             string link = newContent as string;
-            if (AppSettings.AutoLoadImages) { 
-                if (ImageLoader.IsImageLink(link))
+            if (AppSettings.AutoLoadImages)
+            {
+                if (_loader.IsImageLink(link))
                 {
-                    Content = new ProgressBar { IsIndeterminate = true, MinHeight = 32, MinWidth = 200 };                    
+                    Content = new ProgressBar { IsIndeterminate = true, MinHeight = 32, MinWidth = 200 };
                     LoadImageAsync(link);
                 }
             }
@@ -37,8 +43,8 @@ namespace ZumpaReader.Controls
             }
             catch (Exception e)
             {
-                //image link, but links page
-                Content = link;
+                Content = link;//image link, but links page
+                _loader.NotifyInvalidLink(link);
             }
         }
     }
