@@ -178,6 +178,15 @@ namespace ZumpaReader.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link saved to clipboard.
+        /// </summary>
+        public static string LinkSaved {
+            get {
+                return ResourceManager.GetString("LinkSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string Login {

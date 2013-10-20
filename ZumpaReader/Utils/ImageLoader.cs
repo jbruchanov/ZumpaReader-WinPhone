@@ -24,6 +24,8 @@ namespace ZumpaReader.Utils
 
         public ImageLoader()
         {
+            if (System.ComponentModel.DesignerProperties.IsInDesignTool) return;
+
             _storage = IsolatedStorageFile.GetUserStoreForApplication();
             _database = new ZumpaDB();
             _cache = LoadMemoryCache();

@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Coding4Fun.Toolkit.Controls;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +18,26 @@ namespace ZumpaReader.Controls
     {
         private static ImageLoader _loader;
 
+        private bool _longClick = false; //help var for ignoring click event when long click was handled
+
+        #region properties
+        
+        public string Link
+        {
+            get { return (string)GetValue(LinkProperty); }
+            set { SetValue(LinkProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Link.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LinkProperty =
+            DependencyProperty.Register("Link", typeof(string), typeof(ImageButton), new PropertyMetadata(null, OnLinkPropertyChanged));
+
+        private static void OnLinkPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ImageButton ib = d as ImageButton;
+            if (ib != null) { ib.OnLinkChanged(e.NewValue as string); }
+        }
+
         public bool IgnoreImages
         {
             get { return (bool)GetValue(IgnoreImagesProperty); }
@@ -25,18 +48,22 @@ namespace ZumpaReader.Controls
         public static readonly DependencyProperty IgnoreImagesProperty =
             DependencyProperty.Register("IgnoreImages", typeof(bool), typeof(ImageButton), new PropertyMetadata(false));
 
+        #endregion
         static ImageButton()
         {
             _loader = new ImageLoader();
         }
 
-        protected override void OnContentChanged(object oldContent, object newContent)
+        protected virtual void OnLinkChanged(string link)
         {
-            string link = newContent as string;
             if (!IgnoreImages && AppSettings.AutoLoadImages && _loader.IsImageLink(link))
             {
                 Content = new ProgressBar { IsIndeterminate = true, MinHeight = 32, MinWidth = 300 };
                 LoadImageAsync(link);
+            }
+            else
+            {
+                Content = new TextBlock{ Text = link, TextWrapping = TextWrapping.Wrap};
             }
         }
 
@@ -55,6 +82,25 @@ namespace ZumpaReader.Controls
                 Content = link;//image link, but link is invalid (i.g. not real image)
                 _loader.NotifyInvalidLink(link);
             }
+        }
+
+        protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (!_longClick) 
+            { 
+                base.OnMouseLeftButtonUp(e);
+            }
+            e.Handled = _longClick;//ignore this event if it's called from OnHold...
+            _longClick = false;
+        }
+
+        protected override void OnHold(System.Windows.Input.GestureEventArgs e)
+        {
+            base.OnHold(e);
+            Clipboard.SetText(Link);
+            new ToastPrompt{Message = ZumpaReader.Resources.Labels.LinkSaved, TextWrapping = TextWrapping.Wrap}.Show();
+            e.Handled = true;
+            _longClick = true;
         }
     }
 }

@@ -156,6 +156,9 @@
   <data name="LastAuthor" xml:space="preserve">
     <value>Last author</value>
   </data>
+  <data name="LinkSaved" xml:space="preserve">
+    <value>Link saved to clipboard</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
