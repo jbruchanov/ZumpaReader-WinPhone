@@ -43,7 +43,12 @@ namespace ZumpaReader.Commands
 
         public void ShowError(Exception e)
         {
-            new ToastPrompt { Message = e.Message }.Show();
+            ShowToast(e.Message);
+        }
+
+        public void ShowToast(string msg, string title = null)
+        {
+            new ToastPrompt { Title = title, Message = msg, TextWrapping = TextWrapping.Wrap }.Show();
         }
     }
 }

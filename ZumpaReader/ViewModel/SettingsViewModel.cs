@@ -14,7 +14,7 @@ namespace ZumpaReader.ViewModel
 {
     public class SettingsViewModel : BaseViewModel, Credentials
     {
-        #region fields        
+        #region fields
         public string Login
         {
             get { return AppSettings.Login; }
@@ -35,8 +35,8 @@ namespace ZumpaReader.ViewModel
 
         public bool IsLoggedIn
         {
-            get {return AppSettings.IsLoggedIn; }
-            set {AppSettings.IsLoggedIn = value; NotifyPropertyChange(); }
+            get { return AppSettings.IsLoggedIn; }
+            set { AppSettings.IsLoggedIn = value; NotifyPropertyChange(); }
         }
 
         public bool LastAuthor
@@ -66,19 +66,19 @@ namespace ZumpaReader.ViewModel
         #endregion
 
         public SettingsViewModel()
-        {            
+        {
             var service = HttpService.CreateInstance();
             LoginCommand = new LoginCommand(service);
-            LoginCommand.CommandFinished += (o,e) =>
+            LoginCommand.CommandFinished += (o, e) =>
             {
                 string title, msg;
                 if (e.Type == LoginEventArgs.TaskType.Login)
                 {
-                    title = String.Format("{0} {1} {2}", 
+                    title = String.Format("{0} {1} {2}",
                     e.LoginResult.Result ? Resources.Labels.SmileHappy : Resources.Labels.SmileSad,
                     Resources.Labels.Login,
                     e.LoginResult.Result ? Resources.Labels.Successful : Resources.Labels.Unsuccessful
-                    );                    
+                    );
                     msg = e.LoginResult.ZumpaResult;
                 }
                 else
@@ -87,14 +87,14 @@ namespace ZumpaReader.ViewModel
                     msg = String.Format("{0} {1}", Resources.Labels.Logout,
                                     e.LogoutResult ? Resources.Labels.Successful : Resources.Labels.Unsuccessful);
                 }
-                
-                ShowToast(title, msg);                
+
+                ShowToast(title, msg);
             };
-        }        
+        }
 
         private void ShowToast(string title, string message)
         {
-            ToastPrompt tp = new ToastPrompt{ Message = message, Title = title, TextOrientation = System.Windows.Controls.Orientation.Vertical};
+            ToastPrompt tp = new ToastPrompt { Message = message, Title = title, TextOrientation = System.Windows.Controls.Orientation.Vertical, TextWrapping = TextWrapping.Wrap };
             tp.Show();
         }
 
