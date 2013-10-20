@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using ZumpaReader.Utils;
 
 namespace ZumpaReader.Model
 {
@@ -50,8 +51,7 @@ namespace ZumpaReader.Model
                 return _author;
             }
         }
-
-        private static int TIME_OFFSET = 10000;
+        
         private string _date;
         public string ReadableDateTime
         {
@@ -59,10 +59,7 @@ namespace ZumpaReader.Model
             {
                 if (_date == null)
                 {
-                    long t = (Time + (DateTimeOffset.Now.Offset.Hours * 3600000)) * TIME_OFFSET;
-                    _date = (Time > 86400000)
-                            ? new DateTime(t).AddYears(1969).AddDays(-1).ToString("d.MM.yyyy HH:mm.ss", CultureInfo.InvariantCulture)
-                            : new DateTime(t).ToString("HH:mm");
+                    _date = StringUtils.ConvertDateTime(Time);
                 }
                 return _date;
             }
