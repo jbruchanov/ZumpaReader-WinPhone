@@ -26,7 +26,7 @@ namespace ZumpaReader.Controls
             {
                 if (_loader.IsImageLink(link))
                 {
-                    Content = new ProgressBar { IsIndeterminate = true, MinHeight = 32, MinWidth = 200 };
+                    Content = new ProgressBar { IsIndeterminate = true, MinHeight = 32, MinWidth = 300 };                    
                     LoadImageAsync(link);
                 }
             }
@@ -43,7 +43,8 @@ namespace ZumpaReader.Controls
             }
             catch (Exception e)
             {
-                Content = link;//image link, but links page
+
+                Content = link;//image link, but link is invalid (i.g. not real image)
                 _loader.NotifyInvalidLink(link);
             }
         }
