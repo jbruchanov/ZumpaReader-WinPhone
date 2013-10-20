@@ -20,6 +20,7 @@ namespace ZumpaReader.ViewModel
         private const int FAV_INDEX = 0;
         private const int RELOAD_INDEX = 1;
         private const int ADD_INDEX = 2;
+        private const int MAX_IMAGES = 10;
         #region fields
 
         private string _pageTitle;
@@ -38,11 +39,17 @@ namespace ZumpaReader.ViewModel
         }
 
         private bool _isProgressVisible;
-
         public bool IsProgressVisible
         {
             get { return _isProgressVisible; }
             set { _isProgressVisible = value; NotifyPropertyChange(); }
+        }
+
+        private bool _ignoreImages;
+        public bool IgnoreImages
+        {
+            get { return _ignoreImages; }
+            set { _ignoreImages = value; NotifyPropertyChange(); }
         }
 
         private HttpService _service;
@@ -66,7 +73,8 @@ namespace ZumpaReader.ViewModel
             _service = HttpService.CreateInstance();
 
             _switchFavoriteThreadCommand = new SwitchFavoriteThreadCommand(_service, (result) => { if (result) { _isFavorite = !_isFavorite; ReinitFavoriteButton(); } });
-            _switchFavoriteThreadCommand.CanExecuteChanged += (o, e) => { 
+            _switchFavoriteThreadCommand.CanExecuteChanged += (o, e) =>
+            {
                 IsProgressVisible = !_switchFavoriteThreadCommand.CanExecuteIt;
                 (Page.ApplicationBar.Buttons[FAV_INDEX] as ApplicationBarIconButton).IsEnabled = _switchFavoriteThreadCommand.CanExecuteIt;
             };
@@ -92,7 +100,21 @@ namespace ZumpaReader.ViewModel
 
         private void OnDownloadedPage(List<ZumpaSubItem> list)
         {
+            IgnoreImages = CountImages(list) > MAX_IMAGES;
             DataItems = new ObservableCollection<ZumpaSubItem>(list);
+        }
+
+        private int CountImages(List<ZumpaSubItem> list)
+        {
+            int result = 0;
+            list.ForEach((item) =>
+            {
+                if (item.InsideUris != null)
+                { 
+                    item.InsideUris.ForEach((e) => result += ImageLoader.IsImageLinkByExtension(e) ? 1 : 0); 
+                }
+            });
+            return result;
         }
 
         public override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)

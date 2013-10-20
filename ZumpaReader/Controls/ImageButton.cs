@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using ZumpaReader.Commands;
@@ -14,6 +15,16 @@ namespace ZumpaReader.Controls
     {
         private static ImageLoader _loader;
 
+        public bool IgnoreImages
+        {
+            get { return (bool)GetValue(IgnoreImagesProperty); }
+            set { SetValue(IgnoreImagesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IgnoreImages.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IgnoreImagesProperty =
+            DependencyProperty.Register("IgnoreImages", typeof(bool), typeof(ImageButton), new PropertyMetadata(false));
+
         static ImageButton()
         {
             _loader = new ImageLoader();
@@ -22,13 +33,10 @@ namespace ZumpaReader.Controls
         protected override void OnContentChanged(object oldContent, object newContent)
         {
             string link = newContent as string;
-            if (AppSettings.AutoLoadImages)
+            if (!IgnoreImages && AppSettings.AutoLoadImages && _loader.IsImageLink(link))
             {
-                if (_loader.IsImageLink(link))
-                {
-                    Content = new ProgressBar { IsIndeterminate = true, MinHeight = 32, MinWidth = 300 };                    
-                    LoadImageAsync(link);
-                }
+                Content = new ProgressBar { IsIndeterminate = true, MinHeight = 32, MinWidth = 300 };
+                LoadImageAsync(link);
             }
         }
 

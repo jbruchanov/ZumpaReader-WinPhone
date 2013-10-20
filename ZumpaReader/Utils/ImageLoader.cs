@@ -143,13 +143,19 @@ namespace ZumpaReader.Utils
                 link = link.ToLower();
                 if (!IsInvalidImageLink(link))
                 {
-                    foreach (var item in IMAGE_EXTS)
-                    {
-                        if (link.EndsWith(item))
-                        {
-                            return true;
-                        }
-                    }
+                    return IsImageLinkByExtension(link);
+                }
+            }
+            return false;
+        }
+
+        public static bool IsImageLinkByExtension(string link)
+        {
+            foreach (var item in IMAGE_EXTS)
+            {
+                if (link.EndsWith(item))
+                {
+                    return true;
                 }
             }
             return false;
