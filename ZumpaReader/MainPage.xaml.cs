@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using ZumpaReader.ViewModel;
 using System.Diagnostics;
+using ZumpaReader.Utils;
 
 namespace ZumpaReader
 {

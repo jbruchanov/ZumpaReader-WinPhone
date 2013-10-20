@@ -9,6 +9,7 @@
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
                             xmlns:res="clr-namespace:ZumpaReader.Resources;assembly=ZumpaReader"
+                            xmlns:views="clr-namespace:ZumpaReader.Views;assembly=ZumpaReader"
                             x:Class="ZumpaReader.MainPage"
                             mc:Ignorable="d"
                             d:DesignWidth="480"
@@ -52,20 +53,17 @@
                                       IsFlatList="True"
                                       x:Name="ListBox">
                 <toolkit:LongListSelector.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}">
-                            <toolkit:ContextMenuService.ContextMenu>
+                    <DataTemplate>                        
+                        <views:ZumpaItemView DataContext="{Binding}"
+                                             Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}" >
+                        <toolkit:ContextMenuService.ContextMenu>
                                 <toolkit:ContextMenu Name="ContextMenu">
                                     <toolkit:MenuItem Header="{Binding Path=Labels.Favorite, Source={StaticResource Labels}}"
                                                       Command="{Binding Source={StaticResource ViewModel}, Path=SwitchFavoriteThreadCommand}"
                                                       CommandParameter="{Binding}" />
                                 </toolkit:ContextMenu>
                             </toolkit:ContextMenuService.ContextMenu>
-                            <ContentControl Content="{Binding}"
-                                            HorizontalAlignment="Stretch"
-                                            HorizontalContentAlignment="Stretch"
-                                            ContentTemplate="{StaticResource ZumpaItemTemplate}" />
-                        </Grid>
+                        </views:ZumpaItemView>
                     </DataTemplate>
                 </toolkit:LongListSelector.ItemTemplate>
                 <toolkit:LongListSelector.ListFooterTemplate>

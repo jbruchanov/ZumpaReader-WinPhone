@@ -166,6 +166,9 @@
     <Compile Include="WebService\IWebService.cs" />
     <Compile Include="WebService\WebService.cs" />
     <Compile Include="WebService\HttpService.cs" />
+    <Compile Include="Views\ZumpaItemView.xaml.cs">
+      <DependentUpon>ZumpaItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ZumpaReaderResources.cs" />
     <Compile Include="Model\ZumpaItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -212,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="SampleData\SampleZumpaItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="SampleData\SampleThreadPageViewModel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -219,6 +226,10 @@
     <Page Include="SampleData\SampleMainPageViewModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ZumpaItemView.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

@@ -9,24 +9,28 @@ namespace ZumpaReader.Utils
 {
     public class UIHelper
     {
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        public static DependencyObject FindVisualChildren(DependencyObject depObj, string name)
         {
             if (depObj != null)
             {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                for (int i = 0, n = VisualTreeHelper.GetChildrenCount(depObj); i < n; i++)
                 {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
+                    var obj = VisualTreeHelper.GetChild(depObj, i);
+                    object objName = obj.GetValue(FrameworkElement.NameProperty);
+                    if (name.Equals(objName))
                     {
-                        yield return (T)child;
+                        return obj;
                     }
-
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    else
                     {
-                        yield return childOfChild;
+                        if (VisualTreeHelper.GetChildrenCount(obj) > 0)
+                        {
+                            return FindVisualChildren(obj, name);
+                        }
                     }
                 }
             }
+            return null;
         }
     }
 }

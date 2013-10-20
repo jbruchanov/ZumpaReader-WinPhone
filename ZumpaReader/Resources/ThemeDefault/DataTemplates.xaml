@@ -7,64 +7,7 @@
                     xmlns:cmd="clr-namespace:ZumpaReader.Commands;assembly=ZumpaReader"
                     xmlns:res="clr-namespace:ZumpaReader.Resources;assembly=ZumpaReader"
                     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ZumpaReader="clr-namespace:ZumpaReader">
 
-    <conv:StripColorConverter x:Name="StripColorConverter" />
-
-    <DataTemplate x:Name="ZumpaItemTemplate">    
-        <Grid Margin="0,1">                   
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0"
-                      Background="{Binding Converter={StaticResource StripColorConverter}}" />
-                <Grid Grid.Column="1" Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>                    
-                    <TextBlock Text="{Binding Subject}"
-                               Grid.Row="0"
-                               HorizontalAlignment="Stretch"
-                               Style="{StaticResource SubjectFontSize}"
-                               Foreground="{StaticResource ZumpaWhite}"
-                               TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding Author}"
-                               Grid.Row="1"
-                               x:Name="Author"
-                               FontSize="16"
-                               Foreground="{StaticResource ZumpaYellow}"
-                               Margin="0,5,0,0" />
-                    <StackPanel HorizontalAlignment="Right"
-                                Grid.Row="1"
-                                Margin="5,0,5,0"
-                                VerticalAlignment="Bottom"
-                                Orientation="Horizontal">
-                        <TextBlock Text="{Binding LastAnswerAuthor}"
-                                   Grid.Row="1"
-                                   FontSize="14"
-                                   VerticalAlignment="Bottom"
-                                   Foreground="{StaticResource ZumpaYellow}"
-                                   Margin="5,0,5,0" />
-                        <TextBlock Text="{Binding Responses}"
-                                   Grid.Row="1"
-                                   FontSize="20"
-                                   Width="25"
-                                   TextAlignment="Center"
-                                   Foreground="{StaticResource ZumpaWhite}"
-                                   Margin="5,0,5,0" />
-                        <TextBlock Text="{Binding ReadableDateTime}"
-                                   Grid.Row="1"
-                                   FontSize="14"
-                                   MinWidth="33"
-                                   VerticalAlignment="Bottom"
-                                   Foreground="{StaticResource ZumpaYellow}"
-                                   />
-                    </StackPanel>
-                </Grid>
-            </Grid>
-        </Grid>
-    </DataTemplate>
+	<conv:StripColorConverter x:Name="StripColorConverter" />
 </ResourceDictionary>
