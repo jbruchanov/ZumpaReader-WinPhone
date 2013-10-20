@@ -27,5 +27,17 @@ namespace ZumpaReader.Utils
                     ? new DateTime(t).AddYears(1969).AddDays(-1).ToString("d.MM.yyyy HH:mm.ss", CultureInfo.InvariantCulture)
                     : new DateTime(t).ToString("HH:mm");
         }
+
+        public static string ConvertToReadableSize(long len)
+        {
+            string[] sizes = { "B", "KiB", "MiB" };
+            int order = 0;
+            while (len >= 1024 && order + 1 < sizes.Length)
+            {
+                order++;
+                len = len / 1024;
+            }
+            return String.Format("{0:0.##} {1}", len, sizes[order]);
+        }
     }
 }

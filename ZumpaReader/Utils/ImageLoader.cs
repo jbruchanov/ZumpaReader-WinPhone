@@ -219,5 +219,29 @@ namespace ZumpaReader.Utils
                                 select q).FirstOrDefault();
             return item != null ? item.File : null;
         }
+
+        public static StorageValues GetStorageValues()
+        {
+            StorageValues values = new StorageValues();
+
+            using (var storage = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                values.FreeSpace = storage.AvailableFreeSpace;
+            }
+            using (var db = new ZumpaDB())
+            {
+                if (db.Images.Count() > 0)
+                {
+                    values.Downloaded = db.Images.Sum(e => e.Size);
+                }
+            }
+            return values;
+        }
+    }
+
+    public struct StorageValues
+    {
+        public long FreeSpace;
+        public long Downloaded;
     }
 }

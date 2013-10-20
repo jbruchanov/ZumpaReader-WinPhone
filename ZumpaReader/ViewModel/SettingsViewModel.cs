@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ZumpaReader.Commands;
 using ZumpaReader.Converters;
 using ZumpaReader.Model;
+using ZumpaReader.Utils;
 using ZumpaReader.WebService;
 
 namespace ZumpaReader.ViewModel
@@ -108,6 +110,23 @@ namespace ZumpaReader.ViewModel
                 Password = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password];
             }
             StorageValues = Resources.Labels.InProgress;
+            LoadStorageValues();
+        }
+
+        private async void LoadStorageValues()
+        {
+            var vals = await LoadStorageValuesAsync();
+            StorageValues = ConvertStorageValues(vals.Downloaded, vals.FreeSpace);
+        }
+
+        private Task<StorageValues> LoadStorageValuesAsync()
+        {
+            var task = new Task<StorageValues>( () =>
+            {
+                return ImageLoader.GetStorageValues();
+            });
+            task.Start();
+            return task;
         }
 
         private void ShowToast(string title, string message)
@@ -127,7 +146,7 @@ namespace ZumpaReader.ViewModel
         }
 
         private static string ConvertStorageValues(long images, long freeSpace){
-            return String.Format("{0}:{1}\nFree{2}:{3}", Resources.Labels.Downloaded, images, Resources.Labels.Free, freeSpace);
+            return String.Format("{0}:\t{1}\n{2}:\t{3}", Resources.Labels.Downloaded, StringUtils.ConvertToReadableSize(images), Resources.Labels.Free, StringUtils.ConvertToReadableSize(freeSpace));
         }
     }
 }
