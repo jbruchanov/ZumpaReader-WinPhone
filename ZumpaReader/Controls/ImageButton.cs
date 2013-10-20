@@ -58,7 +58,7 @@ namespace ZumpaReader.Controls
         {
             if (!IgnoreImages && AppSettings.AutoLoadImages && _loader.IsImageLink(link))
             {
-                Content = new ProgressBar { IsIndeterminate = true, MinHeight = 32, MinWidth = 300 };
+                Content = new ProgressBar { IsIndeterminate = true, MinHeight = 23, MinWidth = 300 };
                 LoadImageAsync(link);
             }
             else
