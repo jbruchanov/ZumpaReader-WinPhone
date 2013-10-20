@@ -1,4 +1,5 @@
 ﻿using Coding4Fun.Toolkit.Controls;
+using RemoteLogCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,6 +91,12 @@ namespace ZumpaReader.ViewModel
 
                 ShowToast(title, msg);
             };
+
+            if (IsEmulator())
+            {
+                Login = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Login];
+                Password = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.Password];
+            }
         }
 
         private void ShowToast(string title, string message)
@@ -101,6 +108,11 @@ namespace ZumpaReader.ViewModel
         public string Convert(bool value)
         {
             return value ? Resources.Labels.Login : Resources.Labels.Logout;
+        }
+
+        public static bool IsEmulator()
+        {         
+            return "XDeviceEmulator".Equals(new DeviceDataProvider().GetDevice().Model);
         }
     }
 }

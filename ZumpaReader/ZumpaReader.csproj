@@ -113,6 +113,7 @@
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\BaseLoadCommand.cs" />
     <Compile Include="Commands\ImageOperationCommand.cs" />
+    <Compile Include="Commands\LoadImageCommand.cs" />
     <Compile Include="Commands\LoginCommand.cs" />
     <Compile Include="Commands\LoadThreadPageCommand.cs" />
     <Compile Include="Commands\LoadMainPageCommand.cs" />
@@ -121,8 +122,10 @@
     <Compile Include="Commands\SendMessageCommand.cs" />
     <Compile Include="Commands\SwitchFavoriteThreadCommand.cs" />
     <Compile Include="Commands\UploadImageCommand.cs" />
+    <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Converters\BackgroundColorConverter.cs" />
     <Compile Include="Converters\BooleanToStringConverter.cs" />
+    <Compile Include="Converters\LinkConverter.cs" />
     <Compile Include="Converters\StripColorConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -133,6 +136,7 @@
       <DependentUpon>PostPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ThemeManager.cs" />
+    <Compile Include="Utils\ImageLoader.cs" />
     <Compile Include="Utils\PushHelper.cs" />
     <Compile Include="Utils\RLogHelper.cs" />
     <Compile Include="Utils\StringUtils.cs" />

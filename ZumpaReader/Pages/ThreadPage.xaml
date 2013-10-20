@@ -15,10 +15,11 @@
                             xmlns:vm="clr-namespace:ZumpaReader.ViewModel;assembly=ZumpaReader"
                             xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
                             xmlns:res="clr-namespace:ZumpaReader.Resources"
+                            xmlns:ctrls="clr-namespace:ZumpaReader.Controls"
                             d:DataContext="{d:DesignData /SampleData/SampleThreadPageViewModel.xaml}"
                             shell:SystemTray.IsVisible="True">
     <phone:PhoneApplicationPage.Resources>
-        <conv:BackgroundColorConverter x:Key="BackgroundConverter" />
+        <conv:BackgroundColorConverter x:Key="BackgroundConverter" />        
         <res:I18N x:Key="Labels" />
         <vm:ThreadPageViewModel x:Key="ViewModel" />
         
@@ -101,13 +102,14 @@
                                         </ListBox.ItemContainerStyle>
                                             <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <Button Content="{Binding}"                                                
+                                                <ctrls:ImageButton Content="{Binding}"                                                
                                                         Command="{Binding Source={StaticResource ViewModel}, Path=OpenLinkCommand}"
                                                         CommandParameter="{Binding}"
                                                         FontSize="16"
+                                                        MinHeight="32"
                                                         HorizontalAlignment="Stretch"
-                                                        FontWeight="Light">                                                        
-                                                </Button>
+                                                        FontWeight="Light">
+                                                </ctrls:ImageButton>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
