@@ -201,8 +201,11 @@ namespace ZumpaReader
             get
             {
                 if (_storage == null) return false;
-                bool result = true;
-                _storage.TryGetValue<bool>(PropertyKeys.AutoLoadImages.ToString(), out result);
+                bool result;
+                if (!_storage.TryGetValue<bool>(PropertyKeys.AutoLoadImages.ToString(), out result))
+                {
+                    result = true;
+                }
                 return result;
             }
 
