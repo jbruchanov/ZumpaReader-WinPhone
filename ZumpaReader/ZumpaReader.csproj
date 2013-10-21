@@ -137,6 +137,7 @@
       <DependentUpon>PostPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ThemeManager.cs" />
+    <Compile Include="Utils\AnimationHelper.cs" />
     <Compile Include="Utils\ImageLoader.cs" />
     <Compile Include="Utils\PushHelper.cs" />
     <Compile Include="Utils\RLogHelper.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ThreadPageViewModel.cs" />
+    <Compile Include="Views\BaseZumpaItemView.cs" />
     <Compile Include="WebService\IWebService.cs" />
     <Compile Include="WebService\WebService.cs" />
     <Compile Include="WebService\HttpService.cs" />
