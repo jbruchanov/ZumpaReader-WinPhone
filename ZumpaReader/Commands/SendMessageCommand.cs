@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using ZumpaReader.Model;
 using ZumpaReader.WebService;
 
 namespace ZumpaReader.Commands
@@ -29,7 +30,9 @@ namespace ZumpaReader.Commands
             {
                 EnsureInternet();
                 HasPostInformation info = (HasPostInformation)parameter;
-                result = await _webService.SendMessage(info.Subject, info.Message, info.ThreadID);
+                Survey s = info.Survey;
+                //if (!CheckSurvey(s)) { s = null;}
+                result = await _webService.SendMessage(info.Subject, info.Message, null, info.ThreadID);
             }
             catch (Exception e)
             {
@@ -41,6 +44,38 @@ namespace ZumpaReader.Commands
                 Deployment.Current.Dispatcher.BeginInvoke( () => callback.Invoke(result.Context));
             }
         }
+
+        /// <summary>
+        /// Check survey, throws exception if it's invalid
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns>true if is fine and use it, false to ignore it</returns>
+        public bool CheckSurvey(Survey s)
+        {
+            if (!string.IsNullOrEmpty(s.Question))
+            {
+                if (string.IsNullOrEmpty(s.Answers[0]) || string.IsNullOrEmpty(s.Answers[1]))
+                {
+                    throw new Exception(Resources.Labels.InvalidSurvey);
+                }
+            }
+            else
+            {
+                bool anything = !string.IsNullOrEmpty(s.Question);
+                foreach(string item in s.Answers){
+                    anything |= !string.IsNullOrEmpty(item);
+                }
+                if (anything)
+                {
+                    throw new Exception(Resources.Labels.InvalidSurvey);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
     public interface HasPostInformation
@@ -48,5 +83,6 @@ namespace ZumpaReader.Commands
         string ThreadID {get;}
         string Subject {get;}
         string Message {get;}
+        Survey Survey {get;}
     }
 }

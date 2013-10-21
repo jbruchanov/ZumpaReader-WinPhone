@@ -82,6 +82,7 @@ namespace ZumpaReader.ViewModel
         {
             var service = HttpService.CreateInstance();
             LoginCommand = new LoginCommand(service);
+            LoginCommand.CanExecuteChanged += (o,e) => {IsProgressVisible = !LoginCommand.CanExecuteIt;};
             LoginCommand.CommandFinished += (o, e) =>
             {
                 string title, msg;
@@ -121,7 +122,7 @@ namespace ZumpaReader.ViewModel
 
         private Task<StorageValues> LoadStorageValuesAsync()
         {
-            var task = new Task<StorageValues>( () =>
+            var task = new Task<StorageValues>(() =>
             {
                 return ImageLoader.GetStorageValues();
             });
@@ -145,7 +146,8 @@ namespace ZumpaReader.ViewModel
             return "XDeviceEmulator".Equals(new DeviceDataProvider().GetDevice().Model);
         }
 
-        private static string ConvertStorageValues(long images, long freeSpace){
+        private static string ConvertStorageValues(long images, long freeSpace)
+        {
             return String.Format("{0}:\t{1}\n{2}:\t{3}", Resources.Labels.Downloaded, StringUtils.ConvertToReadableSize(images), Resources.Labels.Free, StringUtils.ConvertToReadableSize(freeSpace));
         }
     }

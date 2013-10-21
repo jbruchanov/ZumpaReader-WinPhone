@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Answers" xml:space="preserve">
+    <value>Answers</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>Žumπčka</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="InProgress" xml:space="preserve">
     <value>In progress...</value>
+  </data>
+  <data name="InvalidSurvey" xml:space="preserve">
+    <value>Invalid survey!</value>
   </data>
   <data name="LastAuthor" xml:space="preserve">
     <value>Last author</value>
@@ -189,6 +195,9 @@
   <data name="Photo" xml:space="preserve">
     <value>Photo</value>
   </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
   <data name="ReplyTo" xml:space="preserve">
     <value>Reply to...</value>
   </data>
@@ -218,6 +227,9 @@
   </data>
   <data name="Successful" xml:space="preserve">
     <value>Successful</value>
+  </data>
+  <data name="Survey" xml:space="preserve">
+    <value>Survey</value>
   </data>
   <data name="Unsuccessful" xml:space="preserve">
     <value>Unsuccessful</value>

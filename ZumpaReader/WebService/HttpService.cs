@@ -37,6 +37,7 @@ namespace ZumpaReader.WebService
         private const string PARAM_SURVEY_ITEM = "SurveyItem";
         private const string PARAM_LAST_ANSWER_AUTHOR = "LastAnswerAuthor";
         private const string PARAM_FILTER_TYPE = "FilterType";
+        private const string PARAM_SURVEY = "Survey";
 
 
         private const string TYPE_JSON = "application/json";
@@ -68,7 +69,7 @@ namespace ZumpaReader.WebService
         /// <returns>Serialized data into json object</returns>
         private string JsonParamsCreator(params object[] values)
         {
-            Dictionary<string, string> pars = new Dictionary<string, string>();
+            Dictionary<string, object> pars = new Dictionary<string, object>();
             if (values != null)
             {
                 if (values.Length % 2 != 0)
@@ -81,7 +82,7 @@ namespace ZumpaReader.WebService
                     object value = values[++i];
                     if (key != null && value != null)
                     {
-                        pars[key.ToString()] = value.ToString();
+                        pars[key.ToString()] = value;
                     }
                 }
             }
@@ -175,7 +176,7 @@ namespace ZumpaReader.WebService
             return Parse<List<ZumpaSubItem>>(jsonResponse);
         }
 
-        public async override Task<ContextResult<bool>> SendMessage(string subject, string message, string threadId = null)
+        public async override Task<ContextResult<bool>> SendMessage(string subject, string message, Survey survey, string threadId = null)
         {
             EnsureLoggedIn();
 
@@ -185,9 +186,10 @@ namespace ZumpaReader.WebService
             }
             string @params = JsonParamsCreator(PARAM_SUBJECT, subject,
                                                PARAM_MESSAGE, message,
+                                               PARAM_SURVEY, survey,
                                                PARAM_THREAD_ID, threadId);
             string jsonResponse = await PostData(Config.BaseURL + POST, @params);
-            return Parse<bool>(jsonResponse);
+            return Parse<bool>("{}");
         }
 
         public async override Task<ContextResult<Survey>> VoteSurvey(int id, int vote)

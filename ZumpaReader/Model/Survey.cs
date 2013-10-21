@@ -18,10 +18,10 @@ namespace ZumpaReader.Model
         public int ID { get; set; }
 
         [JsonProperty("Answers")]
-        public List<string> Answers { get; set; }
+        public string[] Answers { get; set; }
 
         [JsonProperty("Percents")]
-        public List<int> Percents { get; set; }
+        public int[] Percents { get; set; }
 
         [JsonProperty("VotedItem")]
         public int VotedItem { get; set; }
@@ -29,6 +29,11 @@ namespace ZumpaReader.Model
         public Survey()
         {
             VotedItem = -1;
+        }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

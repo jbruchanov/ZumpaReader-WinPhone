@@ -47,7 +47,8 @@
         <!--ContentPanel - place additional content here-->
 
 
-        <controls:Panorama Grid.Row="1" Name="Panorama"                           
+        <controls:Panorama Grid.Row="1"
+                           Name="Panorama"
                            Margin="5">
             <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.General}">
                 <Grid x:Name="ContentPanel">
@@ -72,7 +73,7 @@
                                           Text="{Binding Message, Mode=TwoWay}" />
                 </Grid>
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="Photo"
+            <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.Photo}"
                                    Name="PhotoPanoramaItem">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -133,13 +134,52 @@
                                 CommandParameter="90" />
                     </Grid>
                     <Image Name="image"
-                           Source="{Binding Photo}"                           
+                           Source="{Binding Photo}"
                            Grid.Row="2" />
-                    <Button Grid.Row="3" Content="Upload" 
-                    Command="{Binding UploadCommand}" 
-                    CommandParameter="{Binding Photo}" />
+                    <Button Grid.Row="3"
+                            Content="Upload"
+                            Command="{Binding UploadCommand}"
+                            CommandParameter="{Binding Photo}" />
                 </Grid>
-                
+
+            </controls:PanoramaItem>
+            <controls:PanoramaItem  Name="SurveyPanoramaItem"
+                                    Visibility="Collapsed"
+                                    Header="{Binding Source={StaticResource Labels},Path=Labels.Survey}">
+                <ScrollViewer>
+                <StackPanel DataContext="{Binding Survey}">
+                <TextBlock 
+                           Text="{Binding Path=Labels.Question, Source={StaticResource Labels}}" />
+                <toolkit:PhoneTextBox InputScope="Chat"
+                                      TextWrapping="Wrap"
+                                      Text="{Binding Question, Mode=TwoWay}" />
+                <TextBlock Text="{Binding Path=Labels.Answers, Source={StaticResource Labels}}" />
+                    <toolkit:PhoneTextBox InputScope="Chat"
+                                          TextWrapping="Wrap"
+                                              Hint="1"
+                                              Text="{Binding Answers[0], Mode=TwoWay}" />
+                    <toolkit:PhoneTextBox InputScope="Chat"
+                                           Hint="2"
+                                            TextWrapping="Wrap"
+                                            Text="{Binding Answers[1], Mode=TwoWay}" />
+                    <toolkit:PhoneTextBox InputScope="Chat"
+                                              Hint="3"
+                                              TextWrapping="Wrap"
+                                            Text="{Binding Answers[2], Mode=TwoWay}" />
+                    <toolkit:PhoneTextBox InputScope="Chat"
+                                              Hint="4"
+                                              TextWrapping="Wrap"
+                                            Text="{Binding Answers[3], Mode=TwoWay}" />
+                    <toolkit:PhoneTextBox InputScope="Chat"
+                                              Hint="5"
+                                              TextWrapping="Wrap"
+                                            Text="{Binding Answers[4], Mode=TwoWay}" />
+                    <toolkit:PhoneTextBox InputScope="Chat"
+                                              Hint="6"
+                                              TextWrapping="Wrap"
+                                            Text="{Binding Answers[5], Mode=TwoWay}" />                        
+                    </StackPanel>
+                </ScrollViewer>
             </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>

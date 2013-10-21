@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Threading;
+using ZumpaReader.Model;
 
 namespace ZumpaReader.ViewModel
 {
@@ -105,17 +106,25 @@ namespace ZumpaReader.ViewModel
             set { _sendMessageCommand = value; NotifyPropertyChange(); }
         }
 
+        private Survey _survey;
+        public Survey Survey
+        {
+            get { return _survey; }
+            set { _survey = value; NotifyPropertyChange(); }
+        }
+
         #endregion
 
         private IWebService _webService;
 
         public PostPageViewModel()
         {
+            _survey = new Survey() { Answers = new string[6] };
             _webService = HttpService.CreateInstance();
             SendMessageCommand = new SendMessageCommand(_webService);
-            SendMessageCommand.CanExecuteChanged += (o, e) => 
-            { 
-                IsProgressVisible = !SendMessageCommand.CanExecute(null); 
+            SendMessageCommand.CanExecuteChanged += (o, e) =>
+            {
+                IsProgressVisible = !SendMessageCommand.CanExecute(null);
                 (Page.ApplicationBar.Buttons[SEND_INDEX] as ApplicationBarIconButton).IsEnabled = !IsProgressVisible;
             };
         }
@@ -136,7 +145,7 @@ namespace ZumpaReader.ViewModel
                     });
                 });
                 return;
-            }            
+            }
 
             string title = null;
             if (Page.NavigationContext.QueryString.TryGetValue(SUBJECT, out title))
@@ -146,6 +155,7 @@ namespace ZumpaReader.ViewModel
                 if (Page.NavigationContext.QueryString.TryGetValue(THREAD_ID, out threadId))
                 {
                     ThreadID = threadId;
+                    (Page as PostPage).SurveyPanoramaItem.Visibility = Visibility.Collapsed;
                 }
             }
 
@@ -178,10 +188,10 @@ namespace ZumpaReader.ViewModel
 
         private void InitImaging(Stream stream, string fileId)
         {
-            ImageOperationCommand = stream != null 
+            ImageOperationCommand = stream != null
                                         ? new ImageOperationCommand(stream, (e) => { OnPhotoChanged(e); })
                                         : new ImageOperationCommand(fileId, (e) => { OnPhotoChanged(e); });
-            
+
             ImageOperationCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !ImageOperationCommand.CanExecute(null); };
             ImageOperationCommand.Execute("1");//Load default image
 
@@ -192,13 +202,13 @@ namespace ZumpaReader.ViewModel
         public void OnImageChoosing()
         {
             PhotoChooserTask task = new PhotoChooserTask();
-            task.Completed += (o,e) => { OnImageChosen(e) ;};
+            task.Completed += (o, e) => { OnImageChosen(e); };
             task.Show();
         }
 
         private void OnImageChosen(PhotoResult e)
         {
-            if (e.TaskResult == TaskResult.OK) 
+            if (e.TaskResult == TaskResult.OK)
             {
                 InitImaging(e.ChosenPhoto, null);
             }
@@ -210,7 +220,7 @@ namespace ZumpaReader.ViewModel
             PhotoResolution = string.Format("{0}x{1}", source.PixelWidth, source.PixelHeight);
             using (MemoryStream ms = await UploadImageCommand.SaveToJpegAsync(source))
             {
-                PhotoSize = String.Format("{0:#,###0} B", ms.Length); 
+                PhotoSize = String.Format("{0:#,###0} B", ms.Length);
             }
         }
 

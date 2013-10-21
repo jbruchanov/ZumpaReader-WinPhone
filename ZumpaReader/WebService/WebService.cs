@@ -100,9 +100,10 @@ namespace ZumpaReader.WebService
         /// </summary>
         /// <param name="subject"></param>
         /// <param name="message"></param>
+        /// <param name="survey">nullable survey, valid only for new thread</param>
         /// <param name="threadId">Numeric value for thread, if it's null new thread is created</param>
         /// <returns></returns>
-        public abstract Task<WebService.ContextResult<bool>> SendMessage(string subject, string message, string threadId = null);
+        public abstract Task<WebService.ContextResult<bool>> SendMessage(string subject, string message, Survey survey, string threadId = null);
 
         /// <summary>
         /// Vote survey
