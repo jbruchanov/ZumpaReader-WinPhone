@@ -82,6 +82,10 @@ namespace ZumpaReader.Utils
             using (IsolatedStorageFileStream fileStream = _storage.CreateFile(file))
             {
                 imageStream = await LoadLinkAsync(link);
+                if (imageStream == null)
+                {
+                    return null;
+                }
                 await imageStream.CopyToAsync(fileStream);
                 len = imageStream.Position;
                 imageStream.Position = 0;
@@ -107,9 +111,16 @@ namespace ZumpaReader.Utils
         /// <returns></returns>
         private async Task<Stream> LoadLinkAsync(string link)
         {
-            var wc = new WebClient();
-            Stream s = await wc.OpenReadTaskAsync(link);
-            return s;
+            try
+            {
+                var wc = new WebClient();
+                Stream s = await wc.OpenReadTaskAsync(link);
+                return s;
+            }
+            catch (Exception e)
+            {
+                return null;//we can't download it now
+            }
         }
 
         /// <summary>
@@ -187,6 +198,14 @@ namespace ZumpaReader.Utils
                     item.IsValid = false;
                     ZumpaDB.Instance.SubmitChanges();
                 }
+            }
+            else
+            {
+                //it was completely problem with loading
+                ImageRecord ir = new ImageRecord{Link = link, File = "", Size = 0, IsValid = false};
+                _cache[link] = ir;
+                ZumpaDB.Instance.Images.InsertOnSubmit(ir);
+                ZumpaDB.Instance.SubmitChanges();
             }
         }
 

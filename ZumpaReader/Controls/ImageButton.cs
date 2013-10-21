@@ -73,9 +73,16 @@ namespace ZumpaReader.Controls
             try
             {
                 Stream s = await _loader.LoadAsync(link);
-                BitmapImage bi = new BitmapImage();
-                bi.SetSource(s);
-                Content = new Image { Source = bi };
+                if (s != null)
+                {
+                    BitmapImage bi = new BitmapImage();
+                    bi.SetSource(s);
+                    Content = new Image { Source = bi };
+                }
+                else
+                {
+                    Content = new TextBlock { Text = link, TextWrapping = TextWrapping.Wrap };
+                }
             }
             catch (Exception e)
             {
