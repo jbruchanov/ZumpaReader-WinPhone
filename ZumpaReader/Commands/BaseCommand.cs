@@ -50,5 +50,13 @@ namespace ZumpaReader.Commands
         {
             new ToastPrompt { Title = title, Message = msg, TextWrapping = TextWrapping.Wrap }.Show();
         }
+
+        protected void EnsureLoggedIn()
+        {
+            if (!AppSettings.IsLoggedIn)
+            {
+                throw new Exception(Resources.Labels.NotLoggedIn);
+            }
+        }
     }
 }

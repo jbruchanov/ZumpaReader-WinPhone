@@ -28,9 +28,9 @@ namespace ZumpaReader.Commands
         public override void Execute(object parameter)
         {
             var item = parameter as ZumpaSubItem;
-
             try
             {
+                EnsureLoggedIn();
                 string url = String.Format("?{0}={1}&{2}={3}", PostPageViewModel.THREAD_ID, _threadId, PostPageViewModel.SUBJECT, HttpUtility.UrlEncode(_subject));
                 if (item != null)
                 {

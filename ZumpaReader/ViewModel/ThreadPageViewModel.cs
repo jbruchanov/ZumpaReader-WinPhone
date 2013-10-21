@@ -61,7 +61,7 @@ namespace ZumpaReader.ViewModel
 
         public ICommand OpenLinkCommand { get; private set; }
 
-        public ReplyCommand ReplyCommand { get; private set; }        
+        public ICommand ReplyCommand { get; private set; }        
 
         public bool ReloadDataNavigationBack {get;set;}
 

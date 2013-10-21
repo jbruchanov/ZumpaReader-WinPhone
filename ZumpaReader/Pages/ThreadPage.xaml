@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage x:Class="ZumpaReader.Pages.ThreadPage"
+﻿<phone:PhoneApplicationPage
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -6,16 +6,14 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                            FontSize="{StaticResource PhoneFontSizeNormal}"
-                            Foreground="{StaticResource PhoneForegroundBrush}"
-                            SupportedOrientations="PortraitOrLandscape"
-                            Orientation="Portrait"
-                            mc:Ignorable="d"
                             xmlns:vm="clr-namespace:ZumpaReader.ViewModel;assembly=ZumpaReader"
                             xmlns:conv="clr-namespace:ZumpaReader.Converters;assembly=ZumpaReader"
                             xmlns:res="clr-namespace:ZumpaReader.Resources"
                             xmlns:ctrls="clr-namespace:ZumpaReader.Controls"
+                            xmlns:ZumpaReader="clr-namespace:ZumpaReader" x:Class="ZumpaReader.Pages.ThreadPage"
+                            SupportedOrientations="PortraitOrLandscape"
+                            Orientation="Portrait"
+                            mc:Ignorable="d"
                             d:DataContext="{d:DesignData /SampleData/SampleThreadPageViewModel.xaml}"
                             shell:SystemTray.IsVisible="True">
     <phone:PhoneApplicationPage.Resources>
@@ -32,97 +30,6 @@
                                  IsVisible="{Binding IsProgressVisible}" />
     </shell:SystemTray.ProgressIndicator>
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot"
-          Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0"
-                    Orientation="Vertical">
-            <TextBlock Name="Title"
-                       Style="{StaticResource PageTitle}"
-                       Text="{Binding PageTitle}" />
-            <Rectangle Style="{StaticResource PageTitleDivider}" />
-        </StackPanel>
-
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel"
-              Grid.Row="1">
-            <toolkit:LongListSelector x:Name="ListBoxView"
-                    IsFlatList="True"
-                     ItemsSource="{Binding DataItems}">
-                <toolkit:LongListSelector.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="0,1">
-                            <toolkit:ContextMenuService.ContextMenu>
-                                <toolkit:ContextMenu Name="ContextMenu">
-                                    <toolkit:MenuItem Header="{Binding Path=Labels.ReplyTo, Source={StaticResource Labels}}"
-                                                      Command="{Binding Source={StaticResource ViewModel}, Path=ReplyCommand}"
-                                                      CommandParameter="{Binding}"/>                                    
-                                </toolkit:ContextMenu>
-                            </toolkit:ContextMenuService.ContextMenu>
-                            <Grid Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}">
-                                <Grid Margin="5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding Author}"
-                                               Grid.Row="0"
-                                               FontSize="16"
-                                               Foreground="{StaticResource ZumpaYellow}"
-                                               Margin="0,5,0,0" />
-                                    <TextBlock Text="{Binding ReadableDateTime}"
-                                               Grid.Row="0"
-                                               FontSize="14"
-                                               FontWeight="Light"
-                                               TextAlignment="Right"
-                                               Foreground="{StaticResource ZumpaWhite}"
-                                               Margin="0,5,0,0" />
-                                    <TextBlock Text="{Binding Body}"
-                                               Grid.Row="1"
-                                               HorizontalAlignment="Stretch"
-                                               Style="{StaticResource SubjectFontSize}"
-                                               Foreground="{StaticResource ZumpaWhite}"
-                                               TextWrapping="Wrap" />
-                                    <ListBox ItemsSource="{Binding InsideUris}"
-                                             Grid.Row="2"
-                                             Margin="5"
-                                             Background="Transparent"
-                                             ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                                        <ListBox.ItemContainerStyle>
-                                            <Style TargetType="ListBoxItem">
-                                                <Setter Property="HorizontalContentAlignment"
-                                                        Value="Stretch" />
-                                            </Style>
-                                        </ListBox.ItemContainerStyle>
-                                            <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <ctrls:ImageButton DataContext="{Binding}"
-                                                                   Link="{Binding}"
-                                                                   IgnoreImages="{Binding Source={StaticResource ViewModel}, Path=IgnoreImages}"                                              
-                                                        Command="{Binding Source={StaticResource ViewModel}, Path=OpenLinkCommand}"
-                                                        CommandParameter="{Binding}"
-                                                        FontSize="16"
-                                                        MinHeight="32"
-                                                        HorizontalAlignment="Stretch"
-                                                        FontWeight="Light">
-                                                </ctrls:ImageButton>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </DataTemplate>
-                </toolkit:LongListSelector.ItemTemplate>
-            </toolkit:LongListSelector>
-        </Grid>
-    </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.favs.addto.rest.png"
@@ -137,4 +44,38 @@
                                             Text="Send" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
+<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid x:Name="LayoutRoot"
+		Background="Transparent">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<StackPanel Grid.Row="0"
+			Orientation="Vertical">
+			<TextBlock x:Name="Title"
+				Style="{StaticResource PageTitle}"
+				Text="{Binding PageTitle}" />
+			<Rectangle Style="{StaticResource PageTitleDivider}" />
+		</StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+		<Grid x:Name="ContentPanel"
+			Grid.Row="1">
+			<toolkit:LongListSelector x:Name="ListBoxView"
+				IsFlatList="True"
+				ItemsSource="{Binding DataItems}">
+				<toolkit:LongListSelector.ItemTemplate>
+					<DataTemplate>
+						<ZumpaReader:ZumpaSubItemView 
+                            Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}"
+                            OpenLinkCommand="{Binding Source={StaticResource ViewModel}, Path=OpenLinkCommand}"
+                            ReplyCommand="{Binding Source={StaticResource ViewModel}, Path=ReplyCommand}"
+                        />
+					</DataTemplate>
+				</toolkit:LongListSelector.ItemTemplate>
+			</toolkit:LongListSelector>
+		</Grid>
+	</Grid>
 </phone:PhoneApplicationPage>
