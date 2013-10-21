@@ -31,6 +31,7 @@ namespace ZumpaReader.Commands
             CanExecuteIt = false;
             try
             {
+                EnsureInternet();
                 int id = 0;
                 var item = parameter as ZumpaItem;
                 if (item != null)

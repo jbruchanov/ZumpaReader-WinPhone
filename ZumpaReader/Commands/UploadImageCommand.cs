@@ -34,6 +34,7 @@ namespace ZumpaReader.Commands
             CanExecuteIt = false;
             try
             {
+                EnsureInternet();
                 BitmapSource source = (parameter as BitmapSource);
                 using (MemoryStream ms = await SaveToJpegAsync(source))
                 {

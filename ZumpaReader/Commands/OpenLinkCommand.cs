@@ -34,6 +34,7 @@ namespace ZumpaReader.Commands
             }
             try
             {
+                EnsureInternet();
                 string url = Convert.ToString(parameter);
                 if (url.StartsWith(ZUMPA_PREFIX))
                 {

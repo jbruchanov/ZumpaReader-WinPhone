@@ -19,7 +19,5 @@ namespace ZumpaReader.Commands
         {
             WebService = service;
         }
-
-        
     }
 }

@@ -26,6 +26,7 @@ namespace ZumpaReader.Commands
             CanExecuteIt = false;
             try
             {
+                EnsureInternet();
                 LoginEventArgs args = await Execute(creds);
                 OnCommandFinished(args);
             }

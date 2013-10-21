@@ -27,6 +27,7 @@ namespace ZumpaReader.Commands
             WebService.WebService.ContextResult<bool> result = null;
             try
             {
+                EnsureInternet();
                 HasPostInformation info = (HasPostInformation)parameter;
                 result = await _webService.SendMessage(info.Subject, info.Message, info.ThreadID);
             }

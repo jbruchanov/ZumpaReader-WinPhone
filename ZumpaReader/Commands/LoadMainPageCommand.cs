@@ -25,6 +25,7 @@ namespace ZumpaReader.Commands
             ZumpaReader.WebService.WebService.ContextResult<ZumpaItemsResult> result = null;
             try
             {
+                EnsureInternet();
                 result = await WebService.DownloadItems(LoadURL);
             }
             catch (Exception e)

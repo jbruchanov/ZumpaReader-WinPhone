@@ -31,6 +31,7 @@ namespace ZumpaReader.Commands
             try
             {
                 EnsureLoggedIn();
+                EnsureInternet();
                 string url = String.Format("?{0}={1}&{2}={3}", PostPageViewModel.THREAD_ID, _threadId, PostPageViewModel.SUBJECT, HttpUtility.UrlEncode(_subject));
                 if (item != null)
                 {
