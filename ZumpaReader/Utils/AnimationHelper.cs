@@ -12,6 +12,11 @@ namespace ZumpaReader.Utils
         public const int ALPHA_DELAY = 30;
         public const int ALPHA_DURATION = 500;
 
+        /// <summary>
+        /// Animation alpha of object from 0 to 1
+        /// </summary>
+        /// <param name="alphaChangingObject"></param>
+        /// <param name="delayOrder"></param>
         public static void AlphaAnimation(DependencyObject alphaChangingObject, int delayOrder)
         {
             // Create a duration of 2 seconds.

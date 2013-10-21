@@ -6,8 +6,11 @@ using System.Windows.Navigation;
 
 namespace ZumpaReader.Utils
 {    
+    /// <summary>
+    /// Basic UriMapper for support multiple project targeting and problems with assembly names in urls
+    /// </summary>
     public class ZumpaUriMapper : UriMapperBase
-    {
+    {         
         public override Uri MapUri(Uri uri)
         {
             string tempUri = uri.ToString();

@@ -15,6 +15,9 @@ using ZumpaReader.Utils;
 
 namespace ZumpaReader.Controls
 {
+    /// <summary>
+    /// Simpla UI Control for lazy loading of images, bind Link to URL
+    /// </summary>
     public class ImageButton : Button
     {
         private static ImageLoader _loader;
@@ -39,6 +42,9 @@ namespace ZumpaReader.Controls
             if (ib != null) { ib.OnLinkChanged(e.NewValue as string); }
         }
 
+        /// <summary>
+        /// Simple switch for temporaryli disable image loading
+        /// </summary>
         public bool IgnoreImages
         {
             get { return (bool)GetValue(IgnoreImagesProperty); }
@@ -84,10 +90,10 @@ namespace ZumpaReader.Controls
                     Content = new TextBlock { Text = link, TextWrapping = TextWrapping.Wrap };
                 }
             }
-            catch (Exception e)
+            catch (Exception e)//image link, but link is invalid (i.g. not real image)
             {
                 RLog.E(this, e, "Unable to load:" + link);
-                Content = link;//image link, but link is invalid (i.g. not real image)
+                Content = link;
                 _loader.NotifyInvalidLink(link);
             }
         }

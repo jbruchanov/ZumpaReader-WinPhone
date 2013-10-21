@@ -162,6 +162,11 @@ namespace ZumpaReader.Utils
             return false;
         }
 
+        /// <summary>
+        /// Check simple image link by file extension
+        /// </summary>
+        /// <param name="link"></param>
+        /// <returns></returns>
         public static bool IsImageLinkByExtension(string link)
         {
             foreach (var item in IMAGE_EXTS)
@@ -174,6 +179,11 @@ namespace ZumpaReader.Utils
             return false;
         }
 
+        /// <summary>
+        /// Check if current link has been flagged as invalid
+        /// </summary>
+        /// <param name="link"></param>
+        /// <returns></returns>
         private bool IsInvalidImageLink(string link)
         {
             ImageRecord ir = null;
@@ -241,6 +251,10 @@ namespace ZumpaReader.Utils
             return item != null ? item.File : null;
         }
 
+        /// <summary>
+        /// Get simple stastics about free/downloaded data
+        /// </summary>
+        /// <returns></returns>
         public static StorageValues GetStorageValues()
         {
             StorageValues values = new StorageValues();

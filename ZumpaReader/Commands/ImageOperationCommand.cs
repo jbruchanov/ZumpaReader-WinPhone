@@ -90,6 +90,11 @@ namespace ZumpaReader.Commands
             CanExecuteIt = true;
         }
 
+        /// <summary>
+        /// Convert current image base on params
+        /// </summary>
+        /// <param name="parameter">"90" for clockwise rotation, any other value is for scale 1/value</param>
+        /// <returns></returns>
         public WriteableBitmap Convert(string parameter)
         {
             WriteableBitmap image = LoadImage();
@@ -116,6 +121,12 @@ namespace ZumpaReader.Commands
             return image;
         }
 
+        /// <summary>
+        /// Scale image
+        /// </summary>
+        /// <param name="srouce"></param>
+        /// <param name="scale"></param>
+        /// <returns></returns>
         private WriteableBitmap Scale(WriteableBitmap srouce, float scale)
         {
             WriteableBitmap wb = new WriteableBitmap(srouce);

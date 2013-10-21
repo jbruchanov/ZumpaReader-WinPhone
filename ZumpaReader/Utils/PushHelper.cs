@@ -16,8 +16,10 @@ namespace ZumpaReader.Utils
     public class PushHelper
     {
         private static string APP_NAME = "ZumpaReader";
-        private static string CHANNEL_NAME = "www.scurab.com";
 
+        /// <summary>
+        /// Register app for push notifications
+        /// </summary>
         public static void Register()
         {
             Task t = new Task(() =>
@@ -56,7 +58,11 @@ namespace ZumpaReader.Utils
             t.Start();
         }
 
-        static void Finish(HttpNotificationChannel channel)
+        /// <summary>
+        /// Init default values for newly opened push channel
+        /// </summary>
+        /// <param name="channel"></param>
+        private static void Finish(HttpNotificationChannel channel)
         {
             string pushUri = channel.ChannelUri.ToString();
             channel.HttpNotificationReceived += new EventHandler<HttpNotificationEventArgs>((o, e) =>

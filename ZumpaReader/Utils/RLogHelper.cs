@@ -8,6 +8,9 @@ namespace ZumpaReader.Utils
 {
     public class RLogHelper
     {
+        /// <summary>
+        /// Register app to RemoteLog server
+        /// </summary>
         public static void Register()
         {
             string model = new DeviceDataProvider().GetDevice().Model;

@@ -9,6 +9,12 @@ namespace ZumpaReader.Utils
 {
     public class UIHelper
     {
+        /// <summary>
+        /// Find any children in a template
+        /// </summary>
+        /// <param name="depObj">Template</param>
+        /// <param name="name">Name of object</param>
+        /// <returns></returns>
         public static DependencyObject FindVisualChildren(DependencyObject depObj, string name)
         {
             if (depObj != null)

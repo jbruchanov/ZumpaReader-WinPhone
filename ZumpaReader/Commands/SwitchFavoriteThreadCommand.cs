@@ -32,17 +32,9 @@ namespace ZumpaReader.Commands
             try
             {
                 EnsureInternet();
-                int id = 0;
-                var item = parameter as ZumpaItem;
-                if (item != null)
-                {
-                    id = item.ID;
-                }
-                else
-                {
-                    id = Int32.Parse((string)parameter);
-                }
                 
+                var item = parameter as ZumpaItem;
+                int id = item != null ? id = item.ID : Int32.Parse((string)parameter);                                
                 ZumpaReader.WebService.WebService.ContextResult<bool> result = await _service.SwitchThreadFavourite(id);
                 if (_callback != null)
                 {

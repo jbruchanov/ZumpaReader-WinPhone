@@ -8,6 +8,9 @@ using System.Text;
 
 namespace ZumpaReader
 {
+    /// <summary>
+    /// Simple data provider for external private data
+    /// </summary>
     public class ZumpaReaderResources
     {
         public enum Keys

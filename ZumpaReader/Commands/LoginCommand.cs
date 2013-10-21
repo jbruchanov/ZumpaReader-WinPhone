@@ -75,6 +75,10 @@ namespace ZumpaReader.Commands
             return args;
         }
 
+        /// <summary>
+        /// Clears login in AppSettings (removes cookie, password, set filter to default value)
+        /// </summary>
+        /// <param name="creds"></param>
         private void ClearLogin(Credentials creds)
         {
             creds.IsLoggedIn = false;
@@ -92,6 +96,9 @@ namespace ZumpaReader.Commands
         }
     }
 
+    /// <summary>
+    /// Help container for result
+    /// </summary>
     public class LoginEventArgs : EventArgs
     {
         public enum TaskType

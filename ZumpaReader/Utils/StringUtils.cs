@@ -13,6 +13,11 @@ namespace ZumpaReader.Utils
         private static string THREAD_ID_PREFIX = "&t=";
         private static string AMPERSAND = "&";
 
+        /// <summary>
+        /// Extract Thread Id from thread url
+        /// </summary>
+        /// <param name="threadUrl"></param>
+        /// <returns></returns>
         public static string ExtractThreadId(string threadUrl)
         {
             int start = threadUrl.IndexOf("&t=") + THREAD_ID_PREFIX.Length;
@@ -20,6 +25,11 @@ namespace ZumpaReader.Utils
             return end > -1 ? threadUrl.Substring(start, end - start) : threadUrl.Substring(start);
         }
 
+        /// <summary>
+        /// Convert java time value into readable string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string ConvertDateTime(long value)
         {
             long t = (value + (DateTimeOffset.Now.Offset.Hours * 3600000)) * TIME_OFFSET;
@@ -28,6 +38,11 @@ namespace ZumpaReader.Utils
                     : new DateTime(t).ToString("HH:mm");
         }
 
+        /// <summary>
+        /// Convert data size into readable string
+        /// </summary>
+        /// <param name="len"></param>
+        /// <returns></returns>
         public static string ConvertToReadableSize(long len)
         {
             string[] sizes = { "B", "KiB", "MiB" };

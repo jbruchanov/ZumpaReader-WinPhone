@@ -52,6 +52,11 @@ namespace ZumpaReader.Commands
             CanExecuteIt = true;
         }
 
+        /// <summary>
+        /// Convert bitmap source to JPEG image
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static Task<MemoryStream> SaveToJpegAsync(BitmapSource source)
         {
             WriteableBitmap wb = new WriteableBitmap(source);     

@@ -13,8 +13,6 @@ namespace ZumpaReader.Commands
     {
         private const string ZUMPA_PREFIX = "http://portal2.dkm.cz/phorum/read.php";
 
-        public event EventHandler CanExecuteChanged;
-
         private NavigationService _navigationService;
 
         public OpenLinkCommand(NavigationService navService)
@@ -36,12 +34,12 @@ namespace ZumpaReader.Commands
             {
                 EnsureInternet();
                 string url = Convert.ToString(parameter);
-                if (url.StartsWith(ZUMPA_PREFIX))
+                if (url.StartsWith(ZUMPA_PREFIX)) //zumpa link, open it in app
                 {
                     url = String.Format("?url={0}", HttpUtility.UrlEncode(url));
                     _navigationService.Navigate(new Uri("/ZumpaReader;component/Pages/ThreadPage.xaml" + url, UriKind.RelativeOrAbsolute));
                 }
-                else
+                else //just go to web
                 {
                     WebBrowserTask webBrowserTask = new WebBrowserTask();
                     webBrowserTask.Uri = new Uri(url, UriKind.Absolute);
