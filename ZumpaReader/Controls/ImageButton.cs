@@ -1,4 +1,5 @@
 ﻿using Coding4Fun.Toolkit.Controls;
+using RemoteLogCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -78,7 +79,7 @@ namespace ZumpaReader.Controls
             }
             catch (Exception e)
             {
-
+                RLog.E(this, e, "Unable to load:" + link);
                 Content = link;//image link, but link is invalid (i.g. not real image)
                 _loader.NotifyInvalidLink(link);
             }
