@@ -63,14 +63,7 @@
                             Grid.Column="0" />                        
                     <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.Nickname}" />
                     <toolkit:PhoneTextBox Text="{Binding Nickname, Mode=TwoWay}"/>
-                    <toolkit:ToggleSwitch IsChecked="{Binding LastAuthor, Mode=TwoWay}"
-                                          Content="{Binding Source={StaticResource Labels},Path=Labels.LastAuthor}" />
-                    <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.Filter}" />
-                    <toolkit:ListPicker SelectedIndex="{Binding Filter, Mode=TwoWay}" IsEnabled="{Binding IsLoggedIn}">
-                        <toolkit:ListPickerItem Content="{Binding Source={StaticResource Labels},Path=Labels.FilterOff}" />
-                        <toolkit:ListPickerItem Content="{Binding Source={StaticResource Labels},Path=Labels.FilterOwn}" />
-                        <toolkit:ListPickerItem Content="{Binding Source={StaticResource Labels},Path=Labels.FilterFav}" />
-                    </toolkit:ListPicker>
+                    
                 </StackPanel>
                 </ScrollViewer>
             </controls:PanoramaItem>
@@ -80,6 +73,19 @@
                                           Content="{Binding Source={StaticResource Labels},Path=Labels.AutoLoad}" />
                     <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.StorageValues}" />
                     <TextBlock Text="{Binding StorageValues}" Margin="15,0" FontSize="24" />
+                </StackPanel>
+            </controls:PanoramaItem>
+            <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.Other}">
+                <StackPanel>
+                    <toolkit:ToggleSwitch IsChecked="{Binding LastAuthor, Mode=TwoWay}"
+                                          Content="{Binding Source={StaticResource Labels},Path=Labels.LastAuthor}" />
+                    <TextBlock Text="{Binding Source={StaticResource Labels},Path=Labels.Filter}" />
+                    <toolkit:ListPicker SelectedIndex="{Binding Filter, Mode=TwoWay}"
+                                        IsEnabled="{Binding IsLoggedIn}">
+                        <toolkit:ListPickerItem Content="{Binding Source={StaticResource Labels},Path=Labels.FilterOff}" />
+                        <toolkit:ListPickerItem Content="{Binding Source={StaticResource Labels},Path=Labels.FilterOwn}" />
+                        <toolkit:ListPickerItem Content="{Binding Source={StaticResource Labels},Path=Labels.FilterFav}" />
+                    </toolkit:ListPicker>
                 </StackPanel>
             </controls:PanoramaItem>
         </controls:Panorama>

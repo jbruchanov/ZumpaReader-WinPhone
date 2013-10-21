@@ -177,6 +177,9 @@
   <data name="NotLoggedIn" xml:space="preserve">
     <value>Not logged in!</value>
   </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
