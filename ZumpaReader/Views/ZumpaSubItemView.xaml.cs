@@ -10,10 +10,11 @@ using Microsoft.Phone.Shell;
 using System.Windows.Input;
 using ZumpaReader.Commands;
 using System.Diagnostics;
+using ZumpaReader.Views;
 
 namespace ZumpaReader
 {
-    public partial class ZumpaSubItemView : UserControl
+    public partial class ZumpaSubItemView : BaseZumpaItemView
     {
         public object ViewModel
         {

@@ -1,9 +1,14 @@
-﻿<UserControl
+﻿<view:BaseZumpaItemView x:Class="ZumpaReader.ZumpaSubItemView"
+                        xmlns:view="clr-namespace:ZumpaReader.Views"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ViewModel="clr-namespace:ZumpaReader.ViewModel" xmlns:Converters="clr-namespace:ZumpaReader.Converters" xmlns:Resources="clr-namespace:ZumpaReader.Resources" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:Controls="clr-namespace:ZumpaReader.Controls" x:Class="ZumpaReader.ZumpaSubItemView"
+    xmlns:ViewModel="clr-namespace:ZumpaReader.ViewModel" 
+    xmlns:Converters="clr-namespace:ZumpaReader.Converters"
+    xmlns:Resources="clr-namespace:ZumpaReader.Resources" 
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:Controls="clr-namespace:ZumpaReader.Controls" 
+    
     mc:Ignorable="d"
     d:DataContext="{d:DesignData /SampleData/SampleZumpaSubItem.xaml}"
     x:Name="Control"    
@@ -78,4 +83,4 @@
 			</Grid>
 		</Grid>
 	</Grid>
-</UserControl>
+</view:BaseZumpaItemView>
