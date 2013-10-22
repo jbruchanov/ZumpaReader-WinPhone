@@ -89,12 +89,12 @@ namespace ZumpaReader_UnitTests.Model
             Assert.AreEqual("Mno", s.Question);
             Assert.AreEqual(14, s.Responds);
             Assert.AreEqual(3939, s.ID);
-            Assert.AreEqual(4, s.Answers.Count);
+            Assert.AreEqual(4, s.Answers.Length);
             Assert.AreEqual("WP < 7.5", s.Answers[0]);
             Assert.AreEqual("WP 7.5", s.Answers[1]);
             Assert.AreEqual("WP 8", s.Answers[2]);
             Assert.AreEqual("chystam se koupit do konce roku...", s.Answers[3]);
-            Assert.AreEqual(4, s.Percents.Count);
+            Assert.AreEqual(4, s.Percents.Length);
             Assert.AreEqual(7, s.Percents[0]);
             Assert.AreEqual(7, s.Percents[1]);
             Assert.AreEqual(7, s.Percents[2]);

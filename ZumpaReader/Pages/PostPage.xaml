@@ -33,7 +33,7 @@
           Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0"
@@ -45,8 +45,6 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-
-
         <controls:Panorama Grid.Row="1"
                            Name="Panorama"
                            Margin="5">
@@ -143,8 +141,7 @@
                 </Grid>
 
             </controls:PanoramaItem>
-            <controls:PanoramaItem  Name="SurveyPanoramaItem"
-                                    Visibility="Collapsed"
+            <controls:PanoramaItem  Name="SurveyPanoramaItem"                                    
                                     Header="{Binding Source={StaticResource Labels},Path=Labels.Survey}">
                 <ScrollViewer>
                 <StackPanel DataContext="{Binding Survey}">
@@ -157,6 +154,7 @@
                     <toolkit:PhoneTextBox InputScope="Chat"
                                           TextWrapping="Wrap"
                                               Hint="1"
+                                              AcceptsReturn="False"
                                               Text="{Binding Answers[0], Mode=TwoWay}" />
                     <toolkit:PhoneTextBox InputScope="Chat"
                                            Hint="2"

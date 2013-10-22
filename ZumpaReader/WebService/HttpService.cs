@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -186,10 +187,10 @@ namespace ZumpaReader.WebService
             }
             string @params = JsonParamsCreator(PARAM_SUBJECT, subject,
                                                PARAM_MESSAGE, message,
-                                               PARAM_SURVEY, survey,
-                                               PARAM_THREAD_ID, threadId);
+                                               PARAM_SURVEY, (Survey)survey,
+                                               PARAM_THREAD_ID, threadId);            
             string jsonResponse = await PostData(Config.BaseURL + POST, @params);
-            return Parse<bool>("{}");
+            return Parse<bool>(jsonResponse);
         }
 
         public async override Task<ContextResult<Survey>> VoteSurvey(int id, int vote)

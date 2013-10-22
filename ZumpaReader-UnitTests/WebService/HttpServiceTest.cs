@@ -168,7 +168,7 @@ namespace ZumpaReader_UnitTests.WebService
 
             client.Config.Cookies = cookie;
 
-            client.SendMessage("SubjTest", "MsgTest", "1200532").ContinueWith((e) =>
+            client.SendMessage("SubjTest", "MsgTest", null, "1200532").ContinueWith((e) =>
             {
                 ZWS.ContextResult<bool> result = e.Result;
                 Assert.IsNotNull(result);

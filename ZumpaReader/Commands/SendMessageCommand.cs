@@ -31,8 +31,8 @@ namespace ZumpaReader.Commands
                 EnsureInternet();
                 HasPostInformation info = (HasPostInformation)parameter;
                 Survey s = info.Survey;
-                //if (!CheckSurvey(s)) { s = null;}
-                result = await _webService.SendMessage(info.Subject, info.Message, null, info.ThreadID);
+                if (!CheckSurvey(s)) { s = null; }
+                result = await _webService.SendMessage(info.Subject, info.Message, s, info.ThreadID);
             }
             catch (Exception e)
             {
@@ -58,9 +58,19 @@ namespace ZumpaReader.Commands
                 {
                     throw new Exception(Resources.Labels.InvalidSurvey);
                 }
+                //remove nulls from array
+                List<string> answers = new List<string>();
+                foreach (string ans in s.Answers)
+                {
+                    if (!string.IsNullOrEmpty(ans))
+                    {
+                        answers.Add(ans);
+                    }
+                }
+                s.Answers = answers.ToArray();
             }
             else
-            {
+            {                
                 bool anything = !string.IsNullOrEmpty(s.Question);
                 foreach(string item in s.Answers){
                     anything |= !string.IsNullOrEmpty(item);

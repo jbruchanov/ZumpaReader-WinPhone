@@ -110,7 +110,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppSettings.cs" />
-    <Compile Include="BasePage.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\BaseLoadCommand.cs" />
     <Compile Include="Commands\ImageOperationCommand.cs" />

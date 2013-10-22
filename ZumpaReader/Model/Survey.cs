@@ -30,10 +30,5 @@ namespace ZumpaReader.Model
         {
             VotedItem = -1;
         }
-
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }
