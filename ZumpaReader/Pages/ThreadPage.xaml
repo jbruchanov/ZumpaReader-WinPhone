@@ -72,6 +72,7 @@
                             Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}"
                             OpenLinkCommand="{Binding Source={StaticResource ViewModel}, Path=OpenLinkCommand}"
                             ReplyCommand="{Binding Source={StaticResource ViewModel}, Path=ReplyCommand}"
+                            SurveyCommand="{Binding Source={StaticResource ViewModel}, Path=SurveyCommand}"
                         />
 					</DataTemplate>
 				</toolkit:LongListSelector.ItemTemplate>

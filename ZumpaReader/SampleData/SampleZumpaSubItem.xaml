@@ -1,12 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <m:ZumpaSubItem xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="clr-namespace:ZumpaReader.ViewModel;assembly=ZumpaReader"
-             xmlns:m="clr-namespace:ZumpaReader.Model"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             AuthorReal="Author 01"
-             Time="321546978"
-             Body="Blablabla" >
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:vm="clr-namespace:ZumpaReader.ViewModel;assembly=ZumpaReader"
+                xmlns:m="clr-namespace:ZumpaReader.Model"
+                xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                AuthorReal="Author 01"
+                Time="321546978"
+                Body="Blablabla">
+    <m:ZumpaSubItem.Survey>
+        <m:Survey>
+            <m:Survey.Question>Question</m:Survey.Question>                                    
+        </m:Survey>
+    </m:ZumpaSubItem.Survey>
     <m:ZumpaSubItem.InsideUris>
         <sys:String>www.google.com</sys:String>
         <sys:String>www.apina.biz</sys:String>

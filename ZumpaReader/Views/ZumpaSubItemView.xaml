@@ -1,86 +1,130 @@
 ﻿<view:BaseZumpaItemView x:Class="ZumpaReader.ZumpaSubItemView"
                         xmlns:view="clr-namespace:ZumpaReader.Views"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ViewModel="clr-namespace:ZumpaReader.ViewModel" 
-    xmlns:Converters="clr-namespace:ZumpaReader.Converters"
-    xmlns:Resources="clr-namespace:ZumpaReader.Resources" 
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:Controls="clr-namespace:ZumpaReader.Controls" 
-    
-    mc:Ignorable="d"
-    d:DataContext="{d:DesignData /SampleData/SampleZumpaSubItem.xaml}"
-    x:Name="Control"    
-    d:DesignHeight="200"
-    d:DesignWidth="480">
-	<UserControl.Resources>
-		<Converters:BackgroundColorConverter x:Key="BackgroundConverter" />
-		<Resources:I18N x:Key="Labels" />
-	</UserControl.Resources>
-	<Grid x:Name="LayoutRoot" >
-		<Grid>
-			<toolkit:ContextMenuService.ContextMenu>
-				<toolkit:ContextMenu x:Name="ContextMenu">
-					<toolkit:MenuItem Header="{Binding Labels.ReplyTo, Source={StaticResource Labels}}"
-                                      Name="MenuItemReply"                                      
-                                      CommandParameter="{Binding}" /> <!-- command binding in code -->
-                    
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        xmlns:ViewModel="clr-namespace:ZumpaReader.ViewModel"
+                        xmlns:Converters="clr-namespace:ZumpaReader.Converters"
+                        xmlns:Resources="clr-namespace:ZumpaReader.Resources"
+                        xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                        xmlns:Controls="clr-namespace:ZumpaReader.Controls"
+                        mc:Ignorable="d"
+                        d:DataContext="{d:DesignData /SampleData/SampleZumpaSubItem.xaml}"
+                        x:Name="Control"
+                        d:DesignHeight="200"
+                        d:DesignWidth="480">
+    <UserControl.Resources>
+        <Converters:BackgroundColorConverter x:Key="BackgroundConverter" />
+        <Converters:SurveyValueConverter x:Key="SurveyValueConverter" />
+        <Resources:I18N x:Key="Labels" />
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Grid>
+            <toolkit:ContextMenuService.ContextMenu>
+                <toolkit:ContextMenu x:Name="ContextMenu">
+                    <toolkit:MenuItem Header="{Binding Labels.ReplyTo, Source={StaticResource Labels}}"
+                                      Name="MenuItemReply"
+                                      CommandParameter="{Binding}" />
+                    <!-- command binding in code -->
+
                 </toolkit:ContextMenu>
-			</toolkit:ContextMenuService.ContextMenu>
+            </toolkit:ContextMenuService.ContextMenu>
             <!--Background="{Binding ConverterParameter={StaticResource ViewModel}, Converter={StaticResource BackgroundConverter}}"-->
             <Grid Background="{Binding ElementName=Control, Path=Background}">
-				<Grid Margin="5">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
-					<TextBlock Text="{Binding Author}"
-						Grid.Row="0"
-						FontSize="16"
-						Foreground="{StaticResource ZumpaYellow}"
-						Margin="0,5,0,0" />
-					<TextBlock Text="{Binding ReadableDateTime}"
-						Grid.Row="0"
-						FontSize="14"
-						FontWeight="Light"
-						TextAlignment="Right"
-						Foreground="{StaticResource ZumpaWhite}"
-						Margin="0,5,0,0" />
-					<TextBlock Text="{Binding Body}"
-						Grid.Row="1"
-						HorizontalAlignment="Stretch"
-						Style="{StaticResource SubjectFontSize}"
-						Foreground="{StaticResource ZumpaWhite}"
-						TextWrapping="Wrap" />
-					<ListBox ItemsSource="{Binding InsideUris}"
-						Grid.Row="2"
-						Margin="5"
-						Background="Transparent"
-						ScrollViewer.VerticalScrollBarVisibility="Disabled">
-						<ListBox.ItemContainerStyle>
-							<Style TargetType="ListBoxItem">
-								<Setter Property="HorizontalContentAlignment"
-									Value="Stretch" />
-							</Style>
-						</ListBox.ItemContainerStyle>
-						<ListBox.ItemTemplate>
-							<DataTemplate>
-								<Controls:ImageButton DataContext="{Binding}"
-									Link="{Binding}"
-                                    IgnoreImages="{Binding IgnoreImages, ElementName=Control}"                                              
-									Command="{Binding OpenLinkCommand, ElementName=Control}"
-                                    CommandParameter="{Binding}"
-									FontSize="16"
-									MinHeight="32"
-									HorizontalAlignment="Stretch"
-									FontWeight="Light"/>
-							</DataTemplate>
-						</ListBox.ItemTemplate>
-					</ListBox>
-				</Grid>
-			</Grid>
-		</Grid>
-	</Grid>
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Author}"
+                               Grid.Row="0"
+                               FontSize="16"
+                               Foreground="{StaticResource ZumpaYellow}"
+                               Margin="0,5,0,0" />
+                    <TextBlock Text="{Binding ReadableDateTime}"
+                               Grid.Row="0"
+                               FontSize="14"
+                               FontWeight="Light"
+                               TextAlignment="Right"
+                               Foreground="{StaticResource ZumpaWhite}"
+                               Margin="0,5,0,0" />
+                    <TextBlock Text="{Binding Body}"
+                               Grid.Row="1"
+                               HorizontalAlignment="Stretch"
+                               Style="{StaticResource SubjectFontSize}"
+                               Foreground="{StaticResource ZumpaWhite}"
+                               TextWrapping="Wrap" />
+
+                    <StackPanel Grid.Row="2"
+                                Margin="15"
+                                Visibility="{Binding ElementName=Control,Path=DataContext, Converter={StaticResource SurveyValueConverter}}"
+                                DataContext="{Binding Survey}">
+                        <TextBlock Text="{Binding QuestionResps}"
+                                   TextWrapping="Wrap"
+                                   Style="{StaticResource SubjectFontSize}"
+                                   Foreground="{StaticResource ZumpaWhite}" />
+                        <ListBox ItemsSource="{Binding SurveyVoteItems}"
+                                 Margin="5"
+                                 Background="Transparent"
+                                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Stretch" />
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Button IsEnabled="{Binding Enabled}"
+                                            Command="{Binding SurveyCommand, ElementName=Control}"
+                                            CommandParameter="{Binding}">
+                                        <Button.Content>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Answer}"
+                                                           HorizontalAlignment="Left"
+                                                           TextWrapping="Wrap"
+                                                           Style="{StaticResource SurveyItem}" />
+                                                <!--<Line X1="-100"
+                                                      X2="{Binding Percentage}"
+                                                      StrokeThickness="5"
+                                                      Stroke="Red" />-->
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                    <ListBox ItemsSource="{Binding InsideUris}"
+                             Grid.Row="3"
+                             Margin="5"
+                             Background="Transparent"
+                             ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment"
+                                        Value="Stretch" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Controls:ImageButton DataContext="{Binding}"
+                                                      Link="{Binding}"
+                                                      IgnoreImages="{Binding IgnoreImages, ElementName=Control}"
+                                                      Command="{Binding OpenLinkCommand, ElementName=Control}"
+                                                      CommandParameter="{Binding}"
+                                                      FontSize="16"
+                                                      MinHeight="32"
+                                                      HorizontalAlignment="Stretch"
+                                                      FontWeight="Light" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
 </view:BaseZumpaItemView>

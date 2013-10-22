@@ -119,6 +119,8 @@
     <Compile Include="Commands\OpenLinkCommand.cs" />
     <Compile Include="Commands\ReplyCommand.cs" />
     <Compile Include="Commands\SendMessageCommand.cs" />
+    <Compile Include="Commands\SurveyCommand.cs" />
+    <Compile Include="Converters\SurveyValueConverter.cs" />
     <Compile Include="Commands\SwitchFavoriteThreadCommand.cs" />
     <Compile Include="Commands\UploadImageCommand.cs" />
     <Compile Include="Controls\ImageButton.cs" />

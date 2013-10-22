@@ -61,9 +61,11 @@ namespace ZumpaReader.ViewModel
 
         public ICommand OpenLinkCommand { get; private set; }
 
-        public ICommand ReplyCommand { get; private set; }        
+        public ICommand ReplyCommand { get; private set; }
 
-        public bool ReloadDataNavigationBack {get;set;}
+        public ICommand SurveyCommand { get; private set; }
+
+        public bool ReloadDataNavigationBack { get; set; }
 
         private SwitchFavoriteThreadCommand _switchFavoriteThreadCommand;
 
@@ -82,6 +84,12 @@ namespace ZumpaReader.ViewModel
                 IsProgressVisible = !_switchFavoriteThreadCommand.CanExecuteIt;
                 (Page.ApplicationBar.Buttons[FAV_INDEX] as ApplicationBarIconButton).IsEnabled = _switchFavoriteThreadCommand.CanExecuteIt;
             };
+
+            SurveyCommand = new SurveyCommand(_service, (survey) =>
+            {
+                DataItems[0].Survey = survey;
+            });
+            SurveyCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !SurveyCommand.CanExecute(null); };
 
             LoadCommand = new LoadThreadPageCommand(_service, (e) => Dispatcher.BeginInvoke(() => OnDownloadedPage(e.Context)));
             LoadCommand.CanExecuteChanged += (o, e) =>
@@ -114,8 +122,8 @@ namespace ZumpaReader.ViewModel
             list.ForEach((item) =>
             {
                 if (item.InsideUris != null)
-                { 
-                    item.InsideUris.ForEach((e) => result += ImageLoader.IsImageLinkByExtension(e) ? 1 : 0); 
+                {
+                    item.InsideUris.ForEach((e) => result += ImageLoader.IsImageLinkByExtension(e) ? 1 : 0);
                 }
             });
             return result;
@@ -132,7 +140,7 @@ namespace ZumpaReader.ViewModel
                 ReloadDataNavigationBack = true;
             }
             else
-            { 
+            {
                 Bind();
                 OpenLinkCommand = new OpenLinkCommand(Page.NavigationService);
                 (Page.ApplicationBar.Buttons[FAV_INDEX] as ApplicationBarIconButton).IsEnabled = AppSettings.IsLoggedIn;

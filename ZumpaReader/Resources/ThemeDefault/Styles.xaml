@@ -42,4 +42,11 @@
                 Value="22" />
     </Style>
 
+    <Style TargetType="TextBlock"
+           x:Name="SurveyItem">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight"
+                Value="Medium" />
+    </Style>
+
 </ResourceDictionary>

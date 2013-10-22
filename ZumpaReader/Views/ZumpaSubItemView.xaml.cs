@@ -64,6 +64,20 @@ namespace ZumpaReader
         public static readonly DependencyProperty OpenLinkCommandProperty =
             DependencyProperty.Register("OpenLinkCommand", typeof(ICommand), typeof(ZumpaSubItemView), new PropertyMetadata(null));
 
+
+
+        public ICommand SurveyCommand
+        {
+            get { return (ICommand)GetValue(SurveyCommandProperty); }
+            set { SetValue(SurveyCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SurveyCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SurveyCommandProperty =
+            DependencyProperty.Register("SurveyCommand", typeof(ICommand), typeof(ZumpaSubItemView), new PropertyMetadata(null));
+
+        
+
         public ZumpaSubItemView()
         {
             //ReplyCommand = new TestCommand();
