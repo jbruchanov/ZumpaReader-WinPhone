@@ -20,7 +20,11 @@
         <Resources:I18N x:Key="Labels" />
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
-        <Grid>
+    	<Grid.ColumnDefinitions>
+    		<ColumnDefinition Width="43*"/>
+    		<ColumnDefinition Width="53*"/>
+    	</Grid.ColumnDefinitions>
+        <Grid Grid.ColumnSpan="2">
             <toolkit:ContextMenuService.ContextMenu>
                 <toolkit:ContextMenu x:Name="ContextMenu">
                     <toolkit:MenuItem Header="{Binding Labels.ReplyTo, Source={StaticResource Labels}}"
@@ -79,18 +83,19 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Button IsEnabled="{Binding Enabled}"
+                                            Name="SurveyButton"
                                             Command="{Binding SurveyCommand, ElementName=Control}"
-                                            CommandParameter="{Binding}">
+                                            CommandParameter="{Binding}" 											
+											BorderThickness="1">
                                         <Button.Content>
                                             <StackPanel>
                                                 <TextBlock Text="{Binding Answer}"
-                                                           HorizontalAlignment="Left"
                                                            TextWrapping="Wrap"
-                                                           Style="{StaticResource SurveyItem}" />
-                                                <!--<Line X1="-100"
-                                                      X2="{Binding Percentage}"
+                                                           Style="{StaticResource SurveyItem}" HorizontalAlignment="Center" Width="320" Margin="0,5" />
+                                                <Line X1="0"
+                                                      X2="{Binding Percentage, Converter={StaticResource SurveyValueConverter}}"
                                                       StrokeThickness="5"
-                                                      Stroke="Red" />-->
+                                                      Stroke="{Binding Converter={StaticResource SurveyValueConverter}}" />
                                             </StackPanel>
                                         </Button.Content>
                                     </Button>

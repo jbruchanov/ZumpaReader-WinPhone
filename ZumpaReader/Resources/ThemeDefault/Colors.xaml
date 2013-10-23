@@ -24,4 +24,16 @@
     <SolidColorBrush x:Name="ApplicationBarBackground"
                      Color="#212021" />
 
+    <SolidColorBrush x:Name="Survey0"
+                     Color="#A0FF9999" />
+    <SolidColorBrush x:Name="Survey1"
+                     Color="#A099FF99" />
+    <SolidColorBrush x:Name="Survey2"
+                     Color="#A09999FF" />
+    <SolidColorBrush x:Name="Survey3"
+                     Color="#A0EE99FF" />
+    <SolidColorBrush x:Name="Survey4"
+                     Color="#A099FFFF" />
+    <SolidColorBrush x:Name="Survey5"
+                     Color="#A0FFEE33" />
 </ResourceDictionary>
