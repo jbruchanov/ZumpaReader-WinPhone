@@ -63,12 +63,15 @@
         <!--ContentPanel - place additional content here-->
 		<Grid x:Name="ContentPanel"
 			Grid.Row="1">
+            
 			<toolkit:LongListSelector x:Name="ListBoxView"
-				IsFlatList="True"
-				ItemsSource="{Binding DataItems}">
+				                    IsFlatList="True"
+                                      ListHeader="{Binding HeaderItem}"
+                                      ItemsSource="{Binding DataItems}">
 				<toolkit:LongListSelector.ItemTemplate>
 					<DataTemplate>
-						<ZumpaReader:ZumpaSubItemView 
+                        <!-- same template used for listheader when survey is in thread-->
+                        <ZumpaReader:ZumpaSubItemView 
                             Background="{Binding Converter={StaticResource BackgroundConverter}, ConverterParameter={StaticResource ViewModel}}"
                             OpenLinkCommand="{Binding Source={StaticResource ViewModel}, Path=OpenLinkCommand}"
                             ReplyCommand="{Binding Source={StaticResource ViewModel}, Path=ReplyCommand}"

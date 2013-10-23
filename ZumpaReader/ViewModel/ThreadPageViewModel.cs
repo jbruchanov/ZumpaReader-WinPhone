@@ -38,6 +38,13 @@ namespace ZumpaReader.ViewModel
             set { _dataItems = value; NotifyPropertyChange(); }
         }
 
+        private ZumpaSubItem _headerItem;
+        public ZumpaSubItem HeaderItem
+        {
+            get { return _headerItem; }
+            set { _headerItem = value; NotifyPropertyChange(); }
+        }
+
         private bool _isProgressVisible;
         public bool IsProgressVisible
         {
@@ -87,7 +94,7 @@ namespace ZumpaReader.ViewModel
 
             SurveyCommand = new SurveyCommand(_service, (survey) =>
             {
-                DataItems[0].Survey = survey;
+                HeaderItem.Survey = survey;
             });
             SurveyCommand.CanExecuteChanged += (o, e) => { IsProgressVisible = !SurveyCommand.CanExecute(null); };
 
@@ -113,6 +120,13 @@ namespace ZumpaReader.ViewModel
         private void OnDownloadedPage(List<ZumpaSubItem> list)
         {
             IgnoreImages = CountImages(list) > MAX_IMAGES;
+            if (list.Count > 0 && list[0].Survey != null)//move to header
+            {
+                var page = (Page as ThreadPage);
+                page.ListBoxView.ListHeaderTemplate  = page.ListBoxView.ItemTemplate;
+                HeaderItem = list[0];
+                list.RemoveAt(0);
+            }
             DataItems = new ObservableCollection<ZumpaSubItem>(list);
         }
 
