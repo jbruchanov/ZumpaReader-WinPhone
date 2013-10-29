@@ -201,7 +201,7 @@ namespace ZumpaReader.Utils
         public void NotifyInvalidLink(string link)
         {
             ImageRecord item = null;
-            if (_cache.TryGetValue(link, out item))
+            if (_cache.TryGetValue(link.ToLower(), out item))
             {
                 if (item.IsValid)
                 {
