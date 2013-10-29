@@ -33,7 +33,7 @@
           Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0"
@@ -46,9 +46,9 @@
 
         <!--ContentPanel - place additional content here-->
         <controls:Panorama Grid.Row="1"
-                           Name="Panorama"
-                           Margin="5">
+                           Name="Panorama">
             <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.General}">
+                <ScrollViewer>
                 <Grid x:Name="ContentPanel">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -70,6 +70,7 @@
                                           TextWrapping="Wrap"
                                           Text="{Binding Message, Mode=TwoWay}" />
                 </Grid>
+                </ScrollViewer>
             </controls:PanoramaItem>
             <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.Photo}"
                                    Name="PhotoPanoramaItem">
@@ -133,13 +134,13 @@
                     </Grid>
                     <Image Name="image"
                            Source="{Binding Photo}"
+                           Stretch="Uniform"
                            Grid.Row="2" />
                     <Button Grid.Row="3"
                             Content="Upload"
                             Command="{Binding UploadCommand}"
                             CommandParameter="{Binding Photo}" />
                 </Grid>
-
             </controls:PanoramaItem>
             <controls:PanoramaItem  Name="SurveyPanoramaItem"                                    
                                     Header="{Binding Source={StaticResource Labels},Path=Labels.Survey}">
