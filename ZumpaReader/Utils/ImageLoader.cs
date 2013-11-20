@@ -37,9 +37,7 @@ namespace ZumpaReader.Utils
         /// <param name="link"></param>
         /// <returns></returns>
         public async Task<Stream> LoadAsync(string link)
-        {
-            link = link.ToLower();
-
+        {           
             ImageRecord record = null;
             Stream s = null;
             if (!_cache.TryGetValue(link, out record))
@@ -76,7 +74,7 @@ namespace ZumpaReader.Utils
         /// <returns></returns>
         private async Task<Stream> SaveLinkAsync(string link)
         {
-            string file = GenerateRandomFileName(ExtractExt(link));
+            string file = GenerateRandomFileName(ExtractExt(link)).ToLower();
             Stream imageStream = null;
             long len = 0;
             using (IsolatedStorageFileStream fileStream = _storage.CreateFile(file))
@@ -153,7 +151,6 @@ namespace ZumpaReader.Utils
         {
             if (!String.IsNullOrEmpty(link))
             {
-                link = link.ToLower();
                 if (!IsInvalidImageLink(link))
                 {
                     return IsImageLinkByExtension(link);
@@ -169,6 +166,7 @@ namespace ZumpaReader.Utils
         /// <returns></returns>
         public static bool IsImageLinkByExtension(string link)
         {
+            link = link.ToLower();
             foreach (var item in IMAGE_EXTS)
             {
                 if (link.EndsWith(item))
@@ -201,7 +199,7 @@ namespace ZumpaReader.Utils
         public void NotifyInvalidLink(string link)
         {
             ImageRecord item = null;
-            if (_cache.TryGetValue(link.ToLower(), out item))
+            if (_cache.TryGetValue(link, out item))
             {
                 if (item.IsValid)
                 {
