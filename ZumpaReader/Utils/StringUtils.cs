@@ -33,6 +33,10 @@ namespace ZumpaReader.Utils
         public static string ConvertDateTime(long value)
         {
             long t = (value + (DateTimeOffset.Now.Offset.Hours * 3600000)) * TIME_OFFSET;
+            if (value < 0)
+            {
+                return "";
+            }
             return (value > 86400000)
                     ? new DateTime(t).AddYears(1969).AddDays(-1).ToString("d.MM.yyyy HH:mm.ss", CultureInfo.InvariantCulture)
                     : new DateTime(t).ToString("HH:mm");
