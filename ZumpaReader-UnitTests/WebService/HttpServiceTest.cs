@@ -301,5 +301,23 @@ namespace ZumpaReader_UnitTests.WebService
             });
             TestWait(DEFAULT_TIMEOUT);
         }
+
+
+        [Asynchronous]
+        [TestMethod]
+        public void TestGetConfig()
+        {
+            HttpService client = new HttpService();
+            client.Config.BaseURL = ZumpaReaderResources.Instance[ZumpaReaderResources.Keys.WebServiceURL];
+            client.GetConfig().ContinueWith((e) =>
+            {
+                ZumpaReader.WebService.WebService.ContextResult<Dictionary<String, Object>> result = e.Result;
+                Assert.IsNotNull(e);
+                Assert.IsTrue(result.Context.ContainsKey("ShowSettingsAutoLoadImages"));
+                Assert.IsTrue(result.Context.ContainsKey("ShowImageAsButton"));
+                FinishWaiting();
+            });
+            TestWait(DEFAULT_TIMEOUT);
+        }
     }
 }

@@ -22,6 +22,8 @@ namespace ZumpaReader.WebService
 
         Task<WebService.ContextResult<bool>> SwitchThreadFavourite(int threadId);
 
+        Task<WebService.ContextResult<Dictionary<String, Object>>> GetConfig();
+
         Task<bool> RegisterPushURI(string username, string uid, string pushUrl);
     }
 }

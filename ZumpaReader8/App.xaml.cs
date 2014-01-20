@@ -10,6 +10,7 @@ using ZumpaReader.Resources;
 using RemoteLogCore;
 using ZumpaReader.Utils;
 using ZumpaReader;
+using ZumpaReader.WebService;
 
 namespace ZumpaReader8
 {
@@ -134,6 +135,7 @@ namespace ZumpaReader8
 
             RLogHelper.Register();
             PushHelper.Register();
+            AppStartHelper.RefreshServerConfigValue(HttpService.CreateInstance());
         }
 
         /// <summary>

@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="ThemeManager.cs" />
     <Compile Include="Utils\AnimationHelper.cs" />
+    <Compile Include="Utils\AppStartHelper.cs" />
     <Compile Include="Utils\ImageLoader.cs" />
     <Compile Include="Utils\PushHelper.cs" />
     <Compile Include="Utils\RLogHelper.cs" />

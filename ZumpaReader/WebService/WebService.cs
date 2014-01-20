@@ -127,6 +127,13 @@ namespace ZumpaReader.WebService
         /// <param name="threadId"></param>
         /// <returns></returns>
         public abstract Task<WebService.ContextResult<bool>> SwitchThreadFavourite(int threadId);
+        
+        /// <summary>
+        /// Get global config from serverside
+        /// </summary>
+        /// <returns></returns>
+        public abstract Task<WebService.ContextResult<Dictionary<String, Object>>> GetConfig();
+
         /// <summary>
         /// Send push url to server to register receiving
         /// </summary>

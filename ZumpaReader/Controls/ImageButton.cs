@@ -43,7 +43,7 @@ namespace ZumpaReader.Controls
         }
 
         /// <summary>
-        /// Simple switch for temporaryli disable image loading
+        /// Simple switch for temporarily disable image loading
         /// </summary>
         public bool IgnoreImages
         {
@@ -63,7 +63,14 @@ namespace ZumpaReader.Controls
 
         protected virtual void OnLinkChanged(string link)
         {
-            if (!IgnoreImages && AppSettings.AutoLoadImages && _loader.IsImageLink(link))
+            bool isImage = _loader.IsImageLink(link);
+            if (isImage && !AppSettings.ShowImageAsButton)
+            {
+                Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            if (!IgnoreImages && AppSettings.AutoLoadImages && isImage)
             {
                 Content = new ProgressBar { IsIndeterminate = true, MinHeight = 23, MinWidth = 300 };
                 LoadImageAsync(link);

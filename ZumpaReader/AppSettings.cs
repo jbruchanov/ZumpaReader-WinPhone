@@ -9,9 +9,9 @@ namespace ZumpaReader
 {
     public class AppSettings
     {
-        private enum PropertyKeys
+        internal enum PropertyKeys
         {
-            CookieString, Login, Password, IsLoggedIn, ResponseName, LastAuthor, PushURI, ZumpaUID, Filter, AutoLoadImages
+            CookieString, Login, Password, IsLoggedIn, ResponseName, LastAuthor, PushURI, ZumpaUID, Filter, AutoLoadImages, ShowImageAsButton, ShowSettingsAutoLoadImages
         }
 
         static AppSettings()
@@ -212,6 +212,46 @@ namespace ZumpaReader
             set
             {
                 _storage[PropertyKeys.AutoLoadImages.ToString()] = value;
+                _storage.Save();
+            }
+        }
+
+        public static bool ShowImageAsButton
+        {
+            get
+            {
+                if (_storage == null) return false;
+                bool result;
+                if (!_storage.TryGetValue<bool>(PropertyKeys.ShowImageAsButton.ToString(), out result))
+                {
+                    result = false;
+                }
+                return result;
+            }
+
+            set
+            {
+                _storage[PropertyKeys.ShowImageAsButton.ToString()] = value;
+                _storage.Save();
+            }
+        }
+
+        public static bool ShowSettingsAutoLoadImages
+        {
+            get
+            {
+                if (_storage == null) return false;
+                bool result;
+                if (!_storage.TryGetValue<bool>(PropertyKeys.ShowSettingsAutoLoadImages.ToString(), out result))
+                {
+                    result = false;
+                }
+                return result;
+            }
+
+            set
+            {
+                _storage[PropertyKeys.ShowSettingsAutoLoadImages.ToString()] = value;
                 _storage.Save();
             }
         }

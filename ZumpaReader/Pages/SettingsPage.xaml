@@ -47,7 +47,7 @@
             <Rectangle Style="{StaticResource PageTitleDivider}" />
         </StackPanel>
 
-        <controls:Panorama Grid.Row="1">
+        <controls:Panorama Name="PanoramaControl" Grid.Row="1">
             <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.General}">
                 <ScrollViewer>
                 <StackPanel Margin="12,0,12,0"
@@ -67,7 +67,7 @@
                 </StackPanel>
                 </ScrollViewer>
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="{Binding Source={StaticResource Labels},Path=Labels.Images}">
+            <controls:PanoramaItem Name="ImagePanoramaItem" Header="{Binding Source={StaticResource Labels},Path=Labels.Images}">
                 <StackPanel>
                     <toolkit:ToggleSwitch IsChecked="{Binding AutoLoadImages, Mode=TwoWay}"
                                           Content="{Binding Source={StaticResource Labels},Path=Labels.AutoLoad}" />

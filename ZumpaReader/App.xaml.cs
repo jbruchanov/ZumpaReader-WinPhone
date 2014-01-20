@@ -15,6 +15,7 @@ using Microsoft.Phone.Shell;
 using RemoteLogCore;
 using ZumpaReader.Utils;
 using ZumpaReader.Model;
+using ZumpaReader.WebService;
 
 namespace ZumpaReader
 {
@@ -132,6 +133,7 @@ namespace ZumpaReader
             RootFrame.UriMapper = new UriMapper();
             RLogHelper.Register();
             PushHelper.Register();
+            AppStartHelper.RefreshServerConfigValue(HttpService.CreateInstance());
         }
 
         // Do not add any additional code to this method

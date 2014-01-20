@@ -18,6 +18,10 @@ namespace ZumpaReader.Pages
         public SettingsPage()
         {
             InitializeComponent();
+            if (!AppSettings.ShowSettingsAutoLoadImages) 
+            { 
+                PanoramaControl.Items.Remove(ImagePanoramaItem);
+            }
         }
     }
 }

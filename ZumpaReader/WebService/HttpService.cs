@@ -22,7 +22,8 @@ namespace ZumpaReader.WebService
         private const string POST = "/post";
         private const string SURVEY = "/survey";
         private const string FAVOURITE = "/favorite";
-        private const string IMAGE = "/image";       
+        private const string IMAGE = "/image";
+        private const string CONFIG = "/config";
         private const string HTTP_POST = "POST";
 
         private const string PARAM_COOKIES = "Cookies";
@@ -227,6 +228,12 @@ namespace ZumpaReader.WebService
             string url = mainUrl + queryString;
             string result = await new WebClient().DownloadStringTaskAsync(url);
             return "[OK]".Equals(result);
+        }
+
+        public override async Task<WebService.ContextResult<Dictionary<string, object>>> GetConfig()
+        {
+            string jsonResponse = await PostData(Config.BaseURL + CONFIG, "{}");
+            return Parse<Dictionary<string, object>>(jsonResponse);
         }
 
         /// <summary>
