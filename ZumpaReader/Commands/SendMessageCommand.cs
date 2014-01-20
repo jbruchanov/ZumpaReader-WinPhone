@@ -33,6 +33,11 @@ namespace ZumpaReader.Commands
                 Survey s = info.Survey;
                 if (!CheckSurvey(s)) { s = null; }
                 result = await _webService.SendMessage(info.Subject, info.Message, s, info.ThreadID);
+                if (result.HasError)
+                {
+                    ShowToast(result.Error, ":(");
+                    result = null;
+                }
             }
             catch (Exception e)
             {

@@ -66,6 +66,9 @@ namespace ZumpaReader.WebService
 
             [JsonProperty("HasError")]
             public bool HasError { get; set; }
+
+            [JsonProperty("Error")]
+            public string Error { get; set; }
         }
 
         /// <summary>
