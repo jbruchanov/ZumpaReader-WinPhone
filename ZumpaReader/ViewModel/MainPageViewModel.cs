@@ -123,7 +123,7 @@ namespace ZumpaReader.ViewModel
         public virtual void OnDownloadedPage(ZumpaItemsResult zumpaItemsResult)
         {
             _lastResult = zumpaItemsResult;
-            if (DataItems != null)
+            if (DataItems != null && DataItems.Count != 0)
             {
                 foreach (var item in zumpaItemsResult.Items)
                 {
@@ -163,7 +163,7 @@ namespace ZumpaReader.ViewModel
 
         public void LoadNextPage()
         {
-            if (null != _lastResult && LoadCommand.CanExecuteIt)
+            if (null != _lastResult && _lastResult.NextPage != null && LoadCommand.CanExecuteIt)
             {
                 if (LoadCommand.LoadURL == null || !LoadCommand.LoadURL.Equals(_lastResult.NextPage))
                 {
