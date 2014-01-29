@@ -1,4 +1,4 @@
-ZumpaReader-WinPhone
+Žumπčka-WinPhone
 ====================
 
 
